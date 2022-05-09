@@ -56,10 +56,6 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      prism: {
-        darkTheme: require('./src/theme/prism-dark-theme-chialisp'),
-        theme: require('./src/theme/prism-light-theme-chialisp')
-      },
       navbar: {
         title: 'My Site',
         logo: {
