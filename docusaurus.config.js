@@ -7,8 +7,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Chia Dev Guides',
-  tagline: 'Guides for Chia Devs',
-  url: 'https://your-docusaurus-test-site.com',
+  tagline: 'Guides for Chia Developers',
+  url: 'https://staging.devs.chia.net/guides/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -17,7 +17,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'Chia-Network', // Usually your GitHub org/user name.
-  projectName: 'chia-dev-guides', // Usually your repo name.
+  projectName: 'chia-dev-guides-stage', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -59,7 +59,7 @@ const config = {
       navbar: {
         title: 'Chia Dev Guides',
         logo: {
-          alt: 'Chialips Logo',
+          alt: 'Chialisp Logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -95,6 +95,10 @@ const config = {
               {
                 label: 'Keybase',
                 href: 'https://keybase.io/team/chia_network.public',
+              },
+              {
+                label: 'Chia Devs Forum',
+                href: 'https://developers.chia.net/',
               },
               {
                 label: 'Twitter',
