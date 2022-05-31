@@ -7,7 +7,7 @@ const darkTheme = require("./src/theme/prism-dark-theme-chialisp");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Chia Dev Guides",
-  tagline: "Better guides for a better blockchain",
+  tagline: "Resources for developers onboarding to Chia.",
   url: "https://staging.devs.chia.net",
   baseUrl: "/",
   onBrokenLinks: "throw",
