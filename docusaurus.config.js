@@ -52,10 +52,12 @@ const config = {
     ({
       navbar: {
         title: "Dev Guides",
+        style: "dark",
         logo: {
           alt: "Chialisp Logo",
-          src: "img/logo.svg",
+          src: "img/chia-logo.svg",
           href: "/guides/intro",
+          width: 60,
         },
         items: [
           {
