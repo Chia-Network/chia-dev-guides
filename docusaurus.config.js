@@ -61,7 +61,15 @@ const config = {
         },
         items: [
           {
-            href: "https://github.com/Chia-Network",
+            href: "https://docs.chia.net",
+            label: "Chia Docs",
+          },
+          {
+            href: "https://chialisp.com/",
+            label: "Chialisp",
+          },
+          {
+            href: "https://github.com/Chia-Network/chia-dev-guides-stage",
             label: "GitHub",
             position: "right",
           },

@@ -1,10 +1,8 @@
 ---
 id: testnet-setup
-sidebar_position: 2
 slug: /testnet-setup
+title: Testnet Setup
 ---
-
-# Testnet Setup
 
 If you haven't already, you will need to [clone the Chia Blockchain repository](https://github.com/Chia-Network/chia-blockchain), then follow the below steps to set it up and configure it for the testnet.
 
@@ -37,4 +35,4 @@ Now you can set up the wallet and use a faucet to receive Testnet coins to use i
 
 ## Conclusion
 
-You should now be ready to use the Testnet to create and spend smart coins.
+You should now be ready to use the Testnet to create and spend smart coins. As always, if you ran into any issues while setting up the Testnet, feel free to ask for support on our [Keybase](https://keybase.io/team/chia_network.public).
