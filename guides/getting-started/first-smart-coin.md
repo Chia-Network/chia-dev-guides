@@ -1,10 +1,8 @@
 ---
 id: first-smart-coin
 slug: /first-smart-coin
-sidebar_position: 3
+title: First Smart Coin
 ---
-
-# First Smart Coin
 
 By now, you should understand what Chialisp is and how you can use it to write programs and modules that can be run on the command-line. In this guide, we are going to write a simple **puzzle**, use it to lock a **coin** with a password, and finally spend it. This example is insecure for a variety of reasons which will be explained after, but it's a good tool for learning how smart coins work.
 
@@ -45,7 +43,7 @@ Write the following Chialisp code in a file named `password.clsp`:
 )
 ```
 
-1. The puzzle takes in a **curried in** value `PUZZLE_HASH`.
+1. The puzzle takes in a **curried in** value `PASSWORD_HASH`.
 2. The solution takes in the `password` and desired `conditions`.
 3. If the hash of the password matches the curried in value, output the `conditions`.
 4. Otherwise, throw an error to prevent the spend from occurring.
@@ -56,7 +54,9 @@ We've mentioned previously that Chialisp can be used to write puzzles, but you m
 
 ### Currying
 
-Currying is similar to creating a constant in the puzzle, except that it can be redefined as something else either programmatically or on the command-line with every use. It's the ideal pattern when creating a general purpose puzzle that requires external information, since you wouldn't want to hard code it and change it every time.
+Currying can be thought of as defining the value of function parameters before it is called. This is usually used with modules to allow the same puzzle to be reused for multiple different scenarios.
+
+In this example, the curried in `PASSWORD_HASH` represents the hash of the password that is required to spend the coin. Not every instance of this puzzle will have the same password, so we create a parameter and curry the value when we actually make an instance of this puzzle.
 
 ### Conditions
 
