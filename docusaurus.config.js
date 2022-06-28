@@ -8,7 +8,7 @@ const darkTheme = require("./src/theme/prism-dark-theme-chialisp");
 const config = {
   title: "Chia Dev Guides",
   tagline: "Resources for developers onboarding to Chia.",
-  url: "https://staging.devs.chia.net",
+  url: "https://devs.chia.net",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
@@ -17,7 +17,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "Chia-Network", // Usually your GitHub org/user name.
-  projectName: "chia-dev-guides-stage", // Usually your repo name.
+  projectName: "chia-dev-guides", // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -69,7 +69,7 @@ const config = {
             label: "Chialisp",
           },
           {
-            href: "https://github.com/Chia-Network/chia-dev-guides-stage",
+            href: "https://github.com/Chia-Network/chia-dev-guides",
             label: "GitHub",
             position: "right",
           },
