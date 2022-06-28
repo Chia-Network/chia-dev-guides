@@ -11,7 +11,7 @@ Up to this point, you have written single expressions and evaluated them on the 
 The `mod` operator creates a context for converting the usage of constants into a single expression.
 
 :::note
-Functions inside the module will not have direct access to the [solution](/docs/glossary#solution), so values you need access to will need to be passed in as a function parameter manually.
+Functions inside the module will not have direct access to the [solution](https://chialisp.com/docs/glossary#solution), so values you need access to will need to be passed in as a function parameter manually.
 
 In other words, there is no concept of [scope](<https://en.wikipedia.org/wiki/Scope_(computer_science)>).
 :::
