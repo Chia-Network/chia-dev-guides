@@ -12,7 +12,7 @@ const config = {
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  favicon: "img/chia_leaf_green.svg",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -55,7 +55,7 @@ const config = {
         style: "dark",
         logo: {
           alt: "Chialisp Logo",
-          src: "img/chia-logo.svg",
+          src: "img/dev-guides-logo.svg",
           href: "/guides",
           width: 45,
         },
