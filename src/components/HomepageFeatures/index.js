@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 const FeatureList = [
   {
     title: "NFT Developer Guide",
-    Svg: require("@site/static/img/undraw_docusaurus_mountain.svg").default,
+    Svg: require("@site/static/img/chia_NFT.svg").default,
     dest_url: "/guides/nft-developer-guide",
     description: (
       <>Find out more about minting NFTs on Chia - the secure, sustainable blockchain</>
@@ -13,7 +13,7 @@ const FeatureList = [
   },
   {
     title: "Get Started with Chialisp",
-    Svg: require("@site/static/img/undraw_docusaurus_tree.svg").default,
+    Svg: require("@site/static/img/chialisp_logo.svg").default,
     dest_url: "/guides",
     description: (
       <> Learn the fundamentals of Chialisp - the smart coin programming language</>
@@ -21,7 +21,7 @@ const FeatureList = [
   },
   {
     title: "Developer Forum",
-    Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
+    Svg: require("@site/static/img/chiadevs-icon.svg").default,
     dest_url: "https://developers.chia.net/",
     description: (
       <>Connect with Chia developers, discuss your projects and get help from the community.</>
