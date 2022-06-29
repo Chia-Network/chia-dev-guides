@@ -52,7 +52,6 @@ const config = {
     ({
       navbar: {
         title: "Dev Guides",
-        style: "dark",
         logo: {
           alt: "Chialisp Logo",
           src: "img/chia-logo.svg",
@@ -76,7 +75,6 @@ const config = {
         ],
       },
       footer: {
-        style: "dark",
         links: [
           {
             title: "Guides",
