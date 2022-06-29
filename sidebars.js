@@ -16,13 +16,13 @@ const sidebars = {
   tutorialSidebar: [
     {
       type: "category",
-      label: "Getting Started",
+      label: "Chialisp Primer",
       items: [
-        "getting-started/intro",
-        "getting-started/using-modules",
-        "getting-started/testnet-setup",
-        "getting-started/first-smart-coin",
-        "getting-started/bls-signatures",
+        "chialisp-primer/intro",
+        "chialisp-primer/using-modules",
+        "chialisp-primer/testnet-setup",
+        "chialisp-primer/first-smart-coin",
+        "chialisp-primer/bls-signatures",
       ],
     },
   ],
