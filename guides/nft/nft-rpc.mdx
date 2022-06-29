@@ -1,7 +1,7 @@
 ---
 id: nft-rpc
 slug: /nft-rpc
-title: Minting Through RPC
+title: Minting NFTs With RPC
 ---
 
 ```mdx-code-block
@@ -11,52 +11,93 @@ import TabItem from '@theme/TabItem';
 
 The next section of this tutorial will demonstrate how to create and use DIDs and NFTs using RPCs. If you wish to use the CLI instead, head to the [CLI section](/guides/nft-cli).
 
-### Create a DID wallet
+:::note
+
+It is very important that you replace any DID, id, name, or other value in the following commands with your own.
+
+This is just an example, we do not know the specific values your commands will need in order to work.
+
+Also, make sure to use a wallet fingerprint that has enough XCH to pay for transaction fees.
+
+:::
+
+## Create a DID Wallet
 
 :::warning important
-This section will use **Linux/MacOS** rpc syntax. When running rpc commands on **Windows**, you will need to escape all quotes with backslashes.
+When running RPC commands with JSON inputs on **Windows**, you will need to escape all quotes with backslashes.
 
-For example, here is a typical rpc command on **Linux** and **MacOS**:
+Here is an example of the difference between the syntax:
+
+```mdx-code-block
+<Tabs
+  defaultValue="windows"
+  values={[
+    {label: 'Windows', value: 'windows'},
+    {label: 'Linux/MacOS', value: 'nix'},
+  ]}>
+  <TabItem value="windows">
+```
+
+```powershell
+chia rpc wallet create_new_wallet '{\"wallet_type\": \"nft_wallet\"}'
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="nix">
+```
 
 ```bash
 chia rpc wallet create_new_wallet '{"wallet_type": "nft_wallet"}'
 ```
 
-To run the same command on **Windows**, you will need to escape the quotes, so it looks like this:
-
-```bash
-chia rpc wallet create_new_wallet '{\"wallet_type\": \"nft_wallet\"}'
+```mdx-code-block
+  </TabItem>
+</Tabs>
 ```
 
 :::
 
 :::info
-If you already created an NFT wallet using the CLI command from the previous section, you can skip to the next section, [Obtain an image and its hash](#obtain-an-image-and-its-hash 'Obtain an image and its hash').
+If you already created an NFT wallet using the CLI command from the previous section, you can skip to the next section, [Obtain an image and its hash](#obtain-an-image-and-its-hash "Obtain an image and its hash").
 :::
 
-In this section, we'll start with a brand new wallet fingerprint. However, you'll still need an existing DID to set up a new DID with this RPC. As detailed earlier in this guide, this can be created by running `chia wallet did create -n "Backup DID"`
+In this section, we'll start with a brand new wallet fingerprint. However, you'll still need an existing DID to set up a new DID with this RPC.
 
-1. Run `chia rpc wallet create_new_wallet '{"wallet_type": "did_wallet", "did_type": "new", "amount": 1, "backup_dids": ["<existing DID ID>"], "num_of_backup_ids_needed": 1, "fee": <amount in mojos>}'`.
+As detailed in the previous guide, you can use this command to do that:
 
-- This will create a DID wallet containing 1 mojo
-- It will also use a backup DID for recovery
-- Finally, it will add an optional fee in mojos. The recommended amount is 10 million
-- Even if you don't specify a fee, your wallet must contain at least 1 mojo in order to run this RPC:
+```bash
+chia wallet did create -n "Backup DID"
+```
+
+Now we will make the new DID containing 1 mojo, with the backup DID for recovery and a transaction fee:
 
 ```bash
 chia rpc wallet create_new_wallet '{"wallet_type": "did_wallet", "did_type": "new", "amount": 1, "backup_dids": ["did:chia:1plzd3t49kek2clpfmy7eam3hkmqtm8lu66uw8r3v3qgdu5vecnfsmsdmm7"], "num_of_backup_ids_needed": 1, "fee": 10000000}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
-    "my_did": "did:chia:19z0ladugc29x36580yejgp0s6czq0axt4tq0w7kr9uk4042asusqvxldga",
-    "success": true,
-    "type": 8,
-    "wallet_id": 4
+  "my_did": "did:chia:19z0ladugc29x36580yejgp0s6czq0axt4tq0w7kr9uk4042asusqvxldga",
+  "success": true,
+  "type": 8,
+  "wallet_id": 4
 }
 ```
 
-2. It will take a few minutes for your new wallet to be confirmed on the blockchain. Run `chia wallet show` to view the status.
+It will take a few minutes for your new wallet to be confirmed on the blockchain.
+
+You can run the following command to check the status:
 
 ```bash
 chia wallet show
+```
+
+Which will eventually produce an output similar to this:
+
+```js
 Wallet keys:
 1) * 2473516996 (Synced)
 2)   2034978751
@@ -89,36 +130,55 @@ Profile 1:
    -Wallet ID:             4
 ```
 
-### Create an NFT wallet
+## Create an NFT Wallet
 
-1. First, we'll create an NFT wallet that doesn't reference a DID:
+First, we'll create an NFT wallet that doesn't reference a DID:
 
 ```bash
 chia rpc wallet create_new_wallet '{"wallet_type": "nft_wallet", "name": "My NFT Wallet (RPC/non-DID)", "fee": 10000000}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
-    "success": true,
-    "type": 10,
-    "wallet_id": 5
+  "success": true,
+  "type": 10,
+  "wallet_id": 5
 }
 ```
 
-Note that a wall with a `type` of `10` is an NFT wallet.
+Note that a wallet with a `type` of `10` is an NFT wallet.
 
-2. Next, we'll create an NFT wallet that references your DID wallet's `Wallet ID`. Be sure to change the `did_id` to your local DID wallet's `Wallet ID`:
+Next, we'll create an NFT wallet that references your DID wallet's `Wallet ID`. Be sure to change the `did_id` to your local DID wallet's `Wallet ID`.
+
+Run the following command:
 
 ```bash
 chia rpc wallet create_new_wallet '{"wallet_type": "nft_wallet", "name": "My NFT Wallet (RPC/DID)", "did_id": "did:chia:19z0ladugc29x36580yejgp0s6czq0axt4tq0w7kr9uk4042asusqvxldga", "fee": 10000000}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
-    "success": true,
-    "type": 10,
-    "wallet_id": 6
+  "success": true,
+  "type": 10,
+  "wallet_id": 6
 }
 ```
 
-3. Run `chia wallet show` to view the status. You should now have two DIDs and two NFT wallets, one associated with your DID, and one not:
+You will now have two DIDs and two NFT wallets, one associated with your DID, and one not.
+
+Run the following command periodically so you know when they are added:
 
 ```bash
 chia wallet show
+```
+
+Which will eventually produce an output similar to this:
+
+```js
 Wallet height: 1150656
 Sync status: Synced
 Balances, fingerprint: 2473516996
@@ -162,24 +222,23 @@ My NFT Wallet (RPC/DID):
    -Wallet ID:             6
 ```
 
-### Mint an NFT (No DID)
+## Mint an NFT (No DID)
 
-1. Mint your NFT using the following values:
+:::warning important
 
-- `wallet_id`: The ID of your NFT wallet
-- `uris`: A comma-separated list of URIs where this image may be found. We'll only use one URI for this example. Be sure to add two backslashes (`\\`) to escape any special characters in the URI, such as `?` and `=`
-- `hash`: The image hash. The RPC will not verify that this hash is correct. Be sure to double-check this, ideally using multiple methods to calculate the hash
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
 
-The command will end up looking like this:
+:::
+
+You can mint your NFT without a DID like this:
 
 ```bash
 chia rpc wallet nft_mint_nft '{"wallet_id": 5, "uris": ["https://images.pexels.com/photos/4812689/pexels-photo-4812689.jpeg"], "hash": "995b5e2837fa68292e88dd5f900ea83953aafcb6bfb7c086f1ba7671946c4600", "fee": 265000000}'
 ```
 
-If successful, you will receive a JSON output, including the coin additions and removals involved in minting the NFT, as well as the spend bundle that was used. At the end of the output, you should see `"success": true,`.
+That should produce an output similar to this:
 
-```bash
-chia rpc wallet nft_mint_nft '{"wallet_id": 5, "uris": ["https://images.pexels.com/photos/4812689/pexels-photo-4812689.jpeg"], "hash": "995b5e2837fa68292e88dd5f900ea83953aafcb6bfb7c086f1ba7671946c4600", "fee": 265000000}'
+```json
 {
     "spend_bundle": {
         "aggregated_signature": "0xb5dee0fd86ccd2c136b173dd8d0b8ee5541365f4266764b6361914a4b1f3b53bc9e0004cc248adc6b9f9a8f8c9a045420b0e4dccaabd6645b4c0dd2d18037b70537f9e653abd438df12471a68c4dc640d95bc4c387c67ea247ad5752f856b092",
@@ -218,10 +277,26 @@ chia rpc wallet nft_mint_nft '{"wallet_id": 5, "uris": ["https://images.pexels.c
 }
 ```
 
-2. Wait a few minutes for your NFT to be confirmed on the blockchain. To view your NFT, run the `nft_get_nfts` RPC, passing in your NFT wallet's ID. Eventually, the NFT will show up:
+Here is a description of the parameters used in the command:
+
+| Parameter   | Description                          |
+| ----------- | ------------------------------------ |
+| "wallet_id" | The ID of your NFT wallet.           |
+| "uris"      | A list of URIs containing the image. |
+| "hash"      | The hash of the image.               |
+| "fee"       | The transaction fee.                 |
+
+Wait a few minutes for your NFT to be confirmed on the blockchain.
+
+Run the following command to check whether it's been minted yet:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "nft_list": [
         {
@@ -253,30 +328,23 @@ chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
 }
 ```
 
-### Mint an NFT (with DID)
+## Mint an NFT (With DID)
 
-1. Mint your NFT using the following values:
+:::warning important
 
-- `wallet_id`: The ID of your NFT wallet
-- `uris`: A comma-separated list of URIs where this image may be found. We'll only use one URI for this example. Be sure to add two backslashes (`\\`) to escape any special characters in the URI, such as `?` and `=`
-- `hash`: The image hash. The RPC will not verify that this hash is correct. Be sure to double-check this, ideally using multiple methods to calculate the hash
-- `did_id`: Optionally specify the DID to be associated with this NFT
-- `meta_uris`: A list of URIs to mark the location(s) of the NFT's metadata
-- `meta_hash`:The has of the NFT's metadata
-- `license_uris`: A list of URIs to mark the location(s) of the NFT's license. For this example, we'll use [Chia's Apache licence](https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/LICENSE)
-- `license_hash`: The hash of the NFT's license
-- `royalty_address`: Enter the wallet address of the original artist. For this example on testnet, we'll use a local address
-- `royalty_percentage`: The royalty that will go to the original artist each time the NFT is sold. The royalty percentage is represented by an unsigned int with the three least significant digits representing values past the decimal point. For example, a royalty of 1575 would equal 1.575%
-- `target_address`: The wallet address of the initial owner of the NFT. This may be the same as the royalty address
-- `series_number`: If this NFT is part of a series, then this indicates the number/sequence of this NFT in the series
-- `series_total`: If this NFT is part of a series, then this indicates the total number of NFTs in the series
-- `fee`: The one-time blockchain fee to be used upon minting the NFT, in mojos
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
 
-The command will end up looking like this:
+:::
+
+You can mint your NFT with a DID like this:
 
 ```bash
 chia rpc wallet nft_mint_nft '{"wallet_id": 6, "uris": ["https://images.pexels.com/photos/1509582/pexels-photo-1509582.jpeg"], "hash": "0ebedcd2cda065c75132218f745cecc3a1c131927f70b192b3fe6bbebaf437c4", "meta_uris": ["https://pastebin.com/raw/BHZc1suk", "https://pastebin.com/raw/bnzGwjmB"], "meta_hash": "07cb3cc71732d1979abd357af86475e1e35f6c2b41ed2387b309e4b486a89a51", "license_uris": ["https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/LICENSE"], "license_hash": "30a358857da6b49f57cfe819c1ca43bfe007f528eb784df5da5cb64577e0ffc6", "royalty_address": "txch1ape36g8rn8fm7d53z8rvngjkwhlkr83p28vnrpha94zt25szh8aq6anp3y", "royalty_percentage": 175, "target_address": "txch1ezy69gr6gpmu5e3hvyrn07ls7gqrw66s93pt555xcw50x25a2g7q3l3f8m", "series_number": 42, "series_total": 1337, "fee": 615000000}'
+```
 
+That should produce an output similar to this:
+
+```json
 {
     "spend_bundle": {
         "aggregated_signature": "0xb7cc94bff495c6ca81bced8c381db21923d9882709442343fc977b8647619bb075eef82925178a802e833a2a0097a3b90eb0cd0ae8dd839e90bba3a17293460ce2768abaf5ce7332b8daaee1d1cd12775a984619a0d1779b264fd51773214e4a",
@@ -324,12 +392,36 @@ chia rpc wallet nft_mint_nft '{"wallet_id": 6, "uris": ["https://images.pexels.c
 }
 ```
 
-If successful, you will receive a JSON output, including the coin additions and removals involved in minting the NFT, as well as the spend bundle that was used. At the end of the output, you should see `"success": true,`.
+Here is a description of the parameters used in the command:
 
-2. Wait a few minutes for your NFT to be confirmed on the blockchain. To view your NFT, run the `nft_get_nfts` RPC, passing in your NFT wallet's ID. Eventually, the NFT will show up:
+| Parameter            | Description                                                           |
+| -------------------- | --------------------------------------------------------------------- |
+| "wallet_id"          | The ID of your NFT wallet.                                            |
+| "uris"               | A list of URIs containing the image.                                  |
+| "hash"               | The hash of the image.                                                |
+| "fee"                | The transaction fee.                                                  |
+| "did_id"             | The DID associated with the NFT.                                      |
+| "meta_uris"          | A list of URIs containing the metadata.                               |
+| "meta_hash"          | The hash of the metadata.                                             |
+| "license_uris"       | A list of URIs containing the license.                                |
+| "license_hash"       | The hash of the license.                                              |
+| "royalty_address"    | The wallet or smart coin address of the creator.                      |
+| "royalty_percentage" | The royalty percentage expressed as tens of thousandths of a percent. |
+| "target_address"     | The address of the owner.                                             |
+| "series_number"      | The index in the series.                                              |
+| "series_total"       | The total number in the series.                                       |
+
+Wait a few minutes for your NFT to be confirmed on the blockchain.
+
+You can use the following command to check whether it is minted periodically:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 6}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "nft_list": [
         {
@@ -366,16 +458,25 @@ chia rpc wallet nft_get_nfts '{"wallet_id": 6}'
 }
 ```
 
-### Get info about your NFTs
+## Get Info About Your NFTs
 
-There are two RPCs that show info about NFTs. One will show all NFTs in a wallet, and the other will only show a specific NFT.
+:::warning important
 
-1. `chia rpc wallet nft_get_nfts '{"wallet_id": <wallet ID>}'`
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
 
-For example:
+:::
+
+There are two RPCs that show info about NFTs.
+
+This one will show all of the NFTs in a given wallet:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 6}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "nft_list": [
         {
@@ -412,12 +513,15 @@ chia rpc wallet nft_get_nfts '{"wallet_id": 6}'
 }
 ```
 
-2. `chia rpc wallet nft_get_info '{"wallet_id": <wallet ID>, "coin_id": "<coin ID>"}'`
-
-For example:
+This RPC will show information relating to a specific NFT:
 
 ```bash
 chia rpc wallet nft_get_info '{"wallet_id": 6, "coin_id": "0xf5c8951c18dba6482df3447329a2e92f432c8d93d7bcec4ec5488df8763c321b"}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "nft_info": {
         "chain_info": "((117 "https://images.pexels.com/photos/1509582/pexels-photo-1509582.jpeg") (104 . 0x0ebedcd2cda065c75132218f745cecc3a1c131927f70b192b3fe6bbebaf437c4) (28021 "https://pastebin.com/raw/BHZc1suk" "https://pastebin.com/raw/bnzGwjmB") (27765 "https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/LICENSE") (29550 . 42) (29556 . 1337) (28008 . 0x07cb3cc71732d1979abd357af86475e1e35f6c2b41ed2387b309e4b486a89a51) (27752 . 0x30a358857da6b49f57cfe819c1ca43bfe007f528eb784df5da5cb64577e0ffc6))",
@@ -451,24 +555,35 @@ chia rpc wallet nft_get_info '{"wallet_id": 6, "coin_id": "0xf5c8951c18dba6482df
 }
 ```
 
-### Add a URI to your NFTs
+## Add a URI to Your NFTs
 
-This section will show you how to add a new URI to your NFT. As a reminder, NFTs contain URI lists for data, metadata, and license. The current owner may add URIs as needed, but they may not be removed. The URIs are recommended to hash to their corresponding data, metadata, and license hashes. This helps to obtain digital permanence while decreasing the likelihood of fraud from changing URIs.
+:::warning important
+
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
+
+:::
+
+As a reminder, NFTs contain URI lists for data, metadata, and license. The current owner may add URIs as needed, but they may not be removed. The URIs are recommended to hash to their corresponding data, metadata, and license hashes. This helps to obtain digital permanence while decreasing the likelihood of fraud from changing URIs.
 
 A few caveats:
 
-- You can only update one type of key in one spend, and you can only add a single URI per spend
-- The `nft_add_uri` RPC takes one key and one URI. The key must be either `u` (data URI), `mu` (metadata URI), or `lu` (license URI)
-- The new URI will be prepended to the existing list
-- If the new URI is inaccessible, some wallets may not continue to traverse the URI list
-- Each time you run the `nft_add_uri` RPC, the NFT's coin ID will change. You therefore should run either `nft_get_nfts` or `nft_get_info` to obtain the current coin ID before adding a new URI
+- You can only update one type of key in one spend, and you can only add a single URI per spend.
+- The `nft_add_uri` RPC takes one key and one URI. The key must be either `u` (data URI), `mu` (metadata URI), or `lu` (license URI).
+- The new URI will be prepended to the existing list.
+- If the new URI is inaccessible, some wallets may not continue to traverse the URI list.
+- Each time you run the `nft_add_uri` RPC, the NFT's coin ID will change. You therefore should run either `nft_get_nfts` or `nft_get_info` to obtain the current coin ID before adding a new URI.
 
-Example 1 -- Add a new data URI
+### Add Data URI
 
-Obtain coin info. Note that this NFT has one data URI and zero license and metadata URIs:
+Get the NFT coin info:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
+```
+
+Note that the NFT has one data URI, and no license or metadata URIs:
+
+```json
 {
     "nft_list": [
         {
@@ -490,10 +605,15 @@ chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
 }
 ```
 
-Add new data URI:
+Now, add the new data URI:
 
 ```bash
 chia rpc wallet nft_add_uri '{"wallet_id": 5, "nft_coin_id": "0x8470b7feda2f42459399bba36308449bfd24f46e4842258a25c60a0dfeb3f72c", "key": "u", "uri": "new_datauri.com"}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "spend_bundle": {
         "aggregated_signature": "0xad392288e50e8a083baa032e212932377e9655260299d389eef9ee980e2705901146be1d67c0133b78a209ade9cbc05a198cd041e5de3ac4aa82e749eacef9b1ecab6951cd70bf9db3148366a2423e0df231c703628f60868a77368984ddca45",
@@ -514,27 +634,37 @@ chia rpc wallet nft_add_uri '{"wallet_id": 5, "nft_coin_id": "0x8470b7feda2f4245
 }
 ```
 
-Example 2 -- Add a new metadata URI
+### Add Metadata URI
 
-Obtain new coin info:
+Get the NFT coin info:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
-    "nft_list": [
-        {
-            "nft_coin_id": "0x1b3375608b8baa528a9e2fac3d460af82083e37b7078363513eaf65b17ef88fa",
-        }
-    ],
-    "success": true,
-    "wallet_id": 5
+  "nft_list": [
+    {
+      "nft_coin_id": "0x1b3375608b8baa528a9e2fac3d460af82083e37b7078363513eaf65b17ef88fa"
+    }
+  ],
+  "success": true,
+  "wallet_id": 5
 }
 ```
 
-Add new metadata URI:
+Now add the new metadata URI:
 
 ```bash
 chia rpc wallet nft_add_uri '{"wallet_id": 5, "nft_coin_id": "0x1b3375608b8baa528a9e2fac3d460af82083e37b7078363513eaf65b17ef88fa", "key": "mu", "uri": "new_metadatauri.com"}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "spend_bundle": {
         "aggregated_signature": "0x8fd16016f682cb13c3a965874b0070b5cab6898914bbf95366fcf5d12bfdc63cc491429fc5a61f012d07cc3a298906f10235ad8a1186c1e3e14b2505fb7bb37c96b0d05e866c7caf299c40d878115ae748e73705503d75ea520483fcb5620383",
@@ -555,25 +685,37 @@ chia rpc wallet nft_add_uri '{"wallet_id": 5, "nft_coin_id": "0x1b3375608b8baa52
 }
 ```
 
-Example 3 -- Add a new license URI
+### Add License URI
 
-Obtain new coin info:
+Get the NFT coin info:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
-    "nft_list": [
-        {
-            "nft_coin_id": "0xe2487e41652b3aa01f0937423ccd9e5ed3d3442accb71974ad1e5e2b240ac2e2",
-        }
-    ],
-    "success": true,
-    "wallet_id": 5
+  "nft_list": [
+    {
+      "nft_coin_id": "0xe2487e41652b3aa01f0937423ccd9e5ed3d3442accb71974ad1e5e2b240ac2e2"
+    }
+  ],
+  "success": true,
+  "wallet_id": 5
 }
 ```
 
+Now add the new license URI:
+
 ```bash
 chia rpc wallet nft_add_uri '{"wallet_id": 5, "nft_coin_id": "0xe2487e41652b3aa01f0937423ccd9e5ed3d3442accb71974ad1e5e2b240ac2e2", "key": "lu", "uri": "new_licenseuri.com"}'
+```
+
+Thats hould produce an output similar to this:
+
+```json
 {
     "spend_bundle": {
         "aggregated_signature": "0x91191c523ffc6608ce22ce05ea1e06e2058bf14b150aeb0940bb15189191a697dd3315cc7bf4353383505dcdf94e1bae00ea2e57f6ec89d75ad1a4ae43cad8a3ab17a7c8a26b74e9e6b73d8e9c6715f110472343f715f6eeddc44076a671173d",
@@ -594,78 +736,102 @@ chia rpc wallet nft_add_uri '{"wallet_id": 5, "nft_coin_id": "0xe2487e41652b3aa0
 }
 ```
 
-Finally, show the new URIs:
+### Show the New URIs
+
+You can now check the status of the URIs you just added:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
+```
+
+Which will eventually produce an output similar to this:
+
+```json
 {
-    "nft_list": [
-        {
-            "data_uris": [
-                "new_datauri.com",
-                "https://images.pexels.com/photos/4812689/pexels-photo-4812689.jpeg"
-            ],
-            "license_uris": [
-                "new_licenseuri.com"
-            ],
-            "metadata_uris": [
-                "new_metadatauri.com"
-            ],
-        }
-    ],
-    "success": true,
-    "wallet_id": 5
+  "nft_list": [
+    {
+      "data_uris": [
+        "new_datauri.com",
+        "https://images.pexels.com/photos/4812689/pexels-photo-4812689.jpeg"
+      ],
+      "license_uris": ["new_licenseuri.com"],
+      "metadata_uris": ["new_metadatauri.com"]
+    }
+  ],
+  "success": true,
+  "wallet_id": 5
 }
 ```
 
-2. Wait a few minutes for the change to be confirmed on the blockchain. Eventually, you'll see the new URI when you run the `nft_get_nfts` RPC:
+You can also check the list of NFTs once it has been updated:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 2}'
+```
+
+Which will eventually produce an output similar to this:
+
+```json
 {
-    "nft_list": [
-        {
-            "data_hash": "14836B86A48E1B2B5E857213AF97534704475B4C155D34B2CB83ED4B7CBA2BB0",
-            "data_uris": [
-                "https://newuri.net",
-                "https://images.pexels.com/photos/11053072/pexels-photo-11053072.jpeg"
-            ],
-            "did_owner": "",
-            "edition_count": 1,
-            "edition_number": 1,
-            "launcher_id": "C2F3F7D54D254381FD33FBE2B6C031E5BE3BA1267215A2FA182E064ED6015FEF",
-            "license_hash": "",
-            "license_uris": [],
-            "metadata_hash": "",
-            "metadata_uris": [],
-            "nft_coin_id": "D7FEC386B6F4A886ED406CAB09A541F85D3313206DA73FACF92B5A45158E3EEF",
-            "royalty": 0,
-            "version": "NFT0"
-        }
-    ],
-    "success": true,
-    "wallet_id": 2
+  "nft_list": [
+    {
+      "data_hash": "14836B86A48E1B2B5E857213AF97534704475B4C155D34B2CB83ED4B7CBA2BB0",
+      "data_uris": [
+        "https://newuri.net",
+        "https://images.pexels.com/photos/11053072/pexels-photo-11053072.jpeg"
+      ],
+      "did_owner": "",
+      "edition_count": 1,
+      "edition_number": 1,
+      "launcher_id": "C2F3F7D54D254381FD33FBE2B6C031E5BE3BA1267215A2FA182E064ED6015FEF",
+      "license_hash": "",
+      "license_uris": [],
+      "metadata_hash": "",
+      "metadata_uris": [],
+      "nft_coin_id": "D7FEC386B6F4A886ED406CAB09A541F85D3313206DA73FACF92B5A45158E3EEF",
+      "royalty": 0,
+      "version": "NFT0"
+    }
+  ],
+  "success": true,
+  "wallet_id": 2
 }
 ```
 
-### Transfer your NFTs
+## Transfer Your NFTs
 
-This section will show you how to transfer an NFT to a new wallet. For this example, we'll generate a new set of keys and transfer two NFTs to it: one with a DID and one without one.
+:::warning important
 
-1. Generate a new set of keys, which will receive the NFTs:
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
+
+:::
+
+This section will show you how to transfer an NFT to a new wallet.
+
+Generate a new set of keys, which will receive the NFTs:
 
 ```bash
 chia keys generate
+```
+
+That should produce an output similar to this:
+
+```
 Generating private key
 Added private key with public key fingerprint 3014780109
 WARNING: using a farmer address which we might not have the private keys for. We searched the first 50 addresses. Consider overriding txch13amy3jfp8kkmqa87eswytj3a8ef22nm8zwsf3ckptpm8rv72qtgqgvk6fs with txch1ape36g8rn8fm7d53z8rvngjkwhlkr83p28vnrpha94zt25szh8aq6anp3y
 WARNING: using a pool address which we might not have the private keys for. We searched the first 50 addresses. Consider overriding txch13amy3jfp8kkmqa87eswytj3a8ef22nm8zwsf3ckptpm8rv72qtgqgvk6fs with txch1ape36g8rn8fm7d53z8rvngjkwhlkr83p28vnrpha94zt25szh8aq6anp3y
 ```
 
-2. Obtain the receive address for the new wallet with fingerprint 3014780109:
+Obtain the receive address for the new wallet with that fingerprint:
 
 ```bash
 chia keys show
+```
+
+That should produce an output similar to this:
+
+```
 Showing all public keys derived from your master seed and private key:
 
 Fingerprint: 2473516996
@@ -681,12 +847,17 @@ Pool public key (m/12381/8444/1/0): b879c9f384a7fc94f3195e613c0b22ff65718da9e056
 First wallet address: txch1nqpall7xesjrk8eggqxxzly2jsntrgv4usfhk5uckg8gsxfmvpxsgjvzz5
 ```
 
-3. Get the coin IDs of each NFT to transfer:
+Now you will the coin IDs of each NFT to transfer.
 
-Wallet 5 (no DID):
+Starting with wallet 5, which has no DID:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "nft_list": [
         {
@@ -723,10 +894,15 @@ chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
 }
 ```
 
-Wallet 6 (has DID):
+Then wallet 6, which has a DID:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 6}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "nft_list": [
         {
@@ -765,16 +941,15 @@ chia rpc wallet nft_get_nfts '{"wallet_id": 6}'
 }
 ```
 
-4. Run the `nft_transfer_nft` RPC for each NFT using the following values:
-
-- `wallet_id`: The `Wallet ID` of the NFT to transfer
-- `target_address`: The address of the NFT wallet to transfer to
-- `nft_coin_id`: The ID of the NFT coin, obtained from the `nft_get_nfts` RPC
-
-If successful, the target address, coin id, and spend bundle will all be displayed. For example:
+Run the `nft_transfer_nft` RPC for the first NFT:
 
 ```bash
 chia rpc wallet nft_transfer_nft '{"wallet_id": 5, "target_address": "txch1nqpall7xesjrk8eggqxxzly2jsntrgv4usfhk5uckg8gsxfmvpxsgjvzz5", "nft_coin_id": "0x1185a9fd7924b8d38062197ada0cc95d372c05892dfa347440914e0869dd6f01"}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "spend_bundle": {
         "aggregated_signature": "0xa2e00566b404201a2e84eaf130ae7b1a3ee345f4b00b007154ed5f16c2bbd72206876c300942f823f180813d5b08f363029a3cf7a674b65e5b77e0ea9febc9aa354bc0e8a719071331d08bd5a2067f3c89278e43a2f4c3e9800f6e262383528c",
@@ -795,8 +970,15 @@ chia rpc wallet nft_transfer_nft '{"wallet_id": 5, "target_address": "txch1nqpal
 }
 ```
 
+Now run it for the second NFT:
+
 ```bash
 chia rpc wallet nft_transfer_nft '{"wallet_id": 6, "target_address": "txch1nqpall7xesjrk8eggqxxzly2jsntrgv4usfhk5uckg8gsxfmvpxsgjvzz5", "nft_coin_id": "0x0ee605a198dca410f4a820d4e2c8186c4d4e779d88330406b5e80579554e2213"}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "spend_bundle": {
         "aggregated_signature": "0x826377fd91e337bc8fb17342f8d2c6fdd2e6bb45a89b3ed6fa27b7b933e5829192ef9a4d59c2929dc2f29ba2833963d10aee8019023208fbe0c9ecdfd9c82467f3994cc19d18692ae156927e13e64dc55388341e1f7dac29f5f913aa9cc81370",
@@ -817,10 +999,17 @@ chia rpc wallet nft_transfer_nft '{"wallet_id": 6, "target_address": "txch1nqpal
 }
 ```
 
-5. Sync the wallet you just transferred the NFT to (whether it's on the same machine or a different one). After syncing is complete, run `chia wallet show`. A new NFT wallet should have been created automatically.
+Sync the wallet you just transferred the NFT to.
+
+After syncing is complete, run this to check if the NFT wallet is created:
 
 ```bash
 chia wallet show
+```
+
+That should produce an output similar to this:
+
+```js
 Wallet keys:
 1)   2473516996
 2) * 3014780109 (Synced)
@@ -844,10 +1033,15 @@ NFT Wallet:
    -Wallet ID:             2
 ```
 
-6. Run the `nft_get_nfts` rpc again to view the NFTs:
+You can get the NFT information the same way:
 
 ```bash
 chia rpc wallet nft_get_nfts '{"wallet_id": 2}'
+```
+
+That should produce an output similar to this:
+
+```json
 {
     "nft_list": [
         {

@@ -1,13 +1,8 @@
 ---
 id: nft-cli
 slug: /nft-cli
-title: Minting Through CLI
+title: Minting NFTs With CLI
 ---
-
-```mdx-code-block
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-```
 
 The next section of this tutorial will demonstrate how to create and use DIDs and NFTs on the CLI. If you wish to use RPCs instead, you can skip ahead to the [RPC version](/guides/nft-rpc).
 
@@ -21,13 +16,13 @@ Also, make sure to use a wallet fingerprint that has enough XCH to pay for trans
 
 :::
 
-### Create a DID wallet
+## Create a DID Wallet
 
 An NFT wallet has the option of being associated with a DID. In this section, we'll create a new DID. Later we'll create two NFT wallets -- one that is associated with a DID and one that is not.
 
 To create a new DID using Chia's CLI:
 
-Run this command to create a DID wallet with a custom name and 1 mojo:
+Run these commands to create a DID wallet with a custom name and 1 mojo:
 
 ```bash
 chia wallet did create -n "Test DID" -a 1 -m 0.00001
@@ -71,7 +66,7 @@ Test DID:
    -Wallet ID:             2
 ```
 
-### Create an NFT wallet
+## Create an NFT Wallet
 
 :::info
 Each NFT wallet can be anchored to either a DID or a key pair. A key pair can only contain a single NFT wallet, which will act as the "inbox" for all NFTs associated with that key pair. Each DID can also contain a single NFT wallet, which allows for the creation of multiple NFT wallets inside the same wallet key pair.
@@ -147,7 +142,13 @@ DID-Linked NFT Wallet:
    -Wallet ID:             4
 ```
 
-### Mint an NFT (no DID)
+## Mint an NFT (No DID)
+
+:::warning important
+
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
+
+:::
 
 For this example, we'll mint an NFT using only the required options:
 
@@ -197,7 +198,13 @@ Here is a description of the options used:
 | `-u`   | A comma-separated list of URIs where this image may be found. |
 | `-nh`  | The NFT's data hash. Must match to be viewable in the wallet. |
 
-### Mint an NFT (with DID)
+## Mint an NFT (With DID)
+
+:::warning important
+
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
+
+:::
 
 Next we'll mint an NFT that is associated with a DID. For this example, we'll use most of the available options:
 
@@ -262,7 +269,7 @@ Here is a description of the options used:
 | `-lh`                | The hash of the NFT's license.                                          |
 | `-sn`                | The NFT's number in the series.                                         |
 | `-st`                | The total number of NFTs in this series.                                |
-| `-rp`                | The royalty percentage expressed as hundreths of a percent.             |
+| `-rp`                | The royalty percentage expressed as tens of thousandths of a percent.   |
 | `--no-did-ownership` | Disables DID ownership.                                                 |
 | `-m`                 | The fee for this transaction in XCH.                                    |
 
@@ -304,7 +311,7 @@ That should produce an output similar to this:
 }
 ```
 
-### List your NFTs
+## List Your NFTs
 
 We'll list the NFTs from both wallets that were created with the CLI.
 
@@ -466,7 +473,13 @@ https://license_example.com
 
 ```
 
-### Add a URI to your NFTs
+## Add a URI to Your NFTs
+
+:::warning important
+
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
+
+:::
 
 Each NFT has three URI lists:
 
@@ -536,7 +549,13 @@ License URIs:
    https://license_example.com
 ```
 
-### Set the DID for an NFT
+## Set the DID for an NFT
+
+:::warning important
+
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
+
+:::
 
 Next we'll set the DID for an existing NFT. But first we'll need to create the new DID.
 
@@ -634,7 +653,13 @@ https://license_example.com
 
 ```
 
-### Transfer your NFTs
+## Transfer Your NFTs
+
+:::warning important
+
+The values used in these commands are specific to this guide. Change any values that are different when you are following this guide such as the wallet id.
+
+:::
 
 The final step for the CLI portion of this tutorial is to transfer your NFTs to another address. This can be any XCH or TXCH address. If the recipient does not have an NFT wallet, then one will be created automatically.
 
@@ -646,7 +671,7 @@ For this tutorial, we'll send the NFTs to a commonly-used burn address.
 
 The reason these work as a burn address is that there is no known puzzle that matches this puzzle hash. Even if there were, it would have to be spendable. That is an **extremely** unlikely set of conditions to ever occur.
 
-The transfer command is the same for NFTs that are/aren't associated with a DID:
+The transfer command is the same for NFTs whether or not they are associated with a DID:
 
 ```bash
 chia wallet nft transfer -i 3 -ni 11c25eb4f17fccac63a5cf07421258c014592c55766826f28fe8f649ba78fc08 -ta txch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqm6ksh7qddh
