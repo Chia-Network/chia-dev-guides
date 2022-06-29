@@ -4,42 +4,44 @@ import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "Dev Guides",
+    title: "NFT Developer Guide",
     Svg: require("@site/static/img/undraw_docusaurus_mountain.svg").default,
+    dest_url: "/nft-developer-guide",
     description: (
-      <>Take a look at these fun guides and start developing on Chia today.</>
+      <>Find out more about minting NFTs on Chia - the secure, sustainable blockchain</>
     ),
   },
   {
-    title: "Chia Docs",
+    title: "Get Started with Chialisp",
     Svg: require("@site/static/img/undraw_docusaurus_tree.svg").default,
+    dest_url: "/guides",
     description: (
       <>
-        Find out about the Chia Blockchain, PoST consensus, wallet software and
-        more.
+        Learn the fundamentals of Chialisp - the smart coin programming language
       </>
     ),
   },
   {
-    title: "Dev Forum",
+    title: "Developer Forum",
     Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
+    dest_url: "https://developers.chia.net/",
     description: (
       <>
         Connect with Chia developers, discuss your projects and get help from
-        the community.
+        the community
       </>
     ),
   },
 ];
 
-function Feature({ Svg, title, description }) {
+function Feature({ Svg, title, description, dest_url }) {
   return (
     <div className={clsx("col col--4")}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <a href={dest_url}><Svg className={styles.featureSvg} role="img" /></a>
       </div>
       <div className="text--center padding-horiz--md">
-        <h3>{title}</h3>
+        <a href={dest_url}><h3>{title}</h3></a>
         <p>{description}</p>
       </div>
     </div>

@@ -17,6 +17,8 @@ const sidebars = {
     {
       type: "category",
       label: "Chialisp Primer",
+      collapsible: true,
+      collapsed: false,
       items: [
         "chialisp-primer/chialisp-primer-intro",
         "chialisp-primer/chialisp-primer-using-modules",
@@ -28,6 +30,8 @@ const sidebars = {
     {
       type: "category",
       label: "NFT Guide",
+      collapsible: true,
+      collapsed: false,
       link: {
         type: "generated-index",
         slug: "/nft-developer-guide",

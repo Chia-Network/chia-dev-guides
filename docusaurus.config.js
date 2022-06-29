@@ -82,8 +82,12 @@ const config = {
             title: "Guides",
             items: [
               {
-                label: "Intro",
+                label: "Chialisp Primer",
                 to: "/guides",
+              },
+              {
+                label: "NFT Developer Guide",
+                to: "/nft-developer-guide",
               },
             ],
           },
@@ -123,7 +127,7 @@ const config = {
       },
     }),
   customFields: {
-    landingTitle: "Chia Developer Portal",
+    landingTitle: "Chia Dev Guides",
     landingTagline: "Resources for Chia Developers",
   },
 };
