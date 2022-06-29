@@ -1,6 +1,6 @@
 ---
-id: testnet-setup
-slug: /testnet-setup
+id: chialisp-primer-testnet-setup
+slug: /chialisp-testnet-setup
 title: Testnet Setup
 ---
 

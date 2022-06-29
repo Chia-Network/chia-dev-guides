@@ -1,6 +1,6 @@
 ---
-id: first-smart-coin
-slug: /first-smart-coin
+id: chialisp-primer-first-smart-coin
+slug: /chialisp-first-smart-coin
 title: First Smart Coin
 ---
 

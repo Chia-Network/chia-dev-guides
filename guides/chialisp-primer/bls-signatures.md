@@ -1,6 +1,6 @@
 ---
-id: bls-signatures
-slug: /bls-signatures
+id: chialisp-primer-bls-signatures
+slug: /chialisp-bls-signatures
 title: BLS Signatures
 ---
 
