@@ -1,6 +1,6 @@
 ---
-id: intro
-slug: /intro
+id: chialisp-primer-intro
+slug: /
 title: Intro to Chialisp
 ---
 

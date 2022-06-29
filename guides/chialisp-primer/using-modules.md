@@ -1,6 +1,6 @@
 ---
-id: using-modules
-slug: /using-modules
+id: chialisp-primer-using-modules
+slug: /chialisp-using-modules
 title: Using Modules
 ---
 

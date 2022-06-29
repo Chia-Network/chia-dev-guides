@@ -16,13 +16,28 @@ const sidebars = {
   tutorialSidebar: [
     {
       type: "category",
-      label: "Getting Started",
+      label: "Chialisp Primer",
       items: [
-        "getting-started/intro",
-        "getting-started/using-modules",
-        "getting-started/testnet-setup",
-        "getting-started/first-smart-coin",
-        "getting-started/bls-signatures",
+        "chialisp-primer/chialisp-primer-intro",
+        "chialisp-primer/chialisp-primer-using-modules",
+        "chialisp-primer/chialisp-primer-testnet-setup",
+        "chialisp-primer/chialisp-primer-first-smart-coin",
+        "chialisp-primer/chialisp-primer-bls-signatures",
+      ],
+    },
+    {
+      type: "category",
+      label: "NFT Guide",
+      link: {
+        type: "generated-index",
+        slug: "/nft-developer-guide",
+        title: "NFT Developer Guide",
+        description: "This tutorial will guide you through the process of creating DIDs that conform to Chia's DID standard, as well as minting NFTs that adhere to Chia's NFT standard.",
+      },
+      items: [
+        "nft/nft-intro",
+        "nft/nft-cli",
+        "nft/nft-rpc",
       ],
     },
   ],
