@@ -54,7 +54,7 @@ const config = {
         title: "Dev Guides",
         logo: {
           alt: "Chialisp Logo",
-          src: "img/dev-guides-logo.svg",
+          src: "img/chia_leaf_green.svg",
           href: "/guides",
           width: 45,
         },
