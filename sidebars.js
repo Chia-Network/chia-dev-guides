@@ -29,6 +29,13 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Chialisp Concepts",
+      collapsible: true,
+      collapsed: false,
+      items: ["chialisp-concepts/chialisp-concepts-currying"],
+    },
+    {
+      type: "category",
       label: "NFT Guide",
       collapsible: true,
       collapsed: false,
@@ -36,13 +43,10 @@ const sidebars = {
         type: "generated-index",
         slug: "/nft-developer-guide",
         title: "NFT Developer Guide",
-        description: "This tutorial will guide you through the process of creating DIDs that conform to Chia's DID standard, as well as minting NFTs that adhere to Chia's NFT standard.",
+        description:
+          "This tutorial will guide you through the process of creating DIDs that conform to Chia's DID standard, as well as minting NFTs that adhere to Chia's NFT standard.",
       },
-      items: [
-        "nft/nft-intro",
-        "nft/nft-cli",
-        "nft/nft-rpc",
-      ],
+      items: ["nft/nft-intro", "nft/nft-cli", "nft/nft-rpc"],
     },
   ],
 };
