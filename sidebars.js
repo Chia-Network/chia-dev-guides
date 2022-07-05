@@ -32,7 +32,11 @@ const sidebars = {
       label: "Chialisp Concepts",
       collapsible: true,
       collapsed: false,
-      items: ["chialisp-concepts/chialisp-concepts-currying"],
+      items: [
+        "chialisp-concepts/chialisp-concepts-currying",
+        "chialisp-concepts/chialisp-concepts-inner-puzzles",
+        "chialisp-concepts/chialisp-concepts-condition-morphing",
+      ],
     },
     {
       type: "category",
