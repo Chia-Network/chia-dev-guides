@@ -20,6 +20,8 @@ Write this in a file named `multiply.clsp`:
 )
 ```
 
+### Currying
+
 Now, we are going to make an instance of this program that will set the value of the parameter `first` to `2`. This will effectively turn this program from a multiplier to a doubler.
 
 You can curry it like this:
@@ -47,6 +49,36 @@ It should output twice the value of `5`:
 ```chialisp
 10
 ```
+
+### Reuse
+
+The real use of currying comes from the fact that you can curry it again with a new value:
+
+```bash
+cdv clsp curry multiply.clsp -a 5
+```
+
+Which should produce the following curried result:
+
+```chialisp
+(a (q 18 2 5) (c (q . 5) 1))
+```
+
+This will do the same thing as the other one, except this time multiply by `5` instead of `2`.
+
+## Convention
+
+In the previous example, we curried a program that wasn't explicitly designed to be curried like that. However, often times (especially with puzzles), you will be required to curry the value beforehand to use it properly. To indicate that a parameter is meant to be curried in, you write it in `SCREAMING_SNAKE_CASE`.
+
+Lets rewrite the previous example with this convention:
+
+```chialisp title="multiply.clsp"
+(mod (FIRST second)
+    (* FIRST second)
+)
+```
+
+Writing parameters like this doesn't change anything in how they function, but rather how they are expected to be used. This convention makes it clear that you _need_ to specify the value of it before creating coins with it on-chain.
 
 ## Conclusion
 
