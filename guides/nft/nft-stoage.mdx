@@ -1,0 +1,177 @@
+---
+id: nft-storage
+slug: /nft-storage
+title: Image storage for NFTs
+---
+When you look at an NFT you see an image. But where is this image stored? Is the image data on the blockchain, or is it just a reference to an image somewhere?
+
+In most cases, image data for an NFT is _not_ stored on the blockchain. There are exceptions, but storing image data is considered to by a costly operation. 
+
+Instead, most images are stored off chain with a reference being stored on chain.
+
+In the case of Chia, you can have multiple URLs associated with an image. This allows for redundancy that can last a lifetime (or longer). 
+
+Even with the ability to have backup urls, how can we be _sure_ that an image never gets deleted, modified, or replaced completely? This applies not only to the image itself, but the metadata associated with the NFT as well. We will be covering it all in this guide.
+
+:::warning
+When using decentralized storage, there's a good chance files will be public and permanently preserved. Let this be a warning to think twice before uploading something that's supposed to stay private. 
+:::
+
+## File hosting
+
+The first step to protecting your NFT is to use good file hosting. 
+
+You can go with decentralized storage with distributed systems like IPFS or Arweave, or traditional file storage with a system like AWS S3. 
+
+There are also many tools that abstract away file storage giving you a quick and easy way to get started. 
+
+:::tip
+If you're looking for a quick route to getting started, I recommend [NFT.storage]('https://nft.storage'). This will allow you to upload your files directly to their site and will provide you with a public link for free. This uses IPFS and Filecoin behind the scenes, but doesn't require you to have extensive knowledge of these systems. NFT.storage is able to provide free NFT hosting as they are part of the [Filecoin Plus](https://docs.filecoin.io/store/filecoin-plus/) program. Filecoin users are incentivized heavily (10x) to host the files. 
+:::
+
+Let's take a look at some of the major options for file storage. 
+
+## IPFS
+
+IPFS (InterPlanetary File System) is a distributed protocol for file hosting. You can [download IPFS]('https://ipfs.io/') and start hosting files. Let's go through a quick example using the IPFS CLI:
+
+```
+ipfs --version
+echo "first IPFS file" > first.txt
+ipfs add first.txt
+```
+
+This will allow us to check our IPFS version and add our first file to our IPFS node. The response looks something like `added QmVu9BmEUHm5ixLz6GYzpwD8ToyRG8tGy81egd7FX2bBR1 first.txt`, where the string of characters is known as a **CID** and will be used to refer to that specific file. 
+
+When adding important files, you will want them to be **pinned**. IPFS aggressively clears out file caches for any files that have not been pinned. By pinning a file, you're telling IPFS that you want to persist the file indefinitely. Files added this way through the CLI are automatically pinned. 
+
+```
+ipfs pin ls
+```
+
+This should will give a response like `
+QmVu9BmEUHm5ixLz6GYzpwD8ToyRG8tGy81egd7FX2bBR1 recursive` showing that the CID is in fact pinned. 
+
+You can unpin a file like so:
+
+```
+ipfs pin rm QmVu9BmEUHm5ixLz6GYzpwD8ToyRG8tGy81egd7FX2bBR1
+```
+
+Being sure to substitute for your file's CID. You can add a pin like so:
+
+```
+ipfs pin add QmVu9BmEUHm5ixLz6GYzpwD8ToyRG8tGy81egd7FX2bBR1
+```
+
+This pinning is still dependent on your your ability to properly set up a node and host the file. Most likely this is not very permanent. To add redundancy beyond your local pin it is suggested you use a pinning service. 
+
+### Pinning Services
+
+Pinning as a service allows you to delegate file ownership beyond your local node. These are third party services and can be free or paid. Most pinning services offer some sort of free option and allow you to get started pinning files easily. 
+
+Pinata is a popular pinning service and is very easy to set up, just sign up for a free account and get an API key. 
+
+Once you've signed up for an API key you'll receive an API secret access token. Add this to your IPFS node using your own API secret access token like so:
+
+```
+ipfs pin remote service add pinata https://api.pinata.cloud/psa eyJhbGciOiJIUzInNiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzYWY1ODFhMC1hYmE3LTRkYTgtYmU1Mi1kOWY5MDQoGQoNGEiLCJlbWFpbCI6ImMhbGViQGNhbGViY3VycnkuY29tIiwiZfW1haWxfdmVyaWZpZWQUsInBpbl9wb2xpY3kiOesicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxp
+```
+
+You can now pin the file with Pinata:
+
+```
+ipfs pin remote add --service=Pinata --name=filename.txt QmVu9BmEUHm5ixLz6GYzpwD8ToyRG8tGy81egd7FX2bBR1
+
+```
+
+Here is the response: 
+
+```
+CID:    QmVu9BmEUHm5ixLz6GYzpwD8ToyRG8tGy81egd7FX2bBR1
+Name:   filename.txt
+Status: pinned
+```
+
+This should cause the file to show up on the Pinata website where you can confirm it was successfully uploaded to Pinata. 
+
+:::warning
+You can bypass the CLI altogether by uploading the files directly to the Pinata website. 
+
+When uploading directly to a pinning service they act as an intermediate to IPFS, no longer requiring you to upload the file through your own node. This gives up various other capabilities you may get with hosting a node.
+
+This can work, but does not guarantee a local pinned copy. If you decide to go this route we recommend having a file backup. 
+
+:::
+
+You can find more commands around pinning in the [Pinata documentation](https://docs.pinata.cloud/pinata-api/pinning-services-api#configuring-pinata-in-the-ipfs-cli). 
+
+Pinata is just one of many pinning services. Others include Filebase, Infura, and NFT.storage.
+
+### Linking to an IPFS File
+
+In order to get a URL to an IPFS file you need a gateway. A **gateway** provides an http-based view of IPFS allowing files to be retrieved over the internet. 
+
+There are many gateway providers (there's a good chance your pinning service offers a gateway, too).
+
+We can access our file directly through the Pinata gateway:
+
+```
+https://gateway.pinata.cloud/ipfs/<CID>
+```
+
+Using any IPFS CID you can create sharable links: [https://gateway.pinata.cloud/ipfs/QmVu9BmEUHm5ixLz6GYzpwD8ToyRG8tGy81egd7FX2bBR1](https://gateway.pinata.cloud/ipfs/QmVu9BmEUHm5ixLz6GYzpwD8ToyRG8tGy81egd7FX2bBR1).
+
+You can access the same CID through the [CloudFlare gateway](
+https://cloudflare-ipfs.com/ipfs/QmVu9BmEUHm5ixLz6GYzpwD8ToyRG8tGy81egd7FX2bBR1).
+
+
+### IPFS vs Filecoin
+
+:::warning
+Even while using an IPFS pinning service you're not guaranteed file permanence. You're guaranteed permanence _as long_ as your file stays pinned. This requires some trust that a pinning service doesn't shut down or remove your file. To mitigate this, I'd consider using multiple pinning services and keeping a local backup, as well. 
+
+If you're still not convinced, you can use Filecoin to further incentivize others to keep your files.
+:::
+
+Built on top of IPFS, Filecoin is the incentivization layer to encourage users to host files. By offering computer hardware for file storage, miners are rewarded the Filecoin cryptocurrency. 
+
+When hosting a file with Filecoin, you agree to a storage deal where an amount is paid for a file to be hosted for a period of time. This allows you to remove trust away from only centralized pinning services to instead trust the decentralized Filecoin protocol which penalizes dishonorable storage providers.
+
+Think of IPFS as the technology for file hosting and sharing and Filecoin as an additional long-term file solution beyond IPFS pinning. Read more about the [differences between IPFS and Filecoin](https://docs.filecoin.io/about-filecoin/ipfs-and-filecoin/).
+
+## Arweave
+
+What if we could confidently upload a file knowing it will permanent? This is the goal of Arweave. Acting as a permanent hard drive, Arweave allows for files hosted with URLs that should never change or expire. 
+
+While Filecoin is built upon a pricing system requiring ongoing fees for storage, Arweave requires a fee just once to permanently store a file. Arweave miners must not only host new files but also refer to existing files (proving they still have them) in order to be rewarded. 
+
+### Uploading to Ardrive
+
+To start uploading files on Arweave we will use [Ardrive](https://ardrive.io/start/).
+
+But first, you'll need a wallet and some Arweave cryptocurrency. You can use the [ArConnect wallet](https://www.arconnect.io/) and the [Arweave faucet](https://faucet.arweave.net/). The faucet gives a fairly decent amount of Arweave, but requires verification through Twitter. As you go through the faucet you will receive a `.json` file which represents your wallet ownership. This can be imported in the wallet software to view your balance and transactions. 
+
+Next, [signing up for Ardrive](https://app.ardrive.io/#/sign-in) requires the uploading of your wallet file. 
+
+Upon uploading a file, you will see a `pending` callout over the image icon. After some time, this orange circle will turn green and display `confirmed`. 
+
+Once confirmed, you can share the file with others and get a direct link to this public, permanent file!
+
+## Traditional Cloud Storage
+
+I use the term _traditional_ here simply to mean non-decentralized cloud storage. This can be a viable option and is probably more familiar to many. 
+
+You want to be confident in the integrity of your NFT image and metadata. If using a service like AWS S3 helps with this, do it. Just be sure the link will stay public and permanent. This can however remove the decentralized aspect of your NFT and potentially hurt the NFT's reputation, so I suggest also using at least one decentralized storage option such as Arweave. 
+
+Remember, multiple URLs can be provided for an NFT image or metadata. The more redundant, the better!
+
+## Adding URLs
+
+It is possible to prepend new URLs to an NFT in Chia. This is another transaction, so its recommended you set it up to the best of your ability from the start. Additionally, once an NFT is transferred or sold, it's the new owners responsibility to maintain the integrity of the NFT. If you're creating a collection, you want to be confident you have it set up good from the start. Once the NFT leaves your hand, you won't be able to add any URLs.
+
+:::note
+It's not guaranteed which URL will be used by NFT viewers to display the data. Updating the URL list does not guarantee proper display in an NFT explorer. 
+:::
+
+Any questions or storage suggestions can be directed to the #NFT channel in the [official chia Keybase](https://keybase.io/team/chia_network.public). 
