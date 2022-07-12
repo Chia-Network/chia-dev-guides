@@ -6,7 +6,7 @@ title: Condition Morphing
 
 You've seen how you can use inner puzzles to output conditions and append them to the output of the outer puzzle. However, sometimes you want to change the output of the inner puzzle to enforce certain rules. This is called **condition morphing**.
 
-An example of this is the singleton, which turns every coin its inner puzzle creates with an odd output into an inner puzzle of itself. It changes the puzzle in the condition to the singleton with the original puzzle as its new inner puzzle. This can be a bit confusing to think about, but it allows for many things such as keeping track of state.
+An example of this is the singleton - every coin that its inner puzzle creates which has an odd output, is turned into an inner puzzle of itself. It changes the puzzle in the condition to the singleton with the original puzzle as its new inner puzzle. This can be a bit confusing to think about, but it allows for many things such as keeping track of state.
 
 ## Example
 
@@ -15,7 +15,7 @@ Let's try a simpler example of condition morphing that doubles the amount of cre
 Write the following in a file named `coin-doubler.clsp`:
 
 ```chialisp title="coin-double.clsp"
-; Using the dot here means that the inner solution is the rest of the parameters. This avoids the need to nest parenthesis.
+; Using the dot here means that the inner solution is the rest of the parameters. This avoids the need to nest parentheses.
 (mod (INNER_PUZZLE . inner_solution)
 
     ; Doubles the amount of CREATE_COIN conditions.
@@ -90,7 +90,7 @@ Retrieve the libraries used in this example:
 cdv clsp retrieve condition_codes sha256tree
 ```
 
-Similar to the inner puzzle in the last guide, this allows the spender to pick any conditions. However, it also requires a signature. It's essentially the inner and outer puzzle from that example combined.
+Similarly to [the example in the Inner Puzzles guide](/guides/chialisp-inner-puzzles#inner-puzzle), this allows the spender to pick any conditions. However, it also requires a signature. It's essentially the inner and outer puzzle from that example combined.
 
 ### Public Key
 
@@ -132,4 +132,4 @@ Now the inner puzzle and outer puzzle have been combined together.
 
 ## Conclusion
 
-This combined puzzle would allow you to spend coins created with it with your public key, but any create coin conditions have their amounts doubled in the output. Feel free to ask questions you may have on our [Keybase](https://keybase.io/team/chia_network.public).
+This combined puzzle would allow you to spend coins created with it with your public key, but any create coin conditions would have their amounts doubled in the output. Feel free to ask questions you may have on our [Keybase](https://keybase.io/team/chia_network.public).

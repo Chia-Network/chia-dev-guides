@@ -12,12 +12,12 @@ This is typically used in combination with a variety of other concepts, which we
 
 ## Example
 
-We're going to write a simple example to try inner puzzles on the command-line.
+We're going to write a simple example to try inner puzzles on the command line.
 
 Write this in a file named `require-signature.clsp`:
 
 ```chialisp title="require-signature.clsp"
-; Using the dot here means that the inner solution is the rest of the parameters. This avoids the need to nest parenthesis.
+; Using the dot here means that the inner solution is the rest of the parameters. This avoids the need to nest parentheses.
 (mod (PUBLIC_KEY INNER_PUZZLE . inner_solution)
     (include condition_codes.clib)
     (include sha256tree.clib)

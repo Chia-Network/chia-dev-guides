@@ -10,7 +10,7 @@ An example of this is the standard transaction puzzle. One of its parameters is 
 
 ## Example
 
-We're going to write a simple example to try currying on the command-line.
+We're going to write a simple example to try currying on the command line.
 
 Write this in a file named `multiply.clsp`:
 
@@ -38,7 +38,7 @@ Which should produce the following curried result:
 
 This is no longer in Chialisp form, but rather CLVM. You don't need to understand how this works or be able to read it, just that it does what was mentioned before.
 
-You can now run this curried CLVM with the value to double like so:
+You can now run this curried CLVM, and include the value to be doubled as the second parameter, like so:
 
 ```bash
 brun "(a (q 18 2 5) (c (q . 2) 1))" "(5)"
@@ -64,13 +64,13 @@ Which should produce the following curried result:
 (a (q 18 2 5) (c (q . 5) 1))
 ```
 
-This will do the same thing as the other one, except this time multiply by `5` instead of `2`.
+This will do the same thing as the previous curried program, except it will multiply by `5` instead of by `2`.
 
 ## Convention
 
-In the previous example, we curried a program that wasn't explicitly designed to be curried like that. However, often times (especially with puzzles), you will be required to curry the value beforehand to use it properly. To indicate that a parameter is meant to be curried in, you write it in `SCREAMING_SNAKE_CASE`.
+In the previous example, we curried a value into a program, but the program did not declare that this was required. However, often times (especially with puzzles), you will be required to curry the value beforehand to use it properly. To indicate that a parameter is meant to be curried in, you write it in `SCREAMING_SNAKE_CASE`.
 
-Lets rewrite the previous example with this convention:
+Let's rewrite the previous example with this convention:
 
 ```chialisp title="multiply.clsp"
 (mod (FIRST second)
