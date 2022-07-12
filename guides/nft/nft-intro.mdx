@@ -500,3 +500,70 @@ In theory you can use any hosting site to host your NFT images. However, do make
 Certain decentralized services such as IPFS can be slow. The first time a user attempts to view an NFT in their wallet (before caching), it might take a long time to load.
 
 Chia NFTs use a list to store image URIs, so it is possible to add multiple locations to increase permanance. However, do make sure each image's hash is the same as the data hash.
+
+## How to make an offer for an NFT
+
+The CLI commands for NFT offers are almost the same as [those for CAT offers](https://chialisp.com/docs/tutorials/offers_cli_tutorial#create-a-single-token-offer). The main difference is that you have to include the NFT singleton's value after the NFT ID (typically this is `:1`). For example, to make an offer, you can run:
+
+`chia wallet make_offer -o 1:0.1 -r nft1g5gzj3hl9gdyrq83zveepf8wmeet8mxl8zutfyahs0wfkg9mcs9qepc4w5:1 -p test.offer -m 0.001`
+
+The result is:
+```
+Creating Offer
+--------------
+
+OFFERING:
+  - 0.1 XCH (100000000000 mojos)
+REQUESTING:
+  - 1 nft1g5gzj3hl9gdyrq83zveepf8wmeet8mxl8zutfyahs0wfkg9mcs9qepc4w5 (1 mojos)
+Offers for NFTs will have royalties automatically added.  Are you sure you would like to continue? (y/n): y
+Confirm (y/n): y
+Created offer with ID 55314ee65db39c173de05873138440c48525eac39fd4a622fd766b3bb4ab02ff
+Use chia wallet get_offers --id 55314ee65db39c173de05873138440c48525eac39fd4a622fd766b3bb4ab02ff -f 2118200991 to view status
+```
+
+To view your new offer, run the `get_offers` command that was output upon the offer's creation. Using the above example:
+
+`chia wallet get_offers --id 55314ee65db39c173de05873138440c48525eac39fd4a622fd766b3bb4ab02ff -f 2118200991`
+
+The result is:
+
+```
+Record with id: 55314ee65db39c173de05873138440c48525eac39fd4a622fd766b3bb4ab02ff
+---------------
+Created at: 2022-07-12 11:27:17
+Confirmed at: 0
+Accepted at: N/A
+Status: PENDING_ACCEPT
+---------------
+```
+
+## How to take an offer for an NFT
+
+Continuing with the previous example, we can run the `take_offer` command from the wallet that owns the NFT:
+
+```
+chia wallet take_offer test.offer
+Summary:
+  OFFERED:
+    - XCH (Wallet ID: 1): 0.1 (100000000000 mojos)
+  REQUESTED:
+    - 45102946ff2a1a4180f1133390a4eede72b3ecdf38b8b493b783dc9b20bbc40a: 0.001 (1 mojo)
+Included Fees: 0.001
+Would you like to take this offer? (y/n): y
+Accepted offer with ID 11abdc8b7bb241303d2f0c909860785e0e09a842fb6178bdf6527c99e37f3d35
+Use chia wallet get_offers --id 11abdc8b7bb241303d2f0c909860785e0e09a842fb6178bdf6527c99e37f3d35 -f 757927417 to view its status
+```
+
+Use the suggested command to view the offer's status:
+
+```
+chia wallet get_offers --id 11abdc8b7bb241303d2f0c909860785e0e09a842fb6178bdf6527c99e37f3d35 -f 757927417
+
+Record with id: 11abdc8b7bb241303d2f0c909860785e0e09a842fb6178bdf6527c99e37f3d35
+---------------
+Created at: 2022-07-12 11:41:50
+Confirmed at: 1241919
+Accepted at: 2022-07-12 11:41:50
+Status: CONFIRMED
+```
