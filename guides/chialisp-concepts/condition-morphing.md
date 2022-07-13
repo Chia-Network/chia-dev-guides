@@ -90,7 +90,9 @@ Retrieve the libraries used in this example:
 cdv clsp retrieve condition_codes sha256tree
 ```
 
+:::info
 Similarly to [the example in the Inner Puzzles guide](/guides/chialisp-inner-puzzles#inner-puzzle), this allows the spender to pick any conditions. However, it also requires a signature. It's essentially the inner and outer puzzle from that example combined.
+:::
 
 ### Public Key
 

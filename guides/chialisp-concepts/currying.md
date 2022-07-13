@@ -36,7 +36,9 @@ Which should produce the following curried result:
 (a (q 18 2 5) (c (q . 2) 1))
 ```
 
-This is no longer in Chialisp form, but rather CLVM. You don't need to understand how this works or be able to read it, just that it does what was mentioned before.
+:::info
+This is no longer in Chialisp form, but rather has been compiled to CLVM. You don't need to understand how this works or be able to read it, but only be aware that it does what was mentioned before.
+:::
 
 You can now run this curried CLVM, and include the value to be doubled as the second parameter, like so:
 

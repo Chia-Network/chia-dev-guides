@@ -55,7 +55,9 @@ Write this in a file named `any-conditions.clsp`:
 )
 ```
 
+:::info
 This is an exceedingly simple puzzle that just returns any conditions passed into the solution. It is insecure on its own, as it allows anyone to spend it however they want.
+:::
 
 ### Public Key
 
