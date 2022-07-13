@@ -18,7 +18,14 @@ const sidebars = {
       type: "category",
       label: "Chialisp Primer",
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
+      link: {
+        type: "generated-index",
+        slug: "/chialisp-primer",
+        title: "Chialisp Primer",
+        description:
+          "This guide will teach you the basics of Chialisp, a smart coin language used on the Chia blockchain. You will learn the skills required to write basic programs that can dictate how and when coins (including XCH) can be spent.",
+      },
       items: [
         "chialisp-primer/chialisp-primer-intro",
         "chialisp-primer/chialisp-primer-using-modules",
@@ -31,7 +38,14 @@ const sidebars = {
       type: "category",
       label: "Chialisp Concepts",
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
+      link: {
+        type: "generated-index",
+        slug: "/chialisp-concepts",
+        title: "Chialisp Concepts",
+        description:
+          "This guide introduces some key Chialisp concepts. Understanding these concepts will enable you to write Chialisp programs more easily.",
+      },
       items: [
         "chialisp-concepts/chialisp-concepts-currying",
         "chialisp-concepts/chialisp-concepts-inner-puzzles",

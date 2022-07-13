@@ -1,7 +1,7 @@
 ---
 id: chialisp-primer-using-modules
 slug: /chialisp-using-modules
-title: Using Modules
+title: 2. Using Modules
 ---
 
 Up to this point, you have written single expressions and evaluated them on the command-line. However, sometimes you want to split your code into multiple functions or include common libraries. In order to do things like that, you will need to understand what modules are.

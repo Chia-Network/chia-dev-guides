@@ -1,7 +1,7 @@
 ---
 id: chialisp-primer-testnet-setup
 slug: /chialisp-testnet-setup
-title: Testnet Setup
+title: 3. Testnet Setup
 ---
 
 If you haven't already, you will need to [clone the Chia Blockchain repository](https://github.com/Chia-Network/chia-blockchain), then follow the below steps to set it up and configure it for the testnet.
