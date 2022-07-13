@@ -1,7 +1,7 @@
 ---
 id: chialisp-primer-bls-signatures
 slug: /chialisp-bls-signatures
-title: BLS Signatures
+title: 5. BLS Signatures
 ---
 
 When creating a spend bundle previously, we have left the `aggregated_signature` field set to the default value of `c0` followed by 190 zeros. This value indicates that there are no signatures. We will detail what signatures are, and how you can use them on the blockchain.
