@@ -1,0 +1,27 @@
+name: Deploy to Pages on trunk
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    container: node:18-alpine
+    steps:
+    - name: "Install deps"
+      run: |
+        apk add python3 make g++ git
+
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: "yarn deps"
+      run: |
+        yarn
+
+    - name: "yarn build"
+      run: |
+        yarn build
