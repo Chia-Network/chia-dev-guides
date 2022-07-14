@@ -1,4 +1,4 @@
-name: Deploy to Pages on trunk
+name: Build non-trunk
 
 on:
   push:
@@ -22,8 +22,6 @@ jobs:
       run: |
         yarn
 
-    - name: "yarn deploy"
+    - name: "yarn build"
       run: |
-        git config --global user.name 'ChiaAutomation'
-        git config --global user.email 'automation@chia.net'
-        GIT_USER=ChiaAutomation GIT_PASS=${{ github.token }} yarn deploy
+        yarn build
