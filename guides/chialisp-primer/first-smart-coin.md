@@ -1,7 +1,7 @@
 ---
 id: chialisp-primer-first-smart-coin
 slug: /chialisp-first-smart-coin
-title: First Smart Coin
+title: 4. First Smart Coin
 ---
 
 By now, you should understand what Chialisp is and how you can use it to write programs and modules that can be run on the command-line. In this guide, we are going to write a simple **puzzle**, use it to lock a **coin** with a password, and finally spend it. This example is insecure for a variety of reasons which will be explained after, but it's a good tool for learning how smart coins work.

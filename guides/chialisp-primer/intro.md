@@ -1,7 +1,7 @@
 ---
 id: chialisp-primer-intro
 slug: /
-title: Intro to Chialisp
+title: 1. Intro to Chialisp
 ---
 
 [Chialisp](https://chialisp.com) is a language based on [Lisp](<https://en.wikipedia.org/wiki/Lisp_(programming_language)>) that is used on the Chia blockchain to dictate how and when [coins](https://docs.chia.net/docs/01introduction/chia-system-overview#coins-and-transactions) can be spent. It's designed to be as simple and efficient as possible, but still provide broad functionality and [Turing Completeness](https://en.wikipedia.org/wiki/Turing_completeness).
