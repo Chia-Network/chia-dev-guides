@@ -25,17 +25,17 @@ Also, make sure to use a wallet fingerprint that has enough XCH to pay for trans
 
 :::danger Warning
 
-v1.4.0 of the Chia client uses the terms *editions* and *series* inconsistently. It's important to understand the meaning before using these flags.
+v1.4.0 of the Chia client uses the terms _editions_ and _series_ inconsistently. It's important to understand the meaning before using these flags.
 
-***Editions*** of an NFT refer to multiple identical copies of the same data (usually an image). For example, if an NFT is edition 1 of 5, this means there will be 5 NFTs with the same identical data, and this is the first.
+**_Editions_** of an NFT refer to multiple identical copies of the same data (usually an image). For example, if an NFT is edition 1 of 5, this means there will be 5 NFTs with the same identical data, and this is the first.
 
-***Series*** of an NFT refers to a sequence or ordering of unique NFTs (i.e. not identical copies). Often the entirety of a collection will be a single sequence. For example, the first NFT in a collection of 100 NFTs will be series number 1 of 100; the second NFT will be series number 2 of 100; etc.
+**_Series_** of an NFT refers to a sequence or ordering of unique NFTs (i.e. not identical copies). Often the entirety of a collection will be a single sequence. For example, the first NFT in a collection of 100 NFTs will be series number 1 of 100; the second NFT will be series number 2 of 100; etc.
 
-In Chia, the **edition** of an NFT is stored on chain, but in v1.4.0 of the Chia client, this was mistakenly referred to as the series in several places. In v1.4.1, this will be rectified and made consistent throughout the RPCs, CLI and GUI.
+In Chia, the **edition** of an NFT is stored on chain, but in v1.4.0 of the Chia client, this was mistakenly referred to as the series in several places. In v1.5, this has been rectified and made consistent throughout the RPCs, CLI and GUI.
 
-If you are using v1.4.0, you can continue to use the `series_number` and `series_total` parameters, but be aware that these refer to the **edition number** and **edition total number** respectively.
+If you are using v1.4.0, you can continue to use the `edition_number` and `edition_total` parameters, but be aware that these refer to the **edition number** and **edition total number** respectively.
 
-To attach a series number to your NFT, you can include this information in the off-chain metadata file. This could be done through a custom field for the series, or a common practice is to include the series number in the NFT name e.g. *Chia Friends #1*, *Chia Friends #2*, etc.
+To attach a series number to your NFT, you can include this information in the off-chain metadata file. This could be done through a custom field for the series, or a common practice is to include the series number in the NFT name e.g. _Chia Friends #1_, _Chia Friends #2_, etc.
 
 :::
 
@@ -335,8 +335,8 @@ That should produce an output similar to this:
             "pending_transaction": false,
             "royalty_percentage": null,
             "royalty_puzzle_hash": null,
-            "series_number": 1,
-            "series_total": 1,
+            "edition_number": 1,
+            "edition_total": 1,
             "supports_did": false,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -357,14 +357,8 @@ The values used in these commands are specific to this guide. Change any values 
 You can mint your NFT with a DID like this:
 
 ```bash
-chia rpc wallet nft_mint_nft '{"wallet_id": 6, "uris": ["https://images.pexels.com/photos/1509582/pexels-photo-1509582.jpeg"], "hash": "0ebedcd2cda065c75132218f745cecc3a1c131927f70b192b3fe6bbebaf437c4", "meta_uris": ["https://pastebin.com/raw/BHZc1suk", "https://pastebin.com/raw/bnzGwjmB"], "meta_hash": "07cb3cc71732d1979abd357af86475e1e35f6c2b41ed2387b309e4b486a89a51", "license_uris": ["https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/LICENSE"], "license_hash": "30a358857da6b49f57cfe819c1ca43bfe007f528eb784df5da5cb64577e0ffc6", "royalty_address": "txch1ape36g8rn8fm7d53z8rvngjkwhlkr83p28vnrpha94zt25szh8aq6anp3y", "royalty_percentage": 175, "target_address": "txch1ezy69gr6gpmu5e3hvyrn07ls7gqrw66s93pt555xcw50x25a2g7q3l3f8m", "series_number": 1, "series_total": 5, "fee": 615000000}'
+chia rpc wallet nft_mint_nft '{"wallet_id": 6, "uris": ["https://images.pexels.com/photos/1509582/pexels-photo-1509582.jpeg"], "hash": "0ebedcd2cda065c75132218f745cecc3a1c131927f70b192b3fe6bbebaf437c4", "meta_uris": ["https://pastebin.com/raw/BHZc1suk", "https://pastebin.com/raw/bnzGwjmB"], "meta_hash": "07cb3cc71732d1979abd357af86475e1e35f6c2b41ed2387b309e4b486a89a51", "license_uris": ["https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/LICENSE"], "license_hash": "30a358857da6b49f57cfe819c1ca43bfe007f528eb784df5da5cb64577e0ffc6", "royalty_address": "txch1ape36g8rn8fm7d53z8rvngjkwhlkr83p28vnrpha94zt25szh8aq6anp3y", "royalty_percentage": 175, "target_address": "txch1ezy69gr6gpmu5e3hvyrn07ls7gqrw66s93pt555xcw50x25a2g7q3l3f8m", "edition_number": 1, "edition_total": 5, "fee": 615000000}'
 ```
-
-:::danger Warning
-
-`series_number` and `series_total` actually refer to the **edition** number and total number of **editions**, respectively. These parameters will be deprecated in v1.4.1. [See here for more info.](#editions-and-series)
-
-:::
 
 That should produce an output similar to this:
 
@@ -418,22 +412,22 @@ That should produce an output similar to this:
 
 Here is a description of the parameters used in the command:
 
-| Parameter            | Description                                                           |
-| -------------------- | --------------------------------------------------------------------- |
-| "wallet_id"          | The ID of your NFT wallet.                                            |
-| "uris"               | A list of URIs containing the image.                                  |
-| "hash"               | The hash of the image.                                                |
-| "fee"                | The transaction fee.                                                  |
-| "did_id"             | The DID associated with the NFT.                                      |
-| "meta_uris"          | A list of URIs containing the metadata.                               |
-| "meta_hash"          | The hash of the metadata.                                             |
-| "license_uris"       | A list of URIs containing the license.                                |
-| "license_hash"       | The hash of the license.                                              |
-| "royalty_address"    | The wallet or smart coin address of the creator.                      |
-| "royalty_percentage" | The royalty percentage expressed as tens of thousandths of a percent. |
-| "target_address"     | The address of the owner.                                             |
-| "series_number" [(WARNING)](#editions-and-series) | If this NFT has multiple **editions** (multiple identical copies of an NFT), then this parameter indicates the edition number of this NFT. |
-| "series_total" [(WARNING)](#editions-and-series) | If this NFT has multiple **editions**, then this parameter indicates the total number of editions of this NFT. This parameter should be used if and only if the `series_number` parameter was also used |
+| Parameter                                          | Description                                                                                                                                                                                              |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| "wallet_id"                                        | The ID of your NFT wallet.                                                                                                                                                                               |
+| "uris"                                             | A list of URIs containing the image.                                                                                                                                                                     |
+| "hash"                                             | The hash of the image.                                                                                                                                                                                   |
+| "fee"                                              | The transaction fee.                                                                                                                                                                                     |
+| "did_id"                                           | The DID associated with the NFT.                                                                                                                                                                         |
+| "meta_uris"                                        | A list of URIs containing the metadata.                                                                                                                                                                  |
+| "meta_hash"                                        | The hash of the metadata.                                                                                                                                                                                |
+| "license_uris"                                     | A list of URIs containing the license.                                                                                                                                                                   |
+| "license_hash"                                     | The hash of the license.                                                                                                                                                                                 |
+| "royalty_address"                                  | The wallet or smart coin address of the creator.                                                                                                                                                         |
+| "royalty_percentage"                               | The royalty percentage expressed as tens of thousandths of a percent.                                                                                                                                    |
+| "target_address"                                   | The address of the owner.                                                                                                                                                                                |
+| "edition_number" [(WARNING)](#editions-and-series) | If this NFT has multiple **editions** (multiple identical copies of an NFT), then this parameter indicates the edition number of this NFT.                                                               |
+| "edition_total" [(WARNING)](#editions-and-series)  | If this NFT has multiple **editions**, then this parameter indicates the total number of editions of this NFT. This parameter should be used if and only if the `edition_number` parameter was also used |
 
 Wait a few minutes for your NFT to be confirmed on the blockchain.
 
@@ -471,8 +465,8 @@ That should produce an output similar to this:
             "pending_transaction": false,
             "royalty_percentage": 175,
             "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
-            "series_number": 1,
-            "series_total": 5,
+            "edition_number": 1,
+            "edition_total": 5,
             "supports_did": true,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -526,8 +520,8 @@ That should produce an output similar to this:
             "pending_transaction": false,
             "royalty_percentage": 175,
             "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
-            "series_number": 1,
-            "series_total": 5,
+            "edition_number": 1,
+            "edition_total": 5,
             "supports_did": true,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -570,8 +564,8 @@ That should produce an output similar to this:
         "pending_transaction": false,
         "royalty_percentage": 175,
         "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
-        "series_number": 1,
-        "series_total": 5,
+        "edition_number": 1,
+        "edition_total": 5,
         "supports_did": true,
         "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
     },
@@ -907,8 +901,8 @@ That should produce an output similar to this:
             "pending_transaction": false,
             "royalty_percentage": null,
             "royalty_puzzle_hash": null,
-            "series_number": 1,
-            "series_total": 1,
+            "edition_number": 1,
+            "edition_total": 1,
             "supports_did": false,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -954,8 +948,8 @@ That should produce an output similar to this:
             "pending_transaction": false,
             "royalty_percentage": 175,
             "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
-            "series_number": 1,
-            "series_total": 5,
+            "edition_number": 1,
+            "edition_total": 5,
             "supports_did": true,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -1091,8 +1085,8 @@ That should produce an output similar to this:
             "pending_transaction": false,
             "royalty_percentage": null,
             "royalty_puzzle_hash": null,
-            "series_number": 1,
-            "series_total": 1,
+            "edition_number": 1,
+            "edition_total": 1,
             "supports_did": false,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         },
@@ -1121,8 +1115,8 @@ That should produce an output similar to this:
             "pending_transaction": false,
             "royalty_percentage": 175,
             "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
-            "series_number": 1,
-            "series_total": 5,
+            "edition_number": 1,
+            "edition_total": 5,
             "supports_did": true,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
