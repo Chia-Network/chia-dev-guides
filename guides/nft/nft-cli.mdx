@@ -16,21 +16,6 @@ Also, make sure to use a wallet fingerprint that has enough XCH to pay for trans
 
 :::
 
-## Editions and Series
-:::danger Warning
-v1.4.0 of the Chia client uses the terms *editions* and *series* inconsistently. It's important to understand the meaning before using these flags.
-
-***Editions*** of an NFT refer to multiple identical copies of the same data (usually an image). For example, if an NFT is edition 1 of 5, this means there will be 5 NFTs with the same identical data, and this is the first.
-
-***Series*** of an NFT refers to a sequence or ordering of unique NFTs (i.e. not identical copies). Often the entirety of a collection will be a single sequence. For example, the first NFT in a collection of 100 NFTs will be series number 1 of 100; the second NFT will be series number 2 of 100; etc.
-
-In Chia, the **edition** of an NFT is stored on chain, but in v1.4.0 of the Chia client, this was mistakenly referred to as the series in several places. In v1.4.1, this will be rectified and made consistent throughout the RPCs, CLI and GUI.
-
-If you are using v1.4.0, you can continue to use the `-sn` and `-st` flags, but be aware that these refer to the **edition number** and **edition total number** respectively.
-
-To attach a series number to your NFT, you can include this information in the off-chain metadata file. This could be done through a custom field for the series, or a common practice is to include the series number in the NFT name e.g. *Chia Friends #1*, *Chia Friends #2*, etc.
-:::
-
 ## Create a DID Wallet
 
 An NFT wallet has the option of being associated with a DID. In this section, we'll create a new DID. Later we'll create two NFT wallets -- one that is associated with a DID and one that is not.
@@ -270,23 +255,25 @@ NFT minted Successfully with spend bundle:
 
 Here is a description of the options used:
 
-| Option               | Description                                                             |
-| -------------------- | ----------------------------------------------------------------------- |
-| `-i`                 | The id of your NFT wallet.                                              |
-| `-u`                 | A comma-separated list of URIs where this image may be found.           |
-| `-nh`                | The NFT's data hash. Must match to be viewable in the wallet.           |
-| `-f`                 | The fingerprint of the wallet.                                          |
-| `-ra`                | The wallet or smart coin address that will receive royalties.           |
-| `-ta`                | The wallet or smart coin address where the NFT will be sent.            |
-| `-mu`                | A comma-separated list of URIs where the image's metadata may be found. |
-| `-mh`                | The hash of the NFT's metadata.                                         |
-| `-lu`                | A comma-separated list of URIs where the image's license may be found.  |
-| `-lh`                | The hash of the NFT's license.                                          |
-| `-sn` [(WARNING)](#editions-and-series) | The **edition** number. Specify if this NFT has multiple editions (multiple identical copies of an NFT). [default: 1]                                         |
-| `-st` [(WARNING)](#editions-and-series) | The **edition** total number. Specify if this NFT has multiple editions. [default: 1]                                |
-| `-rp`                | The royalty percentage expressed as tens of thousandths of a percent.   |
-| `--no-did-ownership` | Disables DID ownership.                                                 |
-| `-m`                 | The fee for this transaction in XCH.                                    |
+| Option               | Description                                                                                          |
+| -------------------- | ---------------------------------------------------------------------------------------------------- |
+| `-i`                 | The id of your NFT wallet.                                                                           |
+| `-u`                 | A comma-separated list of URIs where this image may be found.                                        |
+| `-nh`                | The NFT's data hash. Must match to be viewable in the wallet.                                        |
+| `-f`                 | The fingerprint of the wallet.                                                                       |
+| `-ra`                | The wallet or smart coin address that will receive royalties.                                        |
+| `-ta`                | The wallet or smart coin address where the NFT will be sent.                                         |
+| `-mu`                | A comma-separated list of URIs where the image's metadata may be found.                              |
+| `-mh`                | The hash of the NFT's metadata.                                                                      |
+| `-lu`                | A comma-separated list of URIs where the image's license may be found.                               |
+| `-lh`                | The hash of the NFT's license.                                                                       |
+| -sn (deprecated)     | Beginning in Chia version 1.5, please use `en` (`edition-number`) instead.                           |
+| -st (deprecated)     | Beginning in Chia version 1.5, please use `ec` (`edition-count`) instead.                            |
+| -en                  | The edition number. Specify if this NFT has multiple editions (multiple identical copies of an NFT). |
+| -ec                  | The edition total number. Specify if this NFT has multiple editions.                                 |
+| `-rp`                | The royalty percentage expressed as tens of thousandths of a percent.                                |
+| `--no-did-ownership` | Disables DID ownership.                                                                              |
+| `-m`                 | The fee for this transaction in XCH.                                                                 |
 
 If successful, you will receive a JSON output, including the coin additions and removals involved in minting the NFT, as well as the spend bundle that was used.
 
