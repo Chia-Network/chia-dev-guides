@@ -1,31 +1,31 @@
-const lightTheme = require("./src/theme/prism-light-theme-chialisp");
-const darkTheme = require("./src/theme/prism-dark-theme-chialisp");
+const lightTheme = require('./src/theme/prism-light-theme-chialisp');
+const darkTheme = require('./src/theme/prism-dark-theme-chialisp');
 
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Chia Dev Guides",
-  tagline: "Resources for developers onboarding to Chia.",
-  url: "https://devs.chia.net",
-  baseUrl: "/",
-  onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
-  favicon: "img/chia_leaf_green.svg",
+  title: 'Chia Dev Guides',
+  tagline: 'Resources for developers onboarding to Chia.',
+  url: 'https://devs.chia.net',
+  baseUrl: '/',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
+  favicon: 'img/chia_leaf_green.svg',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "Chia-Network", // Usually your GitHub org/user name.
-  projectName: "chia-dev-guides", // Usually your repo name.
+  organizationName: 'Chia-Network', // Usually your GitHub org/user name.
+  projectName: 'chia-dev-guides', // Usually your repo name.
   themes: [
     [
-      "@easyops-cn/docusaurus-search-local",
+      '@easyops-cn/docusaurus-search-local',
       {
         hashed: true,
-        language: ["en"],
+        language: ['en'],
         highlightSearchTermsOnTargetPage: true,
-        docsRouteBasePath: "/"
+        docsRouteBasePath: '/',
       },
     ],
   ],
@@ -34,25 +34,25 @@ const config = {
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: "en",
-    locales: ["en"],
+    defaultLocale: 'en',
+    locales: ['en'],
   },
 
   presets: [
     [
-      "classic",
+      'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/Chia-Network/chia-dev-guides/edit/main/",
-          path: "guides",
-          routeBasePath: "guides",
+          editUrl: 'https://github.com/Chia-Network/chia-dev-guides/edit/main/',
+          path: 'guides',
+          routeBasePath: 'guides',
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
+          customCss: require.resolve('./src/css/custom.css'),
         },
       }),
     ],
@@ -62,67 +62,67 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "Dev Guides",
+        title: 'Dev Guides',
         logo: {
-          alt: "Chialisp Logo",
-          src: "img/chia_leaf_green.svg",
-          href: "/guides",
+          alt: 'Chialisp Logo',
+          src: 'img/chia_leaf_green.svg',
+          href: '/guides',
           width: 45,
         },
         items: [
           {
-            href: "https://docs.chia.net",
-            label: "Chia Docs",
+            href: 'https://docs.chia.net',
+            label: 'Chia Docs',
           },
           {
-            href: "https://chialisp.com/",
-            label: "Chialisp",
+            href: 'https://chialisp.com/',
+            label: 'Chialisp',
           },
           {
-            href: "https://github.com/Chia-Network/chia-dev-guides",
-            label: "GitHub",
-            position: "right",
+            href: 'https://github.com/Chia-Network/chia-dev-guides',
+            label: 'GitHub',
+            position: 'right',
           },
         ],
       },
       footer: {
         links: [
           {
-            title: "Guides",
+            title: 'Guides',
             items: [
               {
-                label: "Chialisp Primer",
-                to: "/guides",
+                label: 'Chialisp Primer',
+                to: '/guides',
               },
               {
-                label: "NFT Developer Guide",
-                to: "/guides/nft-developer-guide",
+                label: 'NFT Developer Guide',
+                to: '/guides/nft-developer-guide',
               },
             ],
           },
           {
-            title: "Community",
+            title: 'Community',
             items: [
               {
-                label: "Keybase",
-                href: "https://keybase.io/team/chia_network.public",
+                label: 'Keybase',
+                href: 'https://keybase.io/team/chia_network.public',
               },
               {
-                label: "Chia Devs Forum",
-                href: "https://developers.chia.net/",
+                label: 'Chia Devs Forum',
+                href: 'https://developers.chia.net/',
               },
               {
-                label: "Twitter",
-                href: "https://twitter.com/chia_project",
+                label: 'Twitter',
+                href: 'https://twitter.com/chia_project',
               },
             ],
           },
           {
-            title: "More",
+            title: 'More',
             items: [
               {
-                label: "GitHub",
-                href: "https://github.com/Chia-Network/chia-blockchain",
+                label: 'GitHub',
+                href: 'https://github.com/Chia-Network/chia-blockchain',
               },
             ],
           },
@@ -132,12 +132,12 @@ const config = {
       prism: {
         theme: lightTheme,
         darkTheme: darkTheme,
-        additionalLanguages: ["json"],
+        additionalLanguages: ['json'],
       },
     }),
   customFields: {
-    landingTitle: "Chia Dev Guides",
-    landingTagline: "Resources for Chia Developers",
+    landingTitle: 'Chia Dev Guides',
+    landingTagline: 'Resources for Chia Developers',
   },
 };
 
