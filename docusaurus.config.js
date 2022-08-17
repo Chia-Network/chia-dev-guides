@@ -66,7 +66,7 @@ const config = {
         logo: {
           alt: 'Chialisp Logo',
           src: 'img/chia_leaf_green.svg',
-          href: '/guides',
+          href: '/guides/chialisp-intro',
           width: 45,
         },
         items: [
