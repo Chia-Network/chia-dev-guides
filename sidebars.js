@@ -80,6 +80,20 @@ const sidebars = {
       },
       items: ['cat/cat-creation-tutorial'],
     },
+    {
+      type: 'category',
+      label: 'Chia Crash Course',
+      collapsible: true,
+      collapsed: false,
+      link: {
+        type: 'generated-index',
+        slug: '/crash-course',
+        title: 'Crash Course',
+        description:
+          'These lessons will guide you through the essentials of Chia.',
+      },
+      items: ['course/course-introduction'],
+    },
   ],
 };
 
