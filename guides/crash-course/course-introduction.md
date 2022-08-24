@@ -11,6 +11,36 @@ Once you understand the basics, we'll learn about plotting and farming. Next, we
 Chialisp is Chia's on-chain programming language for writing custom coins. If you want to skip ahead to development, see [this course's intro to Chialisp](#).
 :::
 
+## Intro to Chia
+
+The goal of cryptocurrency is to transfer value peer-to-peer. This means that there is no centralized intermediary to facilitate the transaction. Instead, blockchain relies on a network of nodes to confirm transactions according to some rules. Additionally, cryptocurrency makes the exchange of value extremely fast and easy, even if the transaction is cross-border.
+
+Cryptocurrency is more than digital currency. We are seeing many projects pop up that are designed as decentralized applications, or **dApps**. The value of a cryptocurrency is not only in its ability to be used for buying and selling goods, but that it can be used as a tool to secure a blockchain that designed to avoid centralized authority.
+
+Each person who runs a chia blockchain node runs a full copy of the software and is required to adhere to the consensus algorithm. This allows for peer-to-peer transactions confirmed against an entire network of nodes as opposed to a centralized authority.
+
+### Consensus
+
+As new transactions are added to the network, full nodes must confirm these transactions. For a decentralized network to work, every node must be in agreement with every other node. This means they must follow the same rules.
+
+The rules are known as the **consensus** and are rules defined in the software every node must adhere to.
+
+Chia follows a consensus mechanism (algorithm, protocol) known as **Proof of Space and Time**. The way it works is by utilizing hard drive space as your contribution to the network.
+
+Chia is intentionally different than networks that use proof-of-stake, which many argue has a centralizing effect of the network as the number of decision-making nodes can be few. Chia, on the other hand, has over 350,000 full nodes all following the PoST consensus mechanism, a protocol that is similar to that of Bitcoin (but with less electricity use).
+
+### Decentralization
+
+For a network to be decentralized we want the creation of a full node to be possible for many. Ideally running a full node would be as permissionless as possible.
+
+Anyone can become a full node in Chia. The majority of computers can handle the technical requirements with many people even running off of a Raspberry Pi. A full node can be ran with less storage requirements and computing power. These smaller requirements for a full node allow for stronger decentralization.
+
+Farmers in the network are those who designate hard drive storage to support the network. The more space you reserve, the higher chances you have of confirming a block and getting rewarded Chia (XCH). As you'll learn, the network has grown so much that solo farming can be quite unrewarding with massive times to win. Pooling was introduced as a solution to more evenly distribute farming rewards based on your space contribution.
+
+Pooling is possible with other major cryptocurrencies but a major difference is that the Chia network designed an official protocol for pooling where the individual farmers confirm a block rather than the pool. This completely removes the problem of centralization introduced by current PoW mining. Centralized mining power puts the integrity of the network in question as the possibility of 51% attacks exist. This specific centralization problem is not a problem with the pooling protocol even if a single farming pool maintained a majority of the network.
+
+Essentially, Chia is a blockchain that is decentralized, uses significantly less electricity, and offers dApp capabilities with the Chialisp programming language.
+
 ## Getting Started with the CLI
 
 You can refer to the [download instructions](#) for complete instructions as the instructions vary for different operating systems. For this course we suggest installing from source.
