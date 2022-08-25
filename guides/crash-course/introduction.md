@@ -1,6 +1,6 @@
 ---
-slug: /crash-course/course-introduction
-title: Course Introduction
+slug: /crash-course/introduction
+title: Introduction
 ---
 
 The course is designed to give you an end-to-end introduction to Chia.

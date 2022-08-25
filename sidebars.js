@@ -82,7 +82,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Chia Crash Course',
+      label: 'Crash Course',
       collapsible: true,
       collapsed: false,
       link: {
@@ -93,7 +93,7 @@ const sidebars = {
           'These lessons will guide you through the essentials of Chia.',
       },
       items: [
-        'crash-course/course-introduction',
+        'crash-course/introduction',
         'crash-course/plotting-and-farming',
         'crash-course/nfts-n-stuff',
         'crash-course/chialisp',
