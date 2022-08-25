@@ -6,17 +6,21 @@ title: 5. BLS Signatures
 
 When creating a spend bundle previously, we have left the `aggregated_signature` field set to the default value of `c0` followed by 190 zeros. This value indicates that there are no signatures. We will detail what signatures are, and how you can use them on the blockchain.
 
+Chia uses a specific kind of signature called a [BLS Signature](https://crypto.stanford.edu/~dabo/pubs/papers/BLSmultisig.html). It's a form of elliptic curve cryptography.
+
+One helpful feature of BLS signatures is that they can be non-interactively aggregated. You can take a signature from a party you don't trust, and combine it with another signature to produce a single signature that verifies the combination of all of the messages they were signing.
+
 ## Digital Signatures
 
-A **digital signature** is a cryptographically secure way to check the author of a message. It is quite similar to written signatures.
+A [digital signature](https://en.wikipedia.org/wiki/Digital_signature) is a cryptographically secure way to check the author of a message. It is quite similar to written signatures.
 
-To create a signature, first you need a [key pair](https://en.wikipedia.org/wiki/Public-key_cryptography) that consists of a **private key** and its corresponding **public key**. The private key is used to sign messages, whereas the public key is used to verify the signature created for the message.
+To create a signature, first you need a [key pair](https://en.wikipedia.org/wiki/Public-key_cryptography) that consists of a private key and its corresponding public key. The private key is used to sign messages, whereas the public key is used to verify the signature created for the message.
 
 ## Example
 
 :::danger
 
-Your private key should **never** be shared with anyone other than yourself unless you are fine with them having complete control over the wallet it is for, as well as signing messages on your behalf. The same is true for the mnemonic seed phrase used to generate the key pair.
+Your private key should _never_ be shared with anyone other than yourself unless you are fine with them having complete control over the wallet it is for, as well as signing messages on your behalf. The same is true for the mnemonic seed phrase used to generate the key pair.
 
 :::
 
