@@ -70,7 +70,7 @@ const sidebars = {
       type: 'category',
       label: 'CAT Guide',
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       link: {
         type: 'generated-index',
         slug: '/cat-developer-guide',
@@ -84,7 +84,7 @@ const sidebars = {
       type: 'category',
       label: 'Crash Course',
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       link: {
         type: 'generated-index',
         slug: '/crash-course',
@@ -94,8 +94,7 @@ const sidebars = {
       },
       items: [
         'crash-course/introduction',
-        'crash-course/plotting-and-farming',
-        'crash-course/nfts-n-stuff',
+        'crash-course/cats-offers-nfts',
         'crash-course/chialisp',
       ],
     },
