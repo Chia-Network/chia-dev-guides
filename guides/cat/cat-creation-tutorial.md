@@ -148,7 +148,7 @@ Next, we will install the CAT admin tool:
 
 ```
 git clone https://github.com/Chia-Network/CAT-admin-tool.git -b main --recurse-submodules
-cd CAT-admin-tool.
+cd CAT-admin-tool
 python3 -m venv venv
 . ./venv/bin/activate
 py -m pip install --upgrade pip setuptools wheel
