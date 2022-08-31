@@ -151,7 +151,7 @@ git clone https://github.com/Chia-Network/CAT-admin-tool.git -b main --recurse-s
 cd CAT-admin-tool
 python3 -m venv venv
 . ./venv/bin/activate
-py -m pip install --upgrade pip setuptools wheel
+python3 -m pip install --upgrade pip setuptools wheel
 pip install .
 ```
 
