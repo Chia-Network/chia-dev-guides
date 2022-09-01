@@ -74,7 +74,7 @@ chia wallet add_token -id <Asset ID> -n <custom coin name> -f <fingerprint>
 Creating a CAT on mainnet works the exact same way, you'll just be spending real XCH instead of TXCH!
 
 <details>
-<summary>Concrete Example</summary>
+<summary>Example</summary>
 Here are the exact commands I issued to create a custom CAT.
 
 ```
@@ -145,3 +145,85 @@ ccoin:
 ## Offers
 
 With an offer you can trade assets with others directly in a decentralized manner. For example, we can put an offer up for someone to trade their Chia for your new token. Anyone could then accept this offer.
+
+For this command you will need your wallet IDs, which you can get from `chia wallet show`.
+
+To create an offer to sell 1,000 of your new CAT for some Chia, issue the `make_offer` command:
+
+```
+chia wallet make_offer -o <wallet_id:amount> -r <wallet_id:amount> <path>
+```
+
+Where `wallet_id:amount` could look like `1:1000`.
+
+<details>
+<summary>Example</summary>
+
+This is the command I issued to create an offer to trade 1,000 of my custom CAT for .01 Chia.
+
+```
+chia wallet make_offer -o 2:1000 -r 1:.01 -p ~/Desktop/offer1
+```
+
+Response:
+
+```
+Creating Offer
+--------------
+
+OFFERING:
+
+- 1000 ccoin (1000000 mojos)
+  REQUESTING:
+- .01 XCH (10000000000 mojos)
+  Confirm (y/n): y
+  Created offer with ID b6e2bf3162837a17a40369cb98bd3b8bfbc68fd58c922b3bfedd593f29f260dd
+  Use chia wallet get_offers --id b6e2bf3162837a17a40369cb98bd3b8bfbc68fd58c922b3bfedd593f29f260dd -f 1660000549 to view status
+```
+
+```
+chia wallet get_offers --id b6e2bf3162837a17a40369cb98bd3b8bfbc68fd58c922b3bfedd593f29f260dd -f 1660000549
+```
+
+Response:
+
+```
+
+Record with id: b6e2bf3162837a17a40369cb98bd3b8bfbc68fd58c922b3bfedd593f29f260dd
+---------------
+Created at: 2022-09-01 11:30:49
+Confirmed at: Not confirmed
+Accepted at: N/A
+Status: PENDING_ACCEPT
+---------------
+```
+
+</details>
+
+This creates a file on your computer and nothing is sent to the blockchain. Because of this, it is not a transaction and no fees are required. This file can be shared or uploaded to the web and anyone can use it to finalize the trade.
+
+<details>
+<summary>What is in an Offer File?</summary>
+
+It'll look something like:
+
+`offer1qqz83wcsltt6wcmqvpsxygqqwc7hynr6hum6e0mnf72sn7uvvkpt68eyumkhelprk0adeg42nlelk2mpafs8tkhg2qa9qmzp08ydjpg006k9ju0r3x57a2gt5x9u7j0fn7gllxjau2udha0mvnqkm6uqf23vazn6cua3vt4mzmhwjahp50v807ma2fxwhd2kn2njcmytt2emzsln0u44xz8hzvrtqd2t9vz0alaa9m992xy5k9fhkjepaur0hlm088p2vandlnm747hmyl9dxafx44c83lfa0llef54rulm04tg0t7lmxth646y0289h36rexueuq4lq8c68mj37cpfujfr9k8ar4k8ar4k8dr4k8d84sx0fu3jmra6xkl2qptmstehm8cnmc6mdxn0rvdejdfpway2ccm6srenn6urvdmgvand96gat25z4tf4dlxa2yayde2t4h320uwtvf3z0wxta54n797slkhzka3wsnufzputks4vptnqsme69v3sgxdevw7mv507rlpluh89uy54njg6kfl8slkr383kw49j5ka73rre7dnut0v9v6xn9366zu7uaq0fz3yng7rsfcgrzqsgxx3qf5e0lzugx4c0adln8wuhcfavpmjzs5pcm0ya8xkzpcthp90t0n5fgtan0x4hjl28ecrh035ju0h90mp5xctxklh0j4m53hm6qq593ehls26aklf0mn7lvehj5xm26nywsvn389h87h2n2t36dhu68drpg0fp8e4z5q40klut3cvdu7a2vug0mnvwdh5g78wfu2kck6n8hq5vk08llzck4t46e0mtks2gtflmlc8pwcvle0wjpfra4cmd7t2lvncnnvadx68ean9axykk7dj8ypau2a08ll7p9ttuk6swrhx2u5jcljd9r4lt7ul9x9yjkzae8yn42nu66wl0a8wf0qaepevya6nc8ls0rmwhedawwerv0ja00un2md43mfs39dfqx4ucpfrn0p288p0eytsa3x6qa59tdnlc9sndx2u8t3qcjeh8vw6sv88hf7l8m0peahx24h5944y3dk247utstljgvf0lw67mslv0dcvzsdqk95vv02yetz7h06dmnj3ehayrtekh4kwnla285hg9avj0xq70lfndalp345pmt0wd446wtu7j3klxlzhhxgu8xuhc07tykcsjmlunqvt9jejg4903wwa9v39fxpkp0za4hg48t7jg7pjv8t0lhlkxr26hx4a5mk8hjqqr8hvtgyf3fnt4`
+
+</details>
+
+If this is your first transaction using your new CAT, it'll lock up the entire coin. This is how the UTXO model works. Everything is defined as a coin, so coins can be combined and split in to new coins to reach exact values. For example, when sending someone 1.5XCH, you may actually send 2.0XCH, which will send a new coin worth 1.5XCH to the destination and a new coin of 0.5XCH back to an address you own as **change**.
+
+When you create your CAT, it exists as a single coin for the entire CAT balance. By creating an offer you lock up that coin resulting in a reduced spendable balance. You can see this with `chia wallet show`.
+
+```
+ccoin:
+   -Total Balance:         100000000.0  (100000000000 mojo)
+   -Pending Total Balance: 100000000.0  (100000000000 mojo)
+   -Spendable:             0.0  (0 mojo)
+   -Type:                  CAT
+   -Asset ID:              2b29eb7875ac24f4da73e55ea45c5f94471ab677de608bce6a5ddd1817724844
+   -Wallet ID:             2
+
+```
+
+If someone accepts the offer and the transaction is completed, you will receive the difference as change.
