@@ -142,6 +142,13 @@ ccoin:
 
 </details>
 
+<details>
+<summary>Exercise</summary>
+
+Use the above examples to create your very first CAT, we will use this CAT in the next section to trade for other assets.
+
+</details>
+
 ## Offers
 
 With an offer you can trade assets with others directly in a decentralized manner. For example, we can put an offer up for someone to trade their Chia for your new token. Anyone could then accept this offer.
@@ -227,3 +234,68 @@ ccoin:
 ```
 
 If someone accepts the offer and the transaction is completed, you will receive the difference as change.
+
+### Completing Offers
+
+The first step to getting your offer accepted is to broadcast it in some way.
+
+This file can be uploaded anywhere, but there are many websites out there dedicated to Chia offers. Offer sites include [Offerbin](https://offerbin.io/) and [offerpool](https://offerpool.io/).
+
+You can accept an offer that has been downloaded to your personal machine with the `take_offer` command.
+
+```
+chia wallet take_offer path
+```
+
+Alternatively, you can accept an offer without any download by copying and pasting the contents of the file.
+
+```
+chia wallet take_offer blog
+```
+
+<details>
+<summary>Example</summary>
+
+You can accept an offer by using the content of the offer file.
+
+`chia wallet take_offer offer1qqz83wcsltt6wcmqvpsxygqqwc7hynr6hum6e0mnf72sn7uvvkpt68eyumkhelprk0adeg42nlelk2mpafs8tkhg2qa9qmzp08ydjpg006k9ju0r3x57a2gt5x9u7j0fn7gllxjau2udha0mvnqkm6uqf23vazn6cua3vt4mzmhwjahp50v807ma2fxwhd2kn2njcmytt2emzsln0u44xz8hzvrtqd2t9vz0alaa9m992xy5k9fhkjepaur0hlm088p2vandlnm747hmyl9dxafx44c83lfa0llef54rulm04tg0t7lmxth646y0289h36rexueuq4lq8c68mj37cpfujfr9k8ar4k8ar4k8dr4k8d84sx0fu3jmra6xkl2qptmstehm8cnmc6mdxn0rvdejdfpway2ccm6srenn6urvdmgvand96gat25z4tf4dlxa2yayde2t4h320uwtvf3z0wxta54n797slkhzka3wsnufzputks4vptnqsme69v3sgxdevw7mv507rlpluh89uy54njg6kfl8slkr383kw49j5ka73rre7dnut0v9v6xn9366zu7uaq0fz3yng7rsfcgrzqsgxx3qf5e0lzugx4c0adln8wuhcfavpmjzs5pcm0ya8xkzpcthp90t0n5fgtan0x4hjl28ecrh035ju0h90mp5xctxklh0j4m53hm6qq593ehls26aklf0mn7lvehj5xm26nywsvn389h87h2n2t36dhu68drpg0fp8e4z5q40klut3cvdu7a2vug0mnvwdh5g78wfu2kck6n8hq5vk08llzck4t46e0mtks2gtflmlc8pwcvle0wjpfra4cmd7t2lvncnnvadx68ean9axykk7dj8ypau2a08ll7p9ttuk6swrhx2u5jcljd9r4lt7ul9x9yjkzae8yn42nu66wl0a8wf0qaepevya6nc8ls0rmwhedawwerv0ja00un2md43mfs39dfqx4ucpfrn0p288p0eytsa3x6qa59tdnlc9sndx2u8t3qcjeh8vw6sv88hf7l8m0peahx24h5944y3dk247utstljgvf0lw67mslv0dcvzsdqk95vv02yetz7h06dmnj3ehayrtekh4kwnla285hg9avj0xq70lfndalp345pmt0wd446wtu7j3klxlzhhxgu8xuhc07tykcsjmlunqvt9jejg4903wwa9v39fxpkp0za4hg48t7jg7pjv8t0lhlkxr26hx4a5mk8hjqqr8hvtgyf3fnt4`
+
+Response:
+
+```
+Summary:
+  OFFERED:
+    - ccoin (Wallet ID: 2): 1000.0 (1000000 mojos)
+  REQUESTED:
+    - XCH (Wallet ID: 1): 0.01 (10000000000 mojos)
+
+Included Fees: 0
+
+Would you like to take this offer? (y/n): y
+Accepted offer with ID 41f5bfab75ff5f35489b0954597aa76c56ed7098aa9ad137f0132b584541119f
+Use chia wallet get_offers --id 41f5bfab75ff5f35489b0954597aa76c56ed7098aa9ad137f0132b584541119f -f 1660000549 to view its status
+```
+
+```
+chia wallet get_offers --id 41f5bfab75ff5f35489b0954597aa76c56ed7098aa9ad137f0132b584541119f -f 1660000549
+```
+
+Response:
+
+```
+Record with id: 41f5bfab75ff5f35489b0954597aa76c56ed7098aa9ad137f0132b584541119f
+---------------
+Created at: 2022-09-01 13:40:07
+Confirmed at: 1466993
+Accepted at: 2022-09-01 13:40:07
+Status: CONFIRMED
+---------------
+
+```
+
+</details>
+
+<details>
+<summary>Exercise</summary>
+To get some practice, create an offer to trade your CAT for some Chia or another CAT. You can share this file with others, or you can accept it yourself to see how the process works.
+</details>
