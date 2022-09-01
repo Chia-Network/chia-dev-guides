@@ -147,6 +147,8 @@ ccoin:
 
 Use the above examples to create your very first CAT, we will use this CAT in the next section to trade for other assets.
 
+If you are looking for more practice, you can create a multi-issuance CAT.
+
 </details>
 
 ## Offers
@@ -250,7 +252,7 @@ chia wallet take_offer path
 Alternatively, you can accept an offer without any download by copying and pasting the contents of the file.
 
 ```
-chia wallet take_offer blog
+chia wallet take_offer blob
 ```
 
 <details>
@@ -298,4 +300,7 @@ Status: CONFIRMED
 <details>
 <summary>Exercise</summary>
 To get some practice, create an offer to trade your CAT for some Chia or another CAT. You can share this file with others, or you can accept it yourself to see how the process works.
+
+If you are looking for more practice, you can work with offers on mainnet to trade real assets.
+
 </details>
