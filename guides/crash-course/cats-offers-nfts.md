@@ -276,7 +276,11 @@ Included Fees: 0
 Would you like to take this offer? (y/n): y
 Accepted offer with ID 41f5bfab75ff5f35489b0954597aa76c56ed7098aa9ad137f0132b584541119f
 Use chia wallet get_offers --id 41f5bfab75ff5f35489b0954597aa76c56ed7098aa9ad137f0132b584541119f -f 1660000549 to view its status
+
 ```
+
+You'll notice there is a line for `Included Fees`, which is currently 0. As the blockchain becomes more saturated, a fee may need to be applied by either the maker or taker with an additional CLI flag.
+Let's continue by getting the offer's information.
 
 ```
 chia wallet get_offers --id 41f5bfab75ff5f35489b0954597aa76c56ed7098aa9ad137f0132b584541119f -f 1660000549
@@ -304,3 +308,7 @@ To get some practice, create an offer to trade your CAT for some Chia or another
 If you are looking for more practice, you can work with offers on mainnet to trade real assets.
 
 </details>
+
+## Getting Started with NFTs
+
+NFTs can be defined individually or within a collection. For simplicity, we will create an individual NFT that is not part of a collection. Once you know how to do this, creating a collection will be a lot easier. The main goal of this lesson is to help you become familiar with the basics. Then, you can continue to study on your own.
