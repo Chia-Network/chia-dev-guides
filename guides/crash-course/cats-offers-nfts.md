@@ -479,3 +479,94 @@ If you want more practice, learn to [create a DID and transfer your NFT to it](/
 Additionally, you can study more on decentralized file storage for NFT image hosting.
 
 </details>
+
+## Offers with NFTs
+
+Now that you have a top tier NFT, you can create an offer file including this asset.
+
+First, we will find the ID for the NFT we want to include in an offer.
+
+```
+chia wallet nft list -i <wallet ID>
+```
+
+As a reminder, you can figure out the wallet ID with `chia wallet show`.
+
+The NFT identifier will look something like `nft1w45su63nd0nzy0fjstt3ppd0xe4pe98fgxxztj5lt7af620qn2xss66c5t`.
+
+When formatting your chia offer, you will use this for the `-o` option.
+
+```
+chia wallet make_offer -o <nft offer>:1 -r <wallet id>:<amount> -p <path>
+```
+
+<details>
+<summary>Example</summary>
+
+We can offer an NFT for .01 Chia with a command like this:
+
+```
+chia wallet make_offer -o nft1w45su63nd0nzy0fjstt3ppd0xe4pe98fgxxztj5lt7af620qn2xss66c5t:1 -r 1:.01 -p ~/Desktop/offer2
+```
+
+Response:
+
+```
+Creating Offer
+--------------
+
+OFFERING:
+  - 1 nft1w45su63nd0nzy0fjstt3ppd0xe4pe98fgxxztj5lt7af620qn2xss66c5t (1 mojos)
+REQUESTING:
+  - .01 XCH (10000000000 mojos)
+Offers for NFTs will have royalties automatically added.  Are you sure you would like to continue? (y/n): y
+Confirm (y/n): y
+Created offer with ID a5d3039b3ff2d91cfecd858708f53abdfddab4560b79422a1681c6ae11408d87
+Use chia wallet get_offers --id a5d3039b3ff2d91cfecd858708f53abdfddab4560b79422a1681c6ae11408d87 -f 1660000549 to view status
+
+```
+
+```
+chia wallet get_offers --id a5d3039b3ff2d91cfecd858708f53abdfddab4560b79422a1681c6ae11408d87 -f 1660000549
+```
+
+Response:
+
+```
+
+Record with id: a5d3039b3ff2d91cfecd858708f53abdfddab4560b79422a1681c6ae11408d87
+---------------
+Created at: 2022-09-07 10:07:08
+Confirmed at: Not confirmed
+Accepted at: N/A
+Status: PENDING_ACCEPT
+---------------
+```
+
+</details>
+
+### Accepting NFT Offers
+
+Let's practice by accepting our own offer. Accepting an NFT offer works the same as any other offer. You can open the file to get the hex content.
+
+```
+chia wallet take_offer <blob>
+```
+
+:::info
+If you are working with others, you can exchange these offer files (or the hex blob) with each other to buy/sell NFTs.
+:::
+
+<details>
+<summary>Example</summary>
+
+```
+chia wallet take_offer offer1qqph3wlykhv8jcmqvpsxygqqwc7hynr6hum6e0mnf72sn7uvvkpt68eyumkhelprk0adeg42nlelk2mpafsyjlm5pqpj3dhq5d7ewswwa68td36nxv6jvvm8n7vrk4d6dm2ewleh56kn54h7m05p9v9eh9sw6twfnhnawlzjnyevlmwphk0yjy2vn5fh9tscd40ryttnels5735nn8lmwv59wqlkzgzzyhypmk6vj49tut4m7w5w5jmswkv7jwgen0dhlwgla2yaclpguauj4et8gg6a0csz4mksdmqj9xe6mhfr2a75nkshm3favu4lx2ed4emhvujkh3zxdqkr9sjtkrgnzx8yzf4hgrrxwsxxd6ydc9qd9a5zlf25ds0maa08cu80xsnahf3mf8hthruufl5g7vyfzkmm480uvf9uml8lpd9r87dj3jee72werg6469mgt4hevffnukjk8rl248ulrwlxdglf34dmur7cw539e7qggqmfmlegm4sutf0xwe2ht366577aj29uhlykns7k3wcjdg2h9cf38tey8xcyxqa0yvmugalvqzt7cypdl70pvhlzzjlvrsx0dl0kd4sv56m8j4wt2txevnws7qlltrnvnpmqlx30flcpj7xf9y5zvg4hmlwvmnz0f4rzhkpdfzk5n33tme8utn7c9r8ujt7xyl2rgvp4xccrwv3hmzy59ev9s9ex42t4tyy6p66rwcupfpehdkuj8e57mwxkytslt5urm4vaegmag3356d5adelwkhdnfdas8vqaplh2ysf6vaxu27dqje7hzzdvqewlpt7tmd8hm5drtxl0d370e5x64wnaatx2umttza8mqwt0h4e8ne49a0w4sj5g6yqja9yyxqavqdf6cpzuq00lgurm3zydylaqcuzpe2l2826l2kh9l3fqrk38ul7p38e5aflj9kltvjzhlnw8c29gmphdx0t4xkyrykpesmtvxxsa9qdp62q6asp5t59c5f057ckps8ufytwltakflw6mtxct07hvadfm047782f2rvhx7kf4qrcehvfsrdmqtx9prcnydsvkhkpwmszph0rpc728nfame5t9uwlnu8tjnt2ahffe97a8pfwfn0fpev6yeke36mr8l9jj36xm45qnlxfw8y7hdal8nm7a8fvfnkyqft7jw8r8lutaclrutum0m3lv04avl4j7t95dzw0dvfvxpytcm6su797h26205e0fe5pmkrp53qp8vv9swyrx9sqxkqtpqxjzs3jqgcrhsjsy4y8pcsv00hl7l7p2jsw6089mw0d4x56x4wh9kkj2dshtn45nfh7km0wzv9k88tljgdpncrewhwhmkxlh2rf5ynjqfxrleadkxdtp7xevmlmh4n285c05yysw6mh7tjt5f8ga3ah3m7llcmmnsl74humt2993zpq7t740kyjeltt6xdfewd2gx08muauteyl4xv8x7hwsegat7xl3atr84afn57wn0n8fgua64lhvv3gzqr72c7kg2k9k8m
+
+```
+
+</details>
+
+## Conclusion
+
+Most of what happened in this lesson is possible thanks to foundational pieces (we call them primitives) built on the Chia blockchain. If you want to build something completely custom, you can do that with the Chialisp language. With Chialisp, you can define rules for locking up and spending coins. This is what we will be talking about next!
