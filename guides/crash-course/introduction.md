@@ -3,6 +3,11 @@ slug: /crash-course/introduction
 title: Introduction
 ---
 
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
 The course is designed to give you an end-to-end introduction to Chia.
 We'll start off with the foundations of the Chia blockchain. This includes an having a foundational understanding of blockchain and what makes Chia different.
 Once you understand the basics, we'll learn about plotting and farming. Next, we'll cover many of the DeFi possibilities including tokens (CATs), NFTs, and writing custom coins with Chialisp.
@@ -43,11 +48,126 @@ Essentially, Chia is a blockchain that is decentralized, uses significantly less
 
 ## Getting Started with Chia
 
-You'll want to download Chia.
+You'll want to download Chia. You can refer to the [download instructions](#) for complete instructions as the instructions vary for different operating systems. The installer is usually the simplest and we will go through how to set up the `chia` command for CLI use.
+
+To make the commands as close as possible across operating systems I recommend Windows users [download Git](https://git-scm.com/download/win), which comes with Git bash. You can of course use Windows Command Prompt or PowerShell, but commands may be slightly different.
+
+Before we get started using the CLI, we need to be able to issue the `chia` command.
+
+Use this line in Git Bash / terminal:
+
+```mdx-code-block
+<Tabs groupId="OS"
+  defaultValue="windows (Git Bash)"
+  values={[
+    {label: 'Windows (Git Bash)', value: 'windows (Git Bash)'},
+    {label: 'Linux/MacOS', value: 'nix'},
+  ]}>
+  <TabItem value="windows (Git Bash)">
+```
+
+```
+~/AppData/Local/chia-blockchain/app-1.5.1/resources/app.asar.unpacked/daemon/chia.exe
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="nix">
+```
+
+```
+/Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/chia
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
+
+Response:
+
+```
+Usage: chia.exe [OPTIONS] COMMAND [ARGS]...
+
+  Manage chia blockchain infrastructure (1.5.1)
+
+Options:
+  --root-path PATH                Config file root  [default:
+                                  C:\Users\calebcurry\.chia\mainnet]
+
+  --keys-root-path PATH           Keyring file root  [default:
+                                  C:\Users\calebcurry\.chia_keys]
+
+  --passphrase-file FILENAME      File or descriptor to read the keyring
+                                  passphrase from
+
+  --force-legacy-keyring-migration / --no-force-legacy-keyring-migration
+                                  Force legacy keyring migration. Legacy
+                                  keyring support will be removed in an
+                                  upcoming version!
+
+  -h, --help                      Show this message and exit.
+
+Commands:
+  configure   Modify configuration
+  db          Manage the blockchain database
+  farm        Manage your farm
+  init        Create or migrate the configuration
+  keys        Manage your keys
+  netspace    Estimate total farmed space on the network
+  passphrase  Manage your keyring passphrase
+  plotnft     Manage your plot NFTs
+  plots       Manage your plots
+  plotters    Advanced plotting options
+  rpc         RPC Client
+  run_daemon  Runs chia daemon
+  show        Show node information
+  start       Start service groups
+  stop        Stop services
+  version     Show chia version
+  wallet      Manage your wallet
+
+  Try 'chia start node', 'chia netspace -d 192', or 'chia show -s'
+
+```
+
+Using this path each time can get old, so you have the option of creating an alias or environment variable.
+
+```mdx-code-block
+<Tabs groupId="OS"
+  defaultValue="windows (Git Bash)"
+  values={[
+    {label: 'Windows (Git Bash)', value: 'windows (Git Bash)'},
+    {label: 'Linux/MacOS', value: 'nix'},
+  ]}>
+  <TabItem value="windows (Git Bash)">
+```
+
+```
+alias chia=~/AppData/Local/chia-blockchain/app-1.5.1/resources/app.asar.unpacked/daemon/chia.exe
+```
+
+```mdx-code-block
+  </TabItem>
+  <TabItem value="nix">
+```
+
+```
+alias chia=/Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/chia
+```
+
+```mdx-code-block
+  </TabItem>
+</Tabs>
+```
+
+Now, you can just say:
+
+```
+chia
+```
 
 ## Getting Started with the CLI
-
-You can refer to the [download instructions](#) for complete instructions as the instructions vary for different operating systems. For this course we suggest **installing from source**.
 
 Once you can issue the `chia` command, the differences between operating systems are minimal.
 
@@ -75,6 +195,8 @@ chia keys generate
 
 ## Getting on Testnet
 
+If you are already on a testnet, skip to [instructions for the CLI](#cli).
+
 For most dev work on Chia, you'll want to be on the testnet. That way, you're learning with fake Chia and don't put any funds at risk.
 
 ```
@@ -97,6 +219,8 @@ chia_farmer: started
 chia_full_node: started
 chia_wallet: started
 ```
+
+## CLI
 
 At this point you should be able to use the CLI to get information about your farm and confirm you are on testnet.
 
