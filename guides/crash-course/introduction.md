@@ -44,7 +44,11 @@ Farmers in the network are those who designate hard drive storage to support the
 
 Pooling is possible with other major cryptocurrencies but a major difference is that the Chia network designed an official protocol for pooling where the individual farmers confirm a block rather than the pool. This completely removes the problem of centralization introduced by current PoW mining. Centralized mining power puts the integrity of the network in question as the possibility of 51% attacks exist. This specific centralization problem is not a problem with the pooling protocol even if a single farming pool maintained a majority of the network.
 
-Essentially, Chia is a blockchain that is decentralized, uses significantly less electricity, and offers dApp capabilities with the Chialisp programming language.
+Essentially:
+
+- Chia is a blockchain that is decentralized,
+- uses significantly less electricity,
+- and offers dApp capabilities with the Chialisp programming language.
 
 ## Getting Started with Chia
 
@@ -192,6 +196,29 @@ chia init
 ```
 chia keys generate
 ```
+
+:::info Fingerprints
+It's possible to manage multiple keys from a single Chia client. These will be identified by a **fingerprint**. In `chia wallet show` you'll see a message like `fingerprint: 1660000549`.
+
+Working with only a single fingerprint in your client is easier as if you have multiple you'll often need to specify which fingerprint you want to use. For example. here is the usuage for `chia wallet send`:
+
+```
+chia wallet send [OPTIONS]
+
+Options:
+
+  ...
+
+  -f, --fingerprint INTEGER       Set the fingerprint to specify which wallet
+                                  to use
+
+  ...
+
+```
+
+By managing just a single wallet, all of your chia commands can be simplified by leaving off the `-f` option.
+
+:::
 
 ## Getting on Testnet
 
