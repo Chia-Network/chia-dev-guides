@@ -70,7 +70,7 @@ const sidebars = {
       type: 'category',
       label: 'CAT Guide',
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       link: {
         type: 'generated-index',
         slug: '/cat-developer-guide',
@@ -79,6 +79,24 @@ const sidebars = {
           "These guides will guide you through the process of creating CATs that conform to Chia's CAT standard.",
       },
       items: ['cat/cat-creation-tutorial'],
+    },
+    {
+      type: 'category',
+      label: 'Crash Course',
+      collapsible: true,
+      collapsed: true,
+      link: {
+        type: 'generated-index',
+        slug: '/crash-course',
+        title: 'Crash Course',
+        description:
+          'These lessons will guide you through the essentials of Chia.',
+      },
+      items: [
+        'crash-course/introduction',
+        'crash-course/cats-offers-nfts',
+        'crash-course/chialisp',
+      ],
     },
   ],
 };
