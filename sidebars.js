@@ -81,11 +81,7 @@ const sidebars = {
         description:
           'These lessons will guide you through the essentials of Chia.',
       },
-      items: [
-        'crash-course/introduction',
-        'crash-course/cats-offers-nfts',
-        'crash-course/chialisp',
-      ],
+      items: ['crash-course/introduction', 'crash-course/cats-offers-nfts'],
     },
     {
       type: 'category',
