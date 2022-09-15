@@ -1,14 +1,3 @@
-/**
- * Creating a sidebar enables you to:
- - create an ordered group of docs
- - render a sidebar for each doc of that group
- - provide next/previous navigation
-
- The sidebars can be generated from the filesystem, or explicitly defined here.
-
- Create as many sidebars as you want.
- */
-
 // @ts-check
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
@@ -96,6 +85,43 @@ const sidebars = {
         'crash-course/introduction',
         'crash-course/cats-offers-nfts',
         'crash-course/chialisp',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Video Tutorials',
+      collapsible: true,
+      collapsed: true,
+      link: {
+        type: 'generated-index',
+        slug: '/video-tutorials',
+        title: 'Video Tutorials',
+        description:
+          'A large collection of Chia video tutorial content. Keep in mind that these tutorials were written a while ago, and may contain some outdated information.',
+      },
+      items: [
+        {
+          'Chialisp Tutorial Video Series': [
+            'video-tutorials/why_chia_is_great',
+            'video-tutorials/developing_applications',
+            'video-tutorials/tools_and_setup',
+            'video-tutorials/programming_chialisp',
+            'video-tutorials/coin_lifecycle_and_testing',
+            'video-tutorials/singletons',
+            'video-tutorials/high-level-tips-1',
+            'video-tutorials/high-level-tips-2',
+            'video-tutorials/high-level-tips-3',
+            'video-tutorials/single_issuance_CAT',
+          ],
+        },
+        'video-tutorials/custom_puzzle_lock',
+        'video-tutorials/coin_spend_rpc',
+        'video-tutorials/structure_of_a_chia_application',
+        'video-tutorials/CAT_Launch_Process_Linux_MacOS',
+        'video-tutorials/CAT_Launch_Process_Windows',
+        'video-tutorials/multiple_issuance_CAT',
+        'video-tutorials/offers_gui_tutorial',
+        'video-tutorials/offers_cli_tutorial',
       ],
     },
   ],

@@ -11,7 +11,7 @@ Put simply, a CAT (Chia asset token) is a token built on top of the Chia blockch
 
 Token issuance is controlled by a CAT's TAIL (Token Asset and Issuance Limitations). The TAIL is a Chialisp program describing the rules for creation and destruction of a CAT.
 
-For example, the TAIL may limit the creation to **one-time minting**. Any tokens created using this specific TAIL program will only be minted once during creation. When spent, any new coins created will share the same TAIL.
+For example, the TAIL may limit the creation to **single-issuance**. Any tokens created using this specific TAIL program will only be issued once during creation. When spent, any new coins created will share the same TAIL.
 
 ## CAT Creation Tool and Setup
 
@@ -41,7 +41,7 @@ And you can confirm you have TXCH (or XCH on mainnet) with:
 
 ### Creating a Single-Issuance CAT
 
-We will only be worrying about creating a single-issuance CAT in this lesson. If you want more experience, you can move on to create a multi-issuance CAT. **For every 1 CAT created you will need to spend 1,000 Mojo**. This means spending 0.1 Chia (100,000,000,000 Mojo) will produce a CAT with a max supply of 100 million.
+We will only be worrying about creating a single-issuance CAT in this lesson. If you want more experience, you can move on to create a multiple-issuance CAT. **For every 1 CAT created you will need to spend 1,000 Mojo**. This means spending 0.1 Chia (100,000,000,000 Mojo) will produce a CAT with a max supply of 100 million.
 
 ```
 cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <XCH mojos> -m <fee in XCH mojos> --as-bytes --select-coin
@@ -147,7 +147,7 @@ ccoin:
 
 Use the above examples to create your very first CAT, we will use this CAT in the next section to trade for other assets.
 
-If you are looking for more practice, you can create a multi-issuance CAT.
+If you are looking for more practice, you can create a multiple-issuance CAT.
 
 </details>
 
