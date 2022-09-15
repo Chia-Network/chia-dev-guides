@@ -14,4 +14,4 @@ In this video, Chia developer Matt Hauff goes over what you need to set up so th
 
 ---
 
-If you have further questions, join [Chia Network's public Keybase team](https://keybase.io/team/chia_network.public) and ask in the _#chialisp_ channel.
+If you have further questions, join our [Keybase team](https://keybase.io/team/chia_network.public) and ask in the _#chialisp_ channel.

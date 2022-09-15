@@ -16,4 +16,4 @@ Watch the following videos to learn more about the mindset and basic skills need
 
 ---
 
-If you have further questions, join [Chia Network's public Keybase team](https://keybase.io/team/chia_network.public) and ask in the _#chialisp_ channel.
+If you have further questions, join our [Keybase team](https://keybase.io/team/chia_network.public) and ask in the _#chialisp_ channel.

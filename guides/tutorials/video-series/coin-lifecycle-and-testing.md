@@ -61,4 +61,4 @@ You can download the piggybank coin example files [here](/files/Piggybank_Exampl
 
 ---
 
-If you have further questions, join [Chia Network's public Keybase team](https://keybase.io/team/chia_network.public) and ask in the _#chialisp_ channel.
+If you have further questions, join our [Keybase team](https://keybase.io/team/chia_network.public) and ask in the _#chialisp_ channel.

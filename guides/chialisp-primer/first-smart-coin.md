@@ -62,7 +62,7 @@ In this example, the curried in `PASSWORD_HASH` represents the hash of the passw
 
 A condition consists of a condition number followed by its arguments. They can do a variety of things, from the creation of new coins and requiring other spends to happen at the same time, to various assertions related to the state of the blockchain.
 
-A complete list of conditions can be found [here](https://chialisp.com/docs/coins_spends_and_wallets#conditions), but we will only be using one in this tutorial: condition `51`, or `CREATE_COIN`, creates a new coin with the given `puzzle_hash` and `amount` if the spend is valid. It is used to send money to another puzzle hash (which is analagous to an address).
+A complete list of conditions can be found on the [Conditions page](https://docs.chia.net/conditions), but we will only be using one in this tutorial: condition `51`, or `CREATE_COIN`, creates a new coin with the given `puzzle_hash` and `amount` if the spend is valid. It is used to send money to another puzzle hash (which is analagous to an address).
 
 ## Coins
 
@@ -167,7 +167,7 @@ Finally, run the following command to push the transaction to the Testnet:
 cdv rpc pushtx spendbundle.json
 ```
 
-If all went well, this should spend the coin! Otherwise, retrace your steps carefully to try to find what went wrong. If you still can't figure it out, don't hesitate to ask us on our [Keybase](https://keybase.io/team/chia_network.public) and we will answer as soon as we can.
+If all went well, this should spend the coin! Otherwise, retrace your steps carefully to try to find what went wrong. If you still can't figure it out, don't hesitate to ask us on our [Keybase team](https://keybase.io/team/chia_network.public) and we will answer as soon as we can.
 
 ## Potential Questions
 

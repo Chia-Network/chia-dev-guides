@@ -6,7 +6,7 @@ title: Inner Puzzles
 
 Sometimes you want the behavior of your puzzles to be composable, so that you can reuse code in multiple ways. An example of this is the [Chia Asset Token](https://chialisp.com/docs/puzzles/cats) puzzle, which allows you to specify an **inner puzzle**.
 
-This allows the outer puzzle to enforce certain rules on how it can be spent, while the inner puzzle can do whatever it wants within those rules. In this case, the CAT enforces that it maintains a constant amount in mojos, while the inner puzzle (typically the [Standard Transaction](https://chialisp.com/docs/standard_transaction/)) decides how it can be spent.
+This allows the outer puzzle to enforce certain rules on how it can be spent, while the inner puzzle can do whatever it wants within those rules. In this case, the CAT enforces that it maintains a constant amount in mojos, while the inner puzzle (typically the [Standard Transaction primitive](https://chialisp.com/docs/standard_transaction/)) decides how it can be spent.
 
 This is typically used in combination with a variety of other concepts, which we will talk about later. However, for the purpose of this guide and to make it easier to follow, we will provide a simple example that only incorporates currying and inner puzzles.
 
@@ -61,7 +61,7 @@ This is an exceedingly simple puzzle that just returns any conditions passed int
 
 ### Public Key
 
-You can refer to the [signature guide](/guides/chialisp-bls-signatures) to learn about key pairs and how to use your wallet to sign messages. We will be using similar steps here to get the derived public key.
+You can refer to the [BLS Signatures guide](/guides/chialisp-bls-signatures) to learn about key pairs and how to use your wallet to sign messages. We will be using similar steps here to get the derived public key.
 
 Run this to get the derived public key:
 
@@ -99,4 +99,4 @@ Now the inner puzzle and outer puzzle have been combined together.
 
 ## Conclusion
 
-The concept of inner puzzles allows for the composition of puzzles. This is commonly used in the wallet, where CATs, DIDs, and NFTs wrap the standard transaction. That way they have the ability to be transferred, yet also have their own set of rules that control their use. If you have any questions about inner puzzles, feel free to ask on our [Keybase](https://keybase.io/team/chia_network.public).
+The concept of inner puzzles allows for the composition of puzzles. This is commonly used in the wallet, where CATs, DIDs, and NFTs wrap the standard transaction. That way they have the ability to be transferred, yet also have their own set of rules that control their use. If you have any questions about inner puzzles, feel free to ask on our [Keybase team](https://keybase.io/team/chia_network.public).

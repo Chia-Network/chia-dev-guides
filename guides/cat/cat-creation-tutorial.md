@@ -20,12 +20,12 @@ Welcome to the world of CATs! We're excited to have you here, and we can't wait 
 
 This tutorial will help you jump right in and get started with issuing your own CATs. There are a few things you should know before we begin.
 
-The [CAT standard](https://docs.chia.net/cats) was finalized as of January 2022. However, to minimize your risk of running into unexpected results, we recommend that you do following:
+The [CAT primitive page](https://docs.chia.net/cats) was finalized as of January 2022. However, to minimize your risk of running into unexpected results, we recommend that you do following:
 
 - Generate a new public/private key pair for each CAT you issue. This key pair should be used for issuing one specific CAT **and nothing else**. It should also be the only key pair on your computer while issuing the CAT.
 - Test thoroughly on testnet before issuing your CAT to mainnet.
 
-For any questions regarding this tutorial, head over to the #chialisp channel on our [Keybase](https://keybase.io/team/chia_network.public "Chia's Keybase forum") forum, where there are lots of friendly folks who can help you.
+For any questions regarding this tutorial, head over to the #chialisp channel on our [Keybase team](https://keybase.io/team/chia_network.public) forum, where there are lots of friendly folks who can help you.
 
 ---
 
@@ -47,7 +47,7 @@ Theoretically, it would be possible to set the CAT:mojo ratio to something other
 
 With one XCH, you can issue 1 billion CATs. The face value of these tokens could be zero, or multiple XCH, or anywhere in between. This value is decided by the market -- it's worth whatever someone is willing to pay for it. The value of the tokens has nothing to do with the underlying XCH, other than their 1000-mojo melt value.
 
-These concepts are discussed in greater detail in our [CAT standard](https://docs.chia.net/cats#valuation).
+These concepts are discussed in greater detail in our [CAT primitive page](https://docs.chia.net/cats#valuation).
 
 ---
 
@@ -197,7 +197,7 @@ If you're a visual learner, please see our [Single Issuance CAT video tutorial](
 
 To get started, you will create a single-issuance CAT. This is the default way to issue a CAT. It's also the simplest. It contains a TAIL that only allows the CAT to issue tokens once.
 :::note
-A TAIL is a Chialisp program that defines the rules for issuing and melting tokens. Learn more about the [Token and Asset Issuance Limiter](docs/puzzles/cats/#the-token-and-asset-issuance-limiter-tail-program).
+A TAIL is a Chialisp program that defines the rules for issuing and melting tokens. Learn more about the [Token and Asset Issuance Limitations program](https://docs.chia.net/cats#tail).
 :::
 A CAT with a single-issuance TAIL will be useful for anyone who wants to create a token with a guaranteed fixed supply.
 
@@ -239,7 +239,7 @@ Next, jump to [Add a CAT to Your Wallet](#add-a-cat-to-your-wallet).
 
 ## Creating a Multiple Issuance CAT
 
-If you're a visual learner, please see our [Multi Issuance CAT video tutorial](/multiple-issuance-cat-video-series).
+If you're a visual learner, please see our [Multiple Issuance CAT video tutorial](/multiple-issuance-cat-video-series).
 
 Next we’ll create a CAT capable of issuing tokens multiple times. This CAT uses a delegated TAIL, which is much more flexible than the previous one. As long as you sign a puzzle hash that you specify, you can issue new tokens using whatever TAIL you want. This allows for features such as rebate offers and distributed issuing and retiring of tokens.
 

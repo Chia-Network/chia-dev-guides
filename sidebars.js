@@ -111,8 +111,6 @@ const sidebars = {
         'tutorials/custom-puzzle-lock',
         'tutorials/coin-spend-rpc',
         'tutorials/application-structure',
-        'tutorials/cat-creation-mac-linux',
-        'tutorials/cat-creation-windows',
         'tutorials/offers-gui',
         'tutorials/offers-cli',
       ],
