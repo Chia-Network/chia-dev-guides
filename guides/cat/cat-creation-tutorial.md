@@ -193,7 +193,7 @@ Your environment is now set up and you are ready to start issuing CATs!
 
 ## Creating a Single Issuance CAT
 
-If you're a visual learner, please see our [Single Issuance CAT video tutorial](/single-issuance-cat-video-tutorial).
+If you're a visual learner, please see our [Single Issuance CAT video tutorial](/single-issuance-cat-video-series).
 
 To get started, you will create a single-issuance CAT. This is the default way to issue a CAT. It's also the simplest. It contains a TAIL that only allows the CAT to issue tokens once.
 :::note
@@ -239,7 +239,7 @@ Next, jump to [Add a CAT to Your Wallet](#add-a-cat-to-your-wallet).
 
 ## Creating a Multiple Issuance CAT
 
-If you're a visual learner, please see our [Multi Issuance CAT video tutorial](/multiple-issuance-cat-video-tutorial).
+If you're a visual learner, please see our [Multi Issuance CAT video tutorial](/multiple-issuance-cat-video-series).
 
 Next we’ll create a CAT capable of issuing tokens multiple times. This CAT uses a delegated TAIL, which is much more flexible than the previous one. As long as you sign a puzzle hash that you specify, you can issue new tokens using whatever TAIL you want. This allows for features such as rebate offers and distributed issuing and retiring of tokens.
 
