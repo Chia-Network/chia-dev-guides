@@ -112,7 +112,11 @@ We'll start with installing Chia's testnet.
 
    f. Run `pip install .`. This will take a few minutes.
 
-   > NOTE: You might receive an error such as `ERROR: Failed building wheel for CAT-admin-tool`. This is likely safe to ignore. As long as you can run `cats --help` without errors, the tool has been installed properly.
+   :::note
+
+   You might receive an error such as `ERROR: Failed building wheel for CAT-admin-tool`. This is likely safe to ignore. As long as you can run `cats --help` without errors, the tool has been installed properly.
+
+   :::
 
    g. Run `pip install chia-dev-tools --no-deps`.
 
@@ -150,7 +154,11 @@ Check out the [Single Issuance TAIL](https://github.com/Chia-Network/chia-blockc
 
    b. Figure out how many XCH mojos you want to use to issue your CAT. Each CAT token will contain 1000 mojos, so you should multiply the number of tokens you want to issue by 1000. For example, if you want to issue 1 million tokens, you'll need 1 billion XCH mojos (1/1000 of an XCH).
 
-   > NOTE: We recommend that you include a fee with your transaction. This fee will ensure that your transaction is processed in front of any dust in the mempool. Whether you're running on testnet or mainnet, the recommended fee amount is 100 million mojos (`-m 100000000`). Even though you will run the `cats` command multiple times, the fee will only be applied once, when the transaction is pushed to the network.
+   :::note
+
+   We recommend that you include a fee with your transaction. This fee will ensure that your transaction is processed in front of any dust in the mempool. Whether you're running on testnet or mainnet, the recommended fee amount is 100 million mojos (`-m 100000000`). Even though you will run the `cats` command multiple times, the fee will only be applied once, when the transaction is pushed to the network.
+
+   :::
 
    c. Take note of your Receive Address in the Chia GUI. You'll need it for the next step.
 
@@ -202,7 +210,11 @@ We’ll set up this CAT to delegate the same TAIL we set up previously. What thi
 
    b. Figure out how many XCH mojos you want to use to issue your CAT. Each CAT token will contain 1000 mojos, so you should multiply the number of tokens you want to issue by 1000. For example, if you want to issue 1 million tokens, you'll need 1 billion XCH mojos (1/1000 of an XCH).
 
-   > NOTE: Just as with the Single Issuance CAT, we recommend that you include a fee with your transaction. This fee will ensure that your transaction is processed in front of any dust in the mempool. Whether you're running on testnet or mainnet, the recommended fee amount is 100 million mojos (`-m 100000000`). Even though you will run the `cats` command multiple times, the fee will only be applied once, when the transaction is pushed to the network.
+   :::note
+
+   Just as with the Single Issuance CAT, we recommend that you include a fee with your transaction. This fee will ensure that your transaction is processed in front of any dust in the mempool. Whether you're running on testnet or mainnet, the recommended fee amount is 100 million mojos (`-m 100000000`). Even though you will run the `cats` command multiple times, the fee will only be applied once, when the transaction is pushed to the network.
+
+   :::
 
    c. Take note of your Receive Address in the Chia GUI.
 
