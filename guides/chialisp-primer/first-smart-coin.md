@@ -179,7 +179,7 @@ We allow any conditions to be passed in the solution. While you might think that
 
 ### Why are Password Coins Insecure?
 
-When you spend one or more coins, the puzzle and its solution go into the [mempool](https://docs.chia.net/docs/06mempool/mempool) until the block is inevitably farmed. This means that anyone can read the password in plain text during this time, or after the coin is spent.
+When you spend one or more coins, the puzzle and its solution go into the [mempool](https://docs.chia.net/mempool) until the block is inevitably farmed. This means that anyone can read the password in plain text during this time, or after the coin is spent.
 
 A simple solution to that would be to use a new random password every time you create a coin. However, a malicious farmer can actually change the solution to spends however they would like before adding it to their block. In doing so, they could change where the money will go in order to steal the coin.
 

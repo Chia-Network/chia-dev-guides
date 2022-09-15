@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 This tutorial is for creating Chia Asset Tokens (CATs). This CAT standard allows you to create fungible tokens on the Chia blockchain. This step-by-step guide will go through creating your own CATs.
 
-Alternatively, if you're looking for non-fungible tokens on Chia, check out our [guide on NFTs](https://docs.chia.net/docs/15resources/nft_dev_guide/ 'NFT Guide').
+Alternatively, if you're looking for non-fungible tokens on Chia, check out our [guide on NFTs](https://devs.chia.net/guides/nft-intro 'NFT Guide').
 
 ---
 
@@ -355,4 +355,4 @@ Congratulations! You've created your first CAT. What now?
 
 Well, hopefully you can share your CAT with the world and get some traction. In the meantime, you can learn more about the [single-mint TAIL](https://github.com/Chia-Network/chia-blockchain/blob/main/chia/wallet/puzzles/genesis_by_coin_id.clvm 'Single-mint TAIL') and [multi-mint TAIL](https://github.com/Chia-Network/chia-blockchain/blob/main/chia/wallet/puzzles/delegated_tail.clvm 'Delegated TAIL').
 
-This guide was for fungible tokens. Now you can learn about [non-fungible tokens](https://docs.chia.net/docs/15resources/nft_dev_guide/ 'NFT Guide').
+This guide was for fungible tokens. Now you can learn about [non-fungible tokens](https://devs.chia.net/guides/nft-intro 'NFT Guide').
