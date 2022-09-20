@@ -6,13 +6,13 @@ title: Chialisp
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-To get started with Chialisp you will first want to install the Chia Dev Tools. You can refer to the repo for more information, but the summary of the installation is here:
+To get started with Chialisp you will first want to install the Chia Dev Tools. You can refer to the [Chia Dev Tools repository](https://github.com/Chia-Network/chia-dev-tools) for more information, but the summary of the installation is here:
 
 <Tabs groupId="OS"
 defaultValue="windows"
 values={[
 {label: 'Windows', value: 'windows'},
-{label: 'Linux/MacOS', value: 'nix'},
+{label: 'Linux/MacOS', value: 'linux-macos'},
 ]}>
 <TabItem value="windows">
 
@@ -26,7 +26,7 @@ cdv --version
 ```
 
   </TabItem>
-  <TabItem value="nix">
+  <TabItem value="linux-macos">
 
 ```
 mkdir learning
