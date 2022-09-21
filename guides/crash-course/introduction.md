@@ -10,10 +10,6 @@ import TabItem from '@theme/TabItem';
 
 This course is designed to give you an end-to-end introduction to Chia. We'll start off with a foundational understanding of the Chia blockchain. This includes what blockchains are for and what makes Chia different from other options. Once you understand the basics, we'll learn about plotting and farming. Finally, we'll cover many of the DeFi possibilities including fungible tokens (CATs), non-fungible tokens (NFTs), and writing custom coins in Chialisp.
 
-:::info
-Chialisp is Chia's on-chain programming language for writing custom coins. If you want to skip ahead to development, see the [Intro to Chialisp section](/crash-course/intro-to-chialisp) of this course.
-:::
-
 ## Intro to Chia
 
 The goal of cryptocurrency is to transfer monetary value on a peer-to-peer decentralized network. This means that there is no centralized intermediary to facilitate the transaction. Instead, blockchain relies on a network of nodes to confirm transactions according to some rules. Additionally, cryptocurrency makes the exchange of value extremely fast and easy, even for cross-border payments.
