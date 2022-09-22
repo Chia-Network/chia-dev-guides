@@ -93,11 +93,9 @@ Response:
 ```
 
 :::info
-
 The syntax (+ 2 3) may look confusing. In Chialisp, we place the operator first, followed by the operands. This is known as **prefix notation**. Think of this as the equivalent to `2 + 3` in most other programming languages. or regular math :).
 
 It is set up this way as every program in Chialisp is written as a list, where the first item is an operator. `(+ 2 3)` is a list of three elements with the first being the `+` operator, thus it's a valid Chialisp program.
-
 :::
 
 ## Writing a Chialisp Program (Puzzle)
@@ -117,7 +115,6 @@ Response:
 ```
 
 :::info
-
 What in the world is `(+ 2 5)` that `run` returned? This is an example of compiled Chialisp (bytecode) that is then executed by the Chialisp Virtual Machine (CLVM). It is not very human-readable, but don't worry about that as you are not required to understand CLVM bytecode.
 
 Our first command, `run`, will take Chialisp code and compile it. Next, `brun` will take chialisp bytecode and execute it.

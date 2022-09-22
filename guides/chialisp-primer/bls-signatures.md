@@ -19,9 +19,7 @@ To create a signature, first you need a [key pair](https://en.wikipedia.org/wiki
 ## Example
 
 :::danger
-
 Your private key should _never_ be shared with anyone other than yourself unless you are fine with them having complete control over the wallet it is for, as well as signing messages on your behalf. The same is true for the mnemonic seed phrase used to generate the key pair.
-
 :::
 
 The first thing you need to do is find the fingerprint of the wallet you are going to be using for message signing.
@@ -33,13 +31,11 @@ chia keys show
 ```
 
 :::info
-
 You are not going to be using the root key pair itself to sign messages, but rather a child key derived from it. The `hd_path` represents the path used for deriving the child key from the root.
 
 The `12381` is specific to BLS signatures, whereas `8444` is specific to Chia. Wallets use the index `2`, and finally the last value is just the key index, starting at `0`.
 
 You will not need to change the value in this guide, but you can tweak the last value if you want.
-
 :::
 
 You can now sign messages using this key pair like so:

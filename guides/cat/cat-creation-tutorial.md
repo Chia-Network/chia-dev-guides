@@ -37,9 +37,7 @@ CAT denominations, as well as the rules behind issuance and melting, can take so
 - In a similar vein, Chia Network has made the design decision to map 1 CAT to 1000 mojos. This ratio will be the same for all CATs.
 
 :::caution
-
 Theoretically, it would be possible to set the CAT:mojo ratio to something other than 1:1000 for a specific CAT, but we strongly recommend against doing this. The official Chia wallet will not support CATs with a ratio other than 1:1000. Additionally, if you created your own wallet with support for different ratios, users of this wallet would almost certainly be confused and accidentally spend too much or too little money, by multiple orders of magnitude. Please don't attempt this.
-
 :::
 
 - The melt value of a single token is 1000 mojos. This remains true regardless of the token's face value or its circulating supply.

@@ -10,7 +10,9 @@ This tutorial covers Chia offers using the official wallet's graphical user inte
 
 See also our [command line tutorial](./offers-cli.md) and our [reference document](https://docs.chia.net/offers).
 
-> Note: This tutorial occasionally references a token called "CAT King Cole" (CKC). This token is for demonstration purposes only.
+:::note
+This tutorial occasionally references a token called "CAT King Cole" (CKC). This token is for demonstration purposes only.
+:::
 
 ## Contents:
 

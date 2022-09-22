@@ -11,9 +11,7 @@ By now, you should understand what Chialisp is and how you can use it to write p
 The previous guide detailed how to set up the testnet. You will need to follow it to continue.
 
 :::tip
-
 While this guide can be followed on the command-line like the first, we recommend writing more complicated Chialisp programs like this one that you plan on reusing in a text editor of your choice, then using the command-line to compile it and use the RPC commands.
-
 :::
 
 ## Password Puzzle
@@ -83,9 +81,7 @@ We will now use these concepts and the `password.clsp` file you just wrote to cr
 ### Creating the Coin
 
 :::danger
-
 Don't use a password that you use or plan to use for anything else, as this is not a secure smart coin. The most ideal choice for this is any number of random characters of your choice, such as `x7h2dDkE`. Just write it down for later.
-
 :::
 
 The first step is to curry the puzzle with the password's hash and get the puzzle hash and puzzle reveal:
@@ -125,9 +121,7 @@ cdv decode "txch1WalletAddress"
 ```
 
 :::caution
-
 Make sure you put the `0x` prefix in front of the wallet's puzzle hash in this command. It isn't required for the other commands, but in this case it will compile as a string without it, which you don't want.
-
 :::
 
 Then, get the solution in hex, with the password and your wallet puzzle hash:

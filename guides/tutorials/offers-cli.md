@@ -10,7 +10,9 @@ This tutorial covers Chia offers using the command line interface.
 
 See also our [GUI tutorial](./offers-gui.md) and our [reference document](https://docs.chia.net/offers).
 
-> Note: This tutorial occasionally references a token called "CAT King Cole" (CKC). This token is for demonstration purposes only.
+:::note
+This tutorial occasionally references a token called "CAT King Cole" (CKC). This token is for demonstration purposes only.
+:::
 
 ## Contents:
 

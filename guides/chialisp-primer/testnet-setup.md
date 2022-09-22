@@ -9,9 +9,7 @@ If you haven't already, you will need to [clone the Chia Blockchain repository](
 ## Setup
 
 :::tip
-
 If you are using Windows, we recommend PowerShell, and you may need to replace forward slashes `/` with backslashes `\`.
-
 :::
 
 1.  Open the `chia-blockchain` folder in a command prompt of your choice.
