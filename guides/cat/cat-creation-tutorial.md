@@ -1,5 +1,5 @@
 ---
-slug: 'cat-creation-tutorial'
+slug: '/cat-creation-tutorial'
 title: CAT Creation Tutorial
 ---
 
