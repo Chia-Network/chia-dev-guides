@@ -26,10 +26,18 @@ Commands that modify the blockchain include an optional fee. This fee can be spe
 
 ---
 
-### Install and configure Chia and the DataLayer
+:::info
+
+If you have already installed Chia version 1.6 or greater and started the reference client, you may skip to the next section: [Configure Chia to run DataLayer](#configure-chia-to-run-datalayer).
+
+:::
+
+### Install and Run Chia
 
 :::note
+
 Your firewall might give warnings when installing Chia. This is normal. Allow the installation to continue.
+
 :::
 
 1. Download the latest [Chia installer](https://www.chia.net/download/)
@@ -153,7 +161,9 @@ Start Chia from your _Applications_ folder:
 You will be shown a list of 24 words. Copy these words to a private location. Order is important.
 
 :::warning important
+
 Your seed phrase is all that is required to recover your wallet. If you lose your seed phrase, recovery will not be possible. If a bad actor gains access to your seed phrase, they'll be able to steal your Chia. Do not take a picture of your seed phrase or store it on a computer.
+
 :::
 
 <div style={{ textAlign: 'center' }}>
@@ -254,12 +264,24 @@ Restart any running chia services for changes to take effect
 11. Acquire some XCH. 0.01 XCH is a sufficient amount to get started.
 
 :::tip
+
 If you ever need to display your address, run `chia keys show`. This command will only output your public keys and address; your private keys and seed phrase will not be shown.
+
 :::
 
-12. Configure your router to forward port 8575 (data propagation server) to your local machine. To configure your router's settings, typically you will need enter `http://192.168.1.1` in a web browser, though this address varies for different routers. From your router's settings, locate the Port Forwarding section and add a rule to forward port 8575 to your local IP address.
+### Configure Chia to run DataLayer
 
-13. You will also need to configure your computer's firewall to allow connections on port 8575. This process is different for each OS:
+At this point, you should have installed and started Chia. You should also have a synced wallet with some XCH (0.01 XCH is sufficient to get started). You do _not_ need a synced full node.
+
+:::info
+
+You are recommended to complete steps 1 and 2 (port forwarding and firewall configuration) in order to run DataLayer. If you skip these steps, DataLayer might not run properly.
+
+:::
+
+1. Configure your router to forward port 8575 (data propagation server) to your local machine. To configure your router's settings, typically you will need enter `http://192.168.1.1` in a web browser, though this address varies for different routers. From your router's settings, locate the Port Forwarding section and add a rule to forward port 8575 to your local IP address.
+
+2. You will also need to configure your computer's firewall to allow connections on port 8575. This process is different for each OS:
 
 :::info Firewall setup
 
@@ -344,7 +366,9 @@ sudo pfctl -sr | grep 8575
 
 :::
 
-14. Start the DataLayer services:
+3. Start the DataLayer services from the GUI:
+
+(For CLI instructions, skip ahead to step 5.)
 
 <div style={{ textAlign: 'center' }}>
   <img
@@ -366,9 +390,10 @@ As shown in the above image:
 
 Finally, you need to restart Chia. Close the GUI and run steps 3 and 6 above. When Chia starts, it will automatically enable both of the DataLayer services.
 
-15. If the dot to the left of `WALLET` is green (indicating that your wallet is synced), then you may proceed. If it is still orange, then you need to wait for it turn green before continuing.
+4. If the dot to the left of `WALLET` is green (indicating that your wallet is synced), then you may proceed. If it is still orange, then you need to wait for it turn green before continuing.
 
 :::info
+
 Regardless of the status of `FULL NODE`, you may safely proceed with this tutorial:
 
 - Orange dot = full node is syncing
@@ -382,7 +407,52 @@ Regardless of the status of `FULL NODE`, you may safely proceed with this tutori
 </div>
 <br />
 
+5. Start the DataLayer services from the CLI
+
+(You can safely skip this step if you already started the DataLayer services from the GUI.)
+
+First, start the DataLayer service:
+
+```bash
+chia start data
+```
+
+Result:
+
+```bash
+chia_data_layer: started
+```
+
+Next, start the File Propagation Server:
+
+```bash
+chia start data_layer_http
+```
+
+```bash
+chia_data_layer_http: started
+```
+
 **Chia and the DataLayer are now installed and configured properly.**
+
+---
+
+## Note on Maximum Key and Value Lengths
+
+You may be wondering how much data DataLayer can handle. When testing locally, there are a few important points to consider:
+
+* There is no enforced limit on the length of DataLayer keys or values
+* However, your computer must have enough memory (and other resources) to store the keys and values it downloads. A Raspberry Pi with 4 GB of memory will not be able to support the same size data sets as a server with 512 GB of memory
+* Additionally, when adding a single key/value pair, the total size of the pair must fit into memory (the individual sizes of the key and value don't matter)
+* When running `update_data_store` to add multiple keys, the important metric is the total size of _all_ keys and values in the whole store. Individual keys and values within the same command are unimportant in this context
+* When discussing the lengths of keys and values, we always refer to the _hex_ values _after_ conversion from their original format
+* The amount of data in your request must be smaller than the value of `rpc_server_max_request_body_size`, a parameter located in `~/.chia/mainnet/config/config.yaml`. If you modify this setting, you must restart Chia in order for the change to take effect
+
+Keeping all of this in mind, **it is typically safe to insert data sets of up to 50 MiB** (no guarantees, though). We expect to support larger sizes in future versions. For now, however, we have only done minimal testing on larger data sets. For example, using `curl` to add keys and values to an empty tree required the following lengths of time:
+
+* 100 MiB -- 2 to 4 seconds
+* 1 GiB -- 45 to 60 seconds
+* 2 GiB -- failed to insert
 
 ---
 
@@ -727,7 +797,7 @@ To "advertise" your mirror on-chain you use the `add_mirror` command. This comma
 
 - `i` -- Your root's ID
 - `u` -- The URL of your mirror. You can reuse this argument, as shown in the example below
-- `a` -- The amount (in mojos) to spend to create the mirror. In theory, mirrors with a higher `amount` will be prioritized. Minimum `amount` is 0
+- `a` -- The amount (in mojos) that will be locked into the mirror while it exists. In theory, a system could prioritize mirrors according to how much was spent to create them. The `amount` will be returned to the creator when the mirror is deleted. Minimum `amount` is 0
 
 <details>
 <summary>add_mirror example</summary>
