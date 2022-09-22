@@ -788,7 +788,7 @@ To "advertise" your mirror on-chain you use the `add_mirror` command. This comma
 
 - `i` -- Your root's ID
 - `u` -- The URL of your mirror. You can reuse this argument, as shown in the example below
-- `a` -- The amount (in mojos) to spend to create the mirror. In theory, mirrors with a higher `amount` will be prioritized. Minimum `amount` is 0
+- `a` -- The amount (in mojos) that will be locked into the mirror while it exists. In theory, a system could prioritize mirrors according to how much was spent to create them. The `amount` will be returned to the creator when the mirror is deleted. Minimum `amount` is 0
 
 <details>
 <summary>add_mirror example</summary>
