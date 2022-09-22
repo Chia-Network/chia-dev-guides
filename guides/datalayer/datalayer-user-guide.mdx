@@ -35,7 +35,9 @@ If you have already installed Chia version 1.6 or greater and started the refere
 ### Install and Run Chia
 
 :::note
+
 Your firewall might give warnings when installing Chia. This is normal. Allow the installation to continue.
+
 :::
 
 1. Download the latest [Chia installer](https://www.chia.net/download/)
@@ -159,7 +161,9 @@ Start Chia from your _Applications_ folder:
 You will be shown a list of 24 words. Copy these words to a private location. Order is important.
 
 :::warning important
+
 Your seed phrase is all that is required to recover your wallet. If you lose your seed phrase, recovery will not be possible. If a bad actor gains access to your seed phrase, they'll be able to steal your Chia. Do not take a picture of your seed phrase or store it on a computer.
+
 :::
 
 <div style={{ textAlign: 'center' }}>
@@ -260,7 +264,9 @@ Restart any running chia services for changes to take effect
 11. Acquire some XCH. 0.01 XCH is a sufficient amount to get started.
 
 :::tip
+
 If you ever need to display your address, run `chia keys show`. This command will only output your public keys and address; your private keys and seed phrase will not be shown.
+
 :::
 
 ### Configure Chia to run DataLayer
@@ -268,7 +274,9 @@ If you ever need to display your address, run `chia keys show`. This command wil
 At this point, you should have installed and started Chia. You should also have a synced wallet with some XCH (0.01 XCH is sufficient to get started). You do _not_ need a synced full node.
 
 :::info
+
 You are recommended to complete steps 1 and 2 (port forwarding and firewall configuration) in order to run DataLayer. If you skip these steps, DataLayer might not run properly.
+
 :::
 
 1. Configure your router to forward port 8575 (data propagation server) to your local machine. To configure your router's settings, typically you will need enter `http://192.168.1.1` in a web browser, though this address varies for different routers. From your router's settings, locate the Port Forwarding section and add a rule to forward port 8575 to your local IP address.
@@ -385,6 +393,7 @@ Finally, you need to restart Chia. Close the GUI and run steps 3 and 6 above. Wh
 4. If the dot to the left of `WALLET` is green (indicating that your wallet is synced), then you may proceed. If it is still orange, then you need to wait for it turn green before continuing.
 
 :::info
+
 Regardless of the status of `FULL NODE`, you may safely proceed with this tutorial:
 
 - Orange dot = full node is syncing
