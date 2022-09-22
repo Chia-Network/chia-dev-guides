@@ -428,6 +428,25 @@ chia_data_layer_http: started
 
 ---
 
+## Note on Maximum Key and Value Lengths
+
+You may be wondering how much data DataLayer can handle. When testing locally, there are a few important points to consider:
+
+* There is no enforced limit on the length of DataLayer keys or values
+* However, your computer must have enough memory (and other resources) to store the keys and values it downloads. A Raspberry Pi with 4 GB of memory will not be able to support the same size data sets as a server with 512 GB of memory
+* Additionally, when adding a single key/value pair, the total size of the pair must fit into memory (the individual sizes of the key and value don't matter)
+* When running `update_data_store` to add multiple keys, the important metric is the total size of _all_ keys and values in the whole store. Individual keys and values within the same command are unimportant in this context
+* When discussing the lengths of keys and values, we always refer to the _hex_ values _after_ conversion from their original format
+* The amount of data in your request must be smaller than the value of `rpc_server_max_request_body_size`, a parameter located in `~/.chia/mainnet/config/config.yaml`. If you modify this setting, you must restart Chia in order for the change to take effect
+
+Keeping all of this in mind, **it is typically safe to insert data sets of up to 50 MiB** (no guarantees, though). We expect to support larger sizes in future versions. For now, however, we have only done minimal testing on larger data sets. For example, using `curl` to add keys and values to an empty tree required the following lengths of time:
+
+* 100 MiB -- 2 to 4 seconds
+* 1 GiB -- 45 to 60 seconds
+* 2 GiB -- failed to insert
+
+---
+
 ## Using DataLayer
 
 Chia DataLayer doesn't have a GUI. The commands in this tutorial will use the command line interface (CLI). As a reminder, here is the complete reference for the CLI, as well as all available Remote Procedure Calls (RPCs):
