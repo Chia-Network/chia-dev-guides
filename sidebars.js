@@ -111,6 +111,7 @@ const sidebars = {
         'tutorials/offers-cli',
       ],
     },
+    'datalayer/datalayer-user-guide',
   ],
 };
 
