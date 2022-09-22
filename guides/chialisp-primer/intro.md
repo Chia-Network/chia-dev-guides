@@ -1,6 +1,6 @@
 ---
 id: chialisp-primer-intro
-slug: /chialisp-intro
+slug: /
 title: 1. Intro to Chialisp
 ---
 
