@@ -69,6 +69,7 @@ const sidebars = {
       },
       items: ['cat/cat-creation-tutorial'],
     },
+    'datalayer/datalayer-user-guide',
     {
       type: 'category',
       label: 'Crash Course',
@@ -111,7 +112,6 @@ const sidebars = {
         'tutorials/offers-cli',
       ],
     },
-    'datalayer/datalayer-user-guide',
   ],
 };
 
