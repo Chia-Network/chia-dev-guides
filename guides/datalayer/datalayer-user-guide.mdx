@@ -26,7 +26,13 @@ Commands that modify the blockchain include an optional fee. This fee can be spe
 
 ---
 
-### Install and configure Chia and the DataLayer
+:::info
+
+If you have already installed Chia version 1.6 or greater and started the reference client, you may skip to the next section: [Configure Chia to run DataLayer](#configure-chia-to-run-datalayer).
+
+:::
+
+### Install and Run Chia
 
 :::note
 Your firewall might give warnings when installing Chia. This is normal. Allow the installation to continue.
@@ -257,9 +263,17 @@ Restart any running chia services for changes to take effect
 If you ever need to display your address, run `chia keys show`. This command will only output your public keys and address; your private keys and seed phrase will not be shown.
 :::
 
-12. Configure your router to forward port 8575 (data propagation server) to your local machine. To configure your router's settings, typically you will need enter `http://192.168.1.1` in a web browser, though this address varies for different routers. From your router's settings, locate the Port Forwarding section and add a rule to forward port 8575 to your local IP address.
+### Configure Chia to run DataLayer
 
-13. You will also need to configure your computer's firewall to allow connections on port 8575. This process is different for each OS:
+At this point, you should have installed and started Chia. You should also have a synced wallet with some XCH (0.01 XCH is sufficient to get started). You do _not_ need a synced full node.
+
+:::info
+You are recommended to complete steps 1 and 2 (port forwarding and firewall configuration) in order to run DataLayer. If you skip these steps, DataLayer might not run properly.
+:::
+
+1. Configure your router to forward port 8575 (data propagation server) to your local machine. To configure your router's settings, typically you will need enter `http://192.168.1.1` in a web browser, though this address varies for different routers. From your router's settings, locate the Port Forwarding section and add a rule to forward port 8575 to your local IP address.
+
+2. You will also need to configure your computer's firewall to allow connections on port 8575. This process is different for each OS:
 
 :::info Firewall setup
 
@@ -344,7 +358,9 @@ sudo pfctl -sr | grep 8575
 
 :::
 
-14. Start the DataLayer services:
+3. Start the DataLayer services from the GUI:
+
+(For CLI instructions, skip ahead to step 5.)
 
 <div style={{ textAlign: 'center' }}>
   <img
@@ -366,7 +382,7 @@ As shown in the above image:
 
 Finally, you need to restart Chia. Close the GUI and run steps 3 and 6 above. When Chia starts, it will automatically enable both of the DataLayer services.
 
-15. If the dot to the left of `WALLET` is green (indicating that your wallet is synced), then you may proceed. If it is still orange, then you need to wait for it turn green before continuing.
+4. If the dot to the left of `WALLET` is green (indicating that your wallet is synced), then you may proceed. If it is still orange, then you need to wait for it turn green before continuing.
 
 :::info
 Regardless of the status of `FULL NODE`, you may safely proceed with this tutorial:
@@ -381,6 +397,32 @@ Regardless of the status of `FULL NODE`, you may safely proceed with this tutori
   <img src="/img/data_layer/10_synced.png" alt="Synced wallet" />
 </div>
 <br />
+
+5. Start the DataLayer services from the CLI
+
+(You can safely skip this step if you already started the DataLayer services from the GUI.)
+
+First, start the DataLayer service:
+
+```bash
+chia start data
+```
+
+Result:
+
+```bash
+chia_data_layer: started
+```
+
+Next, start the File Propagation Server:
+
+```bash
+chia start data_layer_http
+```
+
+```bash
+chia_data_layer_http: started
+```
 
 **Chia and the DataLayer are now installed and configured properly.**
 
