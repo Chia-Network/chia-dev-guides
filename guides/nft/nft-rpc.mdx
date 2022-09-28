@@ -59,7 +59,7 @@ chia rpc wallet create_new_wallet '{"wallet_type": "nft_wallet"}'
 :::
 
 :::info
-If you already created an NFT wallet using the CLI command from the previous section, you can skip to the next section, [Obtain an image and its hash](#obtain-an-image-and-its-hash "Obtain an image and its hash").
+If you already created an NFT wallet using the CLI command from the previous section, you can skip to the next section, [Obtain an image and its hash](#obtain-an-image-and-its-hash 'Obtain an image and its hash').
 :::
 
 In this section, we'll start with a brand new wallet fingerprint. However, you'll still need an existing DID to set up a new DID with this RPC.
@@ -1114,7 +1114,7 @@ That should produce an output similar to this:
 
 After you are comfortable with creating and using DIDs and NFTs on the testnet, you may wish to move to mainnet. Please keep in mind that there are extra risks inherent to publishing code on a public blockchain. For example, an NFT's data, metadata and license hashes are not allowed to change after minting. Proceed with caution.
 
-That said, the code is the same for both testnet and mainnet usage. You can continue to run off of the release/1.4.0 code branch, which will eventually be merged into main.
+That said, the code is the same for both testnet and mainnet usage.
 
 When you are ready to move to mainnet, the first step is to run `chia configure -t false`, which will instruct Chia to switch your configuration to mainnet.
 

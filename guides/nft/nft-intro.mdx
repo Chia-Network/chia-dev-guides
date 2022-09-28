@@ -13,10 +13,10 @@ This document will guide you through the process of creating DIDs that conform t
 
 Detailed instructions for each of the commands from this tutorial are available from the following references on Chia Docs:
 
-- [DID CLI reference](https://docs.chia.net/docs/13cli/did_cli "Chia DIDs: CLI reference")
-- [NFT CLI reference](https://docs.chia.net/docs/13cli/nft_cli "Chia NFTs: CLI reference")
-- [DID RPC reference](https://docs.chia.net/docs/12rpcs/did_rpcs "Chia DIDs: RPC reference")
-- [NFT RPC reference](https://docs.chia.net/docs/12rpcs/nft_rpcs "Chia NFTs: RPC reference")
+- [DID CLI reference](https://docs.chia.net/docs/13cli/did_cli 'Chia DIDs: CLI reference')
+- [NFT CLI reference](https://docs.chia.net/docs/13cli/nft_cli 'Chia NFTs: CLI reference')
+- [DID RPC reference](https://docs.chia.net/docs/12rpcs/did_rpcs 'Chia DIDs: RPC reference')
+- [NFT RPC reference](https://docs.chia.net/docs/12rpcs/nft_rpcs 'Chia NFTs: RPC reference')
 
 :::info
 As detailed in our [CLVM reference](https://chialisp.com/docs/clvm/lang_reference#evaluating-cost-for-a-typical-transaction), the CLVM cost for an XCH transaction with two inputs and two outputs is around 17 million.
@@ -38,7 +38,7 @@ The maximum CLVM cost in a transaction block is 11 billion. If you plan to mint 
 <details>
   <summary>Note about Python <code>RuntimeError</code> on Windows</summary>
 
-If you are running on Windows, you might occasionally see a Python Runtime Error. This is a [known issue in Python](https://github.com/aio-libs/aiohttp/issues/4324 "More info about this issue") and can be safely ignored. For example:
+If you are running on Windows, you might occasionally see a Python Runtime Error. This is a [known issue in Python](https://github.com/aio-libs/aiohttp/issues/4324 'More info about this issue') and can be safely ignored. For example:
 
 ```bash
 chia stop -d all
@@ -59,20 +59,20 @@ daemon: {'ack': True, 'command': 'exit', 'data': {'success': True}, 'destination
 
 </details>
 
-## Install and configure Chia (testnet)
+## Install Testnet
 
-This section will show you how to download and install Chia from the `release/1.4.0` branch, configure your installation to run on the testnet, sync your node, and obtain some TXCH. If you have already done all of these things, you can skip to the next section, [Create an NFT wallet (CLI)](#create-an-nft-wallet-cli "Create an NFT wallet (CLI)").
+This section will show you how to install the latest version of Chia, configure your installation to run on the testnet, sync your node, and obtain some TXCH. If you have already done all of these things, you can skip to the next section, [Create an NFT wallet (CLI)](#create-an-nft-wallet-cli 'Create an NFT wallet (CLI)').
 
 :::tip
 Your firewall might give warnings when installing Chia. This is normal. Allow the installations to continue.
 :::
 
-We'll be running on Chia's testnet. You can either run on a full node, or use the light wallet. A full node takes longer to sync (see detailed instructions below), but once it is synced, it is generally faster than the light wallet. You also have the option of starting the light wallet and switching to the full node after it is synced.
+You can either run on a full node, or use the light wallet. A full node takes longer to sync (see detailed instructions below), but once it is synced, it is generally faster than the light wallet. You also have the option of starting the light wallet and switching to the full node after it is synced.
 
-If you wish to run a full testnet node, you can safely download a copy of the database. **Do not attempt this on mainnet.** [Click here to begin the download.](https://download.chia.net/testnet10/blockchain_v2_testnet10.sqlite.gz "Chia's testnet10 database download site") Save the file to your Downloads folder.
+If you wish to run a full testnet node, you can safely [download a copy of the database](https://download.chia.net/testnet10/blockchain_v2_testnet10.sqlite.gz) and save the file to your downloads folder. Make sure you have enough free space before beginning the download.
 
-:::note
-The file you will download is around 20 GB, compressed. Uncompressed, it will be around 40 GB. Make sure you have at least this much free space, and ideally 60 GB.
+:::danger
+Never download the mainnet database, since you can never fully trust the source you are getting it from. Only do this on testnet, and from the official download link. This is for development purposes only.
 :::
 
 You may continue with the next steps while the download is in progress.
@@ -85,24 +85,12 @@ chia stop -d all
 
 Ensure there are no `chia` related processes running. If you are unsure, you may want to uninstall Chia before continuing.
 
-The code to be released in version 1.4 (including NFTs and DIDs) is in the [release/1.4.0](https://github.com/Chia-Network/chia-blockchain/tree/release/1.4.0 "release/1.4.0 branch") branch of the `chia-blockchain` repository. You'll need to download this branch.
+### Using the installer
 
-:::note
-If you don't already have the `git` CLI tool installed, [follow these instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to install it
-:::
-
-Create a new directory and download the `release/1.4.0` branch of the `chia-blockchain` repository into it:
-
-```bash
-mkdir release_1_4_0
-cd release_1_4_0
-git clone -b release/1.4.0 --recurse-submodules https://github.com/Chia-Network/chia-blockchain.git
-```
-
-Install Chia:
+You can download the latest version of Chia using the official installer on the [Chia download page](https://www.chia.net/downloads).
 
 :::info
-If, rather than following the steps from this tutorial, you want to run a binary Chia installer, here's how to set an alias and switch to using the testnet:
+If you want to run a binary Chia installer, here's how to create an alias and switch to using the testnet:
 
 ```mdx-code-block
 <Tabs
@@ -114,7 +102,7 @@ If, rather than following the steps from this tutorial, you want to run a binary
   <TabItem value="windows">
 ```
 
-```powershell
+```bash
 Set-Alias -Name chia "C:\Users\<username>\AppData\Local\chia-blockchain\app-<version>\resources\app.asar.unpacked\daemon\chia.exe"
 chia configure -t true
 ```
@@ -136,6 +124,14 @@ chia configure -t true
 
 :::
 
+### Installing from source
+
+You can also download Chia from source instead, which makes using the command-line easier.
+
+:::note
+If you don't already have the `git` CLI tool installed, [follow these instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to install it
+:::
+
 ```mdx-code-block
 <Tabs
   defaultValue="windows"
@@ -146,7 +142,8 @@ chia configure -t true
   <TabItem value="windows">
 ```
 
-```powershell
+```bash
+git clone https://github.com/Chia-Network/chia-blockchain chia-blockchain
 cd chia-blockchain
 .\Install.ps1
 .\venv\Scripts\Activate.ps1
@@ -159,6 +156,7 @@ chia init
 ```
 
 ```bash
+git clone https://github.com/Chia-Network/chia-blockchain chia-blockchain
 cd chia-blockchain
 sh install.sh
 . ./activate
@@ -185,17 +183,13 @@ Check the version of the Chia software:
 chia version
 ```
 
-For example, as of writing the current version is:
-
-```text
-1.3.6.dev682
-```
-
-**IMPORTANT:** Run the following command to set up Chia to use the testnet:
+Run the following command to set up Chia to use the testnet:
 
 ```bash
 chia configure --testnet true
 ```
+
+## Configuration
 
 We recommend that you use `INFO` level logging instead of the default `WARNING` level. To do this, run:
 
@@ -203,7 +197,7 @@ We recommend that you use `INFO` level logging instead of the default `WARNING` 
 chia configure --set-log-level INFO
 ```
 
-We recommend that you use a public/private key pair for testnet that is separate from your mainnet keys. If you don't have a separate set of testnet keys, generate them:
+We recommend that you use a key pair for testnet that is separate from your mainnet keys. If you don't have a separate set of testnet keys, generate them:
 
 ```bash
 chia keys generate
