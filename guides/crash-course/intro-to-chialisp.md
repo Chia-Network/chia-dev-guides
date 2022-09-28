@@ -250,6 +250,21 @@ Now, we can execute the file by name:
 run first.clsp
 ```
 
+This output will be exactly the same as before, but our code is a bit easier to manage.
+
+We will still execute the output like so:
+
+```
+brun "(a (i (> (+ 2 5) (q . 100)) (q 1 . "large") (q 1 . "small")) 1)" "(50 51)"
+
+```
+
+And, using nesting, `$()` will execute anything within `()` first. We can simplify further with:
+
+```
+brun "$(run first.clsp)" "(50 51)"
+```
+
 ## Defining Functions
 
 A function will give a name to some lines of code, often taking an input and returning a result. Let's create a new file to practice functions inside of Chialisp.
