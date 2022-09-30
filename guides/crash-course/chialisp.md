@@ -66,6 +66,12 @@ Run the following to see what commands it provides:
 cdv
 ```
 
+For example, a Chialisp file can be built like so:
+
+```bash
+cdv clsp build something.clsp
+```
+
 ### Run
 
 You also have access to the `run` command that can be used to compile Chialisp code directly.
@@ -105,30 +111,30 @@ If you need to pass external parameters into the program, you will need to first
 For example, let's say that the `run` command produced the following CLVM bytecode output:
 
 ```chialisp
-(+ 2 5)
+2
 ```
 
 You could run it like so:
 
 ```bash
-brun '(+ 2 5)' '(100 200)'
+brun '2' '(42)'
 ```
 
 Which should produce the following output:
 
 ```chialisp
-300
+42
 ```
+
+So Chialisp can calculate the [meaning of life](<https://en.wikipedia.org/wiki/42_(number)#The_Hitchhiker's_Guide_to_the_Galaxy>)!
 
 ---
 
-:::info
-The program `(+ 2 5)` in this case does not mean to add the numbers 2 and 5, but rather to access the input parameters. This is an advanced concept that is covered in more detail on the [Chialisp website](https://chialisp.com), and will not be necessary to understand for this course.
-:::
+## Writing a Chialisp Puzzle {#writing-puzzle}
 
-## Writing a Chialisp Program (Puzzle)
+Let's start off with some terminology. Firstly, coins on the Chia blockchain use Chialisp programs named **puzzles** to secure the value stored within. The parameters to a puzzle are called its **solution**.
 
-First off, in Chialisp a program is called a **puzzle**. To create larger puzzles we will use the `mod` operator. The `mod` operator will allow us to take arguments passed in to customize the functionality / result of executing the puzzle. These passed in arguments in Chialisp are known as the **solution**.
+To create puzzles that require a solution, we will use the `mod` operator. It allows us to take arguments passed in to customize the functionality and result of the puzzle.
 
 A very basic example would be:
 
@@ -143,9 +149,9 @@ Which should return the following result:
 ```
 
 :::info
-What in the world is `(+ 2 5)` that `run` returned? This is an example of compiled Chialisp (bytecode) that is then executed by the Chialisp Virtual Machine (CLVM). It is not very human-readable, but don't worry about that as you are not required to understand CLVM bytecode.
+What in the world is `(+ 2 5)` that `run` returned? This is an example of Chialisp bytecode that is later executed by the Chialisp Virtual Machine (CLVM). It is not very human-readable, but don't worry about that, as you are not required to understand CLVM bytecode in order to use it.
 
-Our first command, `run`, will take Chialisp code and compile it. Next, `brun` will take chialisp bytecode and execute it.
+Our first command, `run`, will take Chialisp code and compile it to bytecode. Next, `brun` will take that bytecode and execute it.
 :::
 
 We will then run this puzzle with the `brun` command, followed by a solution of your choice:
@@ -160,7 +166,7 @@ Which should return the following result:
 15
 ```
 
-:::tip
+:::info reminder
 We are now using `mod` to demand a solution for our puzzle. Whenever this is the case, you will be required to use the `brun` command after `run`.
 :::
 
@@ -178,9 +184,9 @@ Which should return the following result:
 27
 ```
 
-At this point you have a working Chialisp puzzle that will take inputs and give back an output! Congrats!
+At this point you have a working Chialisp puzzle that will take inputs and give back an output. Congrats on making it this far!
 
-## Comparisons and If Statements
+## Comparisons and If
 
 Going with a contrived example, let's say we wanted to add two numbers and return `large` if they were `> 100`, or `small` if they were `<= 100`.
 
@@ -190,7 +196,7 @@ You can compare two values like so:
 (> arg1 arg2)
 ```
 
-If `arg1` is larger than `arg2`, this returns `true`.
+If `arg1` is larger than `arg2`, this returns `1`. Otherwise, the output is `()`, which is equivalent to `0`.
 
 You can then use an if statement to return one of two different things depending on the result.
 
@@ -201,19 +207,19 @@ You can then use an if statement to return one of two different things depending
 A concrete example of an `if` would be:
 
 ```bash
-run '(if 0 "its true" "its false")'
+run '(if 1 "true" "false")'
 ```
 
 Which should return the following result:
 
 ```chialisp
-"its false"
+"true"
 ```
 
 Now, we will add `arg1` and `arg2` with the code `(+ arg1 arg2)` and compare it to the literal value `100`. This comparison will determine whether the `if` is `true` or `false`. We end up with:
 
 ```bash
-run '(mod (arg1 arg2) (if (> (+ arg1 arg2) 100) 'large' 'small'))'
+run '(mod (arg1 arg2) (if (> (+ arg1 arg2) 100) "large" "small"))'
 ```
 
 Which should return the following result:
