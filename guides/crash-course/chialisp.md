@@ -8,6 +8,10 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 ```
 
+For this section of the course, you will learn how to set up your development environment, write Chialisp code, and execute it on the command-line.
+
+## Development Environment
+
 To get started with Chialisp, you will first want to [install Chia Dev Tools](https://github.com/Chia-Network/chia-dev-tools).
 
 Here is a summary of the instructions:
@@ -49,59 +53,77 @@ cdv --version
 This will install the Chia Dev Tools within your activated virtual environment. You'll want to make sure this virtual environment is activated before working on Chialisp. You'll see a `(venv)` on the left of your terminal prompt.
 
 :::info
-Virtual environments allow you to install specific Python packages that will only be usable with the environment is active. This allows you to switch between different environments for different projects or if you just want to use different software versions.
+Virtual environments allow you to install specific Python packages that will only be usable with the environment that is currently active. This allows you to switch between different environments for different projects, or if you just want to use different software versions.
 :::
 
-You should now get a usage response when using `cdv`:
+### Chia Dev Tools
+
+The `cdv` command provides a set of useful commands for building and running Chialisp programs, as well as some utilities for deploying smart coins on the Chia blockchain, which we will cover later on.
+
+Run the following to see what commands it provides:
 
 ```bash
 cdv
 ```
 
-Response:
+### Run
 
-```
-Usage: cdv [OPTIONS] COMMAND [ARGS]...
+You also have access to the `run` command that can be used to compile Chialisp code directly.
 
-  Dev tooling for Chia development
+:::note
+If Chialisp code doesn't depend on any external parameters, the compiler will simplify it to the smallest form it can, which often means that this command will return the final output of the program.
 
-Options:
-  --version   Show the version and exit.
-  -h, --help  Show this message and exit.
+If this is the case, you can skip the `brun` command.
+:::
 
-Commands:
-  clsp     Commands to use when developing with chialisp
-  decode   Decode a bech32m address to a puzzle hash
-  encode   Encode a puzzle hash to a bech32m address
-  hash     SHA256 hash UTF-8 strings or bytes (use 0x prefix for bytes)
-  inspect  Inspect various data structures
-  rpc      Make RPC requests to a Chia full node
-  sim      Configure and make requests to a Chia Simulator Full Node
-  test     Run the local test suite (located in ./tests)
-```
-
-You will also now have a `run` command that can be issued directly.
-
-```bash
-run
-```
-
-By itself, `run` will only return `()`, but you can also pass a valid Chialisp program to execute it. Here is an example:
+Run the following command:
 
 ```bash
 run '(+ 2 3)'
 ```
 
-Response:
+Which should return the following result:
 
 ```chialisp
 5
 ```
 
-:::info
-The syntax (+ 2 3) may look confusing. In Chialisp, we place the operator first, followed by the operands. This is known as **prefix notation**. Think of this as the equivalent to `2 + 3` in most other programming languages. or regular math :).
+---
 
-It is set up this way as every program in Chialisp is written as a list, where the first item is an operator. `(+ 2 3)` is a list of three elements with the first being the `+` operator, thus it's a valid Chialisp program.
+:::info
+The syntax `(+ 2 3)` may look confusing. In Chialisp, we place the operator first, followed by the operands. This is known as **prefix notation**. Think of this as the equivalent to `2 + 3` in math and most other programming languages.
+
+It is set up this way because every program in Chialisp is written as a list, where the first item is the operator. `(+ 2 3)` is a list of three elements with the first being the `+` operator, and thus it's a valid Chialisp program.
+:::
+
+### Brun
+
+The `brun` command is different from the `run` command in that it doesn't compile code. Instead, it takes the result of the `run` command and executes it on the Chialisp Virtual Machine (CLVM) directly.
+
+If you need to pass external parameters into the program, you will need to first compile it with `run`, then use the `brun` command with the parameters.
+
+For example, let's say that the `run` command produced the following CLVM bytecode output:
+
+```chialisp
+(+ 2 5)
+```
+
+You could run it like so:
+
+```bash
+brun '(+ 2 5)' '(100 200)'
+```
+
+Which should produce the following output:
+
+```chialisp
+300
+```
+
+---
+
+:::info
+The program `(+ 2 5)` in this case does not mean to add the numbers 2 and 5, but rather to access the input parameters. This is an advanced concept that is covered in more detail on the [Chialisp website](https://chialisp.com), and will not be necessary to understand for this course.
 :::
 
 ## Writing a Chialisp Program (Puzzle)
@@ -114,7 +136,7 @@ A very basic example would be:
 run '(mod (arg1 arg2) (+ arg1 arg2))'
 ```
 
-Response:
+Which should return the following result:
 
 ```bash
 (+ 2 5)
@@ -132,7 +154,7 @@ We will then run this puzzle with the `brun` command, followed by a solution of 
 brun '(+ 2 5)' '(10 5)'
 ```
 
-Response:
+Which should return the following result:
 
 ```chialisp
 15
@@ -150,7 +172,7 @@ You can run it again with a different solution:
 brun '(+ 2 5)' '(20 7)'
 ```
 
-Response:
+Which should return the following result:
 
 ```chialisp
 27
@@ -182,7 +204,7 @@ A concrete example of an `if` would be:
 run '(if 0 "its true" "its false")'
 ```
 
-Response:
+Which should return the following result:
 
 ```chialisp
 "its false"
@@ -194,7 +216,7 @@ Now, we will add `arg1` and `arg2` with the code `(+ arg1 arg2)` and compare it 
 run '(mod (arg1 arg2) (if (> (+ arg1 arg2) 100) 'large' 'small'))'
 ```
 
-Response:
+Which should return the following result:
 
 ```chialisp
 (a (i (> (+ 2 5) (q . 100)) (q 1 . "large") (q 1 . "small")) 1)
@@ -206,7 +228,7 @@ Next, let's put this bytecode through `brun`, giving it a solution:
 brun '(a (i (> (+ 2 5) (q . 100)) (q 1 . "large") (q 1 . "small")) 1)' '(10 90)'
 ```
 
-Response:
+Which should return the following result:
 
 ```chialisp
 small
@@ -218,7 +240,7 @@ Now, again with a different solution:
 brun '(a (i (> (+ 2 5) (q . 100)) (q 1 . "large") (q 1 . "small")) 1)' '(10 91)'
 ```
 
-Response:
+Which should return the following result:
 
 ```chialisp
 large
