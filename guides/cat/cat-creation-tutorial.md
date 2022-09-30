@@ -66,7 +66,7 @@ First, we will install Chia.
 <Tabs groupId='os'>
 <TabItem value="mac" label="Linux/macOS">
 
-```
+```bash
 git clone https://github.com/Chia-Network/chia-blockchain.git -b main --recurse-submodules
 cd chia-blockchain
 sh install.sh
@@ -80,7 +80,7 @@ sh install-gui.sh
 
 <TabItem value="windows" label="Windows">
 
-```
+```bash
 git clone https://github.com/Chia-Network/chia-blockchain.git -b main --recurse-submodules
 cd chia-blockchain
 .\Install.ps1
@@ -94,7 +94,7 @@ chia init --fix-ssl-permissions
 </Tabs>
 At this point, you can switch to testnet.
 
-```
+```bash
 chia configure -t true
 ```
 
@@ -103,7 +103,7 @@ chia configure -t true
 <Tabs groupId='os'>
 <TabItem value="mac" label="Linux/macOS">
 
-```
+```bash
 cd chia-blockchain/chia-blockchain-gui
 npm run electron &
 ```
@@ -112,7 +112,7 @@ npm run electron &
 
 <TabItem value="windows" label="Windows">
 
-```
+```bash
 cd chia-blockchain/chia-blockchain-gui
 npm run electron
 ```
@@ -138,13 +138,13 @@ Now we will set up the CAT admin tool, which will help you to issue your CATs:
 
 Your Linux installation may not come with Python's development tools installed by default. To be sure that these tools are installed, run:
 
-```
+```bash
 sudo apt-get install -y build-essential python3-dev
 ```
 
 Next, we will install the CAT admin tool:
 
-```
+```bash
 git clone https://github.com/Chia-Network/CAT-admin-tool.git -b main --recurse-submodules
 cd CAT-admin-tool
 python3 -m venv venv
@@ -157,7 +157,7 @@ pip install .
 
 <TabItem value="windows" label="Windows">
 
-```
+```bash
 git clone https://github.com/Chia-Network/CAT-admin-tool.git -b main --recurse-submodules
 cd CAT-admin-tool.
 python -m venv venv
@@ -205,7 +205,7 @@ Take note of your **Receive Address** in the Chia GUI. You'll need it for the ne
 
 After confirming you are within the admin tool directory, run:
 
-```
+```bash
 cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <mojos> -m <fee in mojos> --as-bytes --select-coin
 ```
 
@@ -217,7 +217,7 @@ The `--select-coin` flag will choose a coin from your wallet for issuing your to
 
 Run the same command again, this time removing the `--select-coin` flag and adding a new flag, `--curry <Coin ID>`. It’s very important to preface the coin ID with `0x` here to make CLVM interpret the value as bytes and not a string. Here’s the full command to run:
 
-```
+```bash
 cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <mojos> -m <fee in mojos> --as-bytes --curry 0x<Coin ID>`
 ```
 
@@ -257,7 +257,7 @@ Run `chia keys show`. Take note of your **fingerprint** and **master public key*
 
 After confirming you are within the admin tool directory, run:
 
-```
+```bash
 cats --tail ./reference_tails/delegated_tail.clsp.hex --curry 0x<Master public key> --send-to <wallet address> -a <XCH mojos> -m <fee in XCH mojos> --as-bytes --select-coin
 ```
 
@@ -267,7 +267,7 @@ Now that you have a coin, you can create a full delegated TAIL. In our case, the
 
 Run
 
-```
+```bash
 cdv clsp curry ./reference_tails/genesis_by_coin_id.clsp.hex -a 0x<Coin ID>
 ```
 
@@ -275,13 +275,13 @@ Keep in mind the 0x before the coin ID is necessary. The result of this command 
 
 Run the same command again, with the additional `--treehash` flag. This will give you the **treehash** of the puzzle you just created:
 
-```
+```bash
 cdv clsp curry ./reference_tails/genesis_by_coin_id.clsp.hex -a 0x<Coin ID> --treehash
 ```
 
 Sign the treehash (you do _not_ need 0x here) with the fingerprint you noted above by running this command:
 
-```
+```bash
 chia keys sign -d <treehash> -f <Fingerprint> -t m -b
 ```
 
@@ -289,7 +289,7 @@ The last two flags are for the path and bytes. Make sure the resulting public ke
 
 Run the same `cats` command as above, but remove the `--select-coin` flag and add the `--solution` flag, passing in the delegated puzzle you just calculated. This must be surrounded by quotes and parenthesis and it must contain a solution, which we'll leave empty. Add the `--signature` flag as well:
 
-```
+```bash
 cats --tail ./reference_tails/delegated_tail.clsp.hex --curry 0x<Master public key> --send-to <wallet address> -a <amount in mojos to issue> -m <fee in XCH mojos> --as-bytes --solution "(<delegated puzzle> ())" --signature <Signature>
 ```
 
@@ -321,7 +321,7 @@ That said, issuing a CAT to mainnet isn't very different from issuing one to tes
 
 When you are ready to issue your CAT to mainnet, the first step is to switch to mainnet.
 
-```
+```bash
 chia configure -t false
 ```
 

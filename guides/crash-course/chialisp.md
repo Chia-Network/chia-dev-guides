@@ -8,7 +8,9 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 ```
 
-To get started with Chialisp you will first want to install the Chia Dev Tools. You can refer to the [Chia Dev Tools repository](https://github.com/Chia-Network/chia-dev-tools) for more information, but the summary of the installation is here:
+To get started with Chialisp, you will first want to [install Chia Dev Tools](https://github.com/Chia-Network/chia-dev-tools).
+
+Here is a summary of the instructions:
 
 ```mdx-code-block
 <Tabs groupId="OS"
@@ -20,7 +22,7 @@ values={[
 <TabItem value="windows">
 ```
 
-```
+```bash
 mkdir learning
 cd learning
 py -m venv venv
@@ -32,7 +34,7 @@ cdv --version
   </TabItem>
   <TabItem value="linux-macos">
 
-```
+```bash
 mkdir learning
 cd learning
 python3 -m venv venv
@@ -52,7 +54,7 @@ Virtual environments allow you to install specific Python packages that will onl
 
 You should now get a usage response when using `cdv`:
 
-```
+```bash
 cdv
 ```
 
@@ -80,19 +82,19 @@ Commands:
 
 You will also now have a `run` command that can be issued directly.
 
-```
+```bash
 run
 ```
 
 By itself, `run` will only return `()`, but you can also pass a valid Chialisp program to execute it. Here is an example:
 
-```
+```bash
 run '(+ 2 3)'
 ```
 
 Response:
 
-```
+```chialisp
 5
 ```
 
@@ -108,13 +110,13 @@ First off, in Chialisp a program is called a **puzzle**. To create larger puzzle
 
 A very basic example would be:
 
-```
+```bash
 run '(mod (arg1 arg2) (+ arg1 arg2))'
 ```
 
 Response:
 
-```
+```bash
 (+ 2 5)
 ```
 
@@ -126,13 +128,13 @@ Our first command, `run`, will take Chialisp code and compile it. Next, `brun` w
 
 We will then run this puzzle with the `brun` command, followed by a solution of your choice:
 
-```
+```bash
 brun '(+ 2 5)' '(10 5)'
 ```
 
 Response:
 
-```
+```chialisp
 15
 ```
 
@@ -144,13 +146,13 @@ Pay close attention to the location of quotes and parenthesis. It's easy to get 
 
 You can run it again with a different solution:
 
-```
+```bash
 brun '(+ 2 5)' '(20 7)'
 ```
 
 Response:
 
-```
+```chialisp
 27
 ```
 
@@ -162,7 +164,7 @@ Going with a contrived example, let's say we wanted to add two numbers and retur
 
 You can compare two values like so:
 
-```
+```chialisp
 (> arg1 arg2)
 ```
 
@@ -170,55 +172,55 @@ If `arg1` is larger than `arg2`, this returns `true`.
 
 You can then use an if statement to return one of two different things depending on the result.
 
-```
+```chialisp
 (if <comparison> <result if true> <result if false>)
 ```
 
 A concrete example of an `if` would be:
 
-```
+```bash
 run '(if 0 "its true" "its false")'
 ```
 
 Response:
 
-```
+```chialisp
 "its false"
 ```
 
 Now, we will add `arg1` and `arg2` with the code `(+ arg1 arg2)` and compare it to the literal value `100`. This comparison will determine whether the `if` is `true` or `false`. We end up with:
 
-```
+```bash
 run '(mod (arg1 arg2) (if (> (+ arg1 arg2) 100) 'large' 'small'))'
 ```
 
 Response:
 
-```
+```chialisp
 (a (i (> (+ 2 5) (q . 100)) (q 1 . "large") (q 1 . "small")) 1)
 ```
 
 Next, let's put this bytecode through `brun`, giving it a solution:
 
-```
+```bash
 brun '(a (i (> (+ 2 5) (q . 100)) (q 1 . "large") (q 1 . "small")) 1)' '(10 90)'
 ```
 
 Response:
 
-```
+```chialisp
 small
 ```
 
 Now, again with a different solution:
 
-```
+```bash
 brun '(a (i (> (+ 2 5) (q . 100)) (q 1 . "large") (q 1 . "small")) 1)' '(10 91)'
 ```
 
 Response:
 
-```
+```chialisp
 large
 ```
 

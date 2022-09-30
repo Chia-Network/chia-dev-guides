@@ -4,7 +4,7 @@ You can get information on your plotNFT:
 How do we create a plot NFT from the terminal, get an address for faucet, etc?
 :::
 
-```
+```bash
 chia plotnft show
 ```
 
@@ -28,7 +28,7 @@ The values will look something like:
 
 The entire plotting command will look something like:
 
-```
+```bash
 chia plotters madmax -k 32 -n 1 -r 7 -t temp -d . -f 8914eed5ca5737ed6bb36225910d110cfc4d567115cfbb19cc19f600736aabf2a6709995aef9de37152d29f35ed9cdd6 -c xch1fafdg7w35l4ujyz4vcuj3k78s5gwj395gs8tszkfwjj40melx75scxgw8h
 ```
 
@@ -44,7 +44,7 @@ For the following Sections we suggest Atom or Visual Studio Code for the editor 
 
 You will also need to install Chia Dev Tools. To do this, you'll first need Python installed. For this we will first create a directory for our project and virtual environment, then install `chia-dev-tools` inside of the virtual environment.
 
-```
+```bash
 mkdir chialisp
 cd chialisp
 python3 -m venv .venv
@@ -54,10 +54,10 @@ pip install chia-dev-tools
 
 This includes CLVM tools, which will include commands like `run` and `brun`. It will also install a version of the Chia blockchain so we should have access to various Chia commands.
 
-```
+```bash
 brun --help
 ```
 
-```
+```bash
 cdv --help
 ```

@@ -17,7 +17,7 @@ For example, the TAIL may limit the creation to **single-issuance**. Any tokens 
 
 Up next we will clone the CAT creation tool which will simplify creating a cat by providing all of the necessary TAIL Chialisp files.
 
-```
+```bash
 sudo apt-get install -y build-essential python3-dev
 git clone https://github.com/Chia-Network/CAT-admin-tool.git -b main --recurse-submodules
 cd CAT-admin-tool
@@ -43,7 +43,7 @@ And you can confirm you have TXCH (or XCH on mainnet) with:
 
 We will only be worrying about creating a single-issuance CAT in this lesson. If you want more experience, you can move on to create a multiple-issuance CAT. **For every 1 CAT created you will need to spend 1,000 Mojo**. This means spending 0.1 Chia (100,000,000,000 Mojo) will produce a CAT with a max supply of 100 million.
 
-```
+```bash
 cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <XCH mojos> -m <fee in XCH mojos> --as-bytes --select-coin
 ```
 
@@ -53,7 +53,7 @@ The final line of the output will be `Name: <Coin ID>`. You’ll use the coin ID
 
 Run the same command again, this time removing the --select-coin flag and adding a new flag, `--curry <Coin ID>`. It’s very important to preface the coin ID with 0x here to make CLVM interpret the value as bytes and not a string. Here’s the full command to run:
 
-```
+```bash
 cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <XCH mojos> -m <fee in XCH mojos> --as-bytes --curry 0x<Coin ID>
 ```
 
@@ -67,7 +67,7 @@ The output will be `Asset ID: <Asset ID>`. Copy the asset ID to import the CAT i
 
 This token can be displayed in your wallet using the GUI or with the CLI:
 
-```
+```bash
 chia wallet add_token -id <Asset ID> -n <custom coin name> -f <fingerprint>
 ```
 
@@ -77,13 +77,13 @@ Creating a CAT on mainnet works the exact same way, you'll just be spending real
 <summary>Example</summary>
 Here are the exact commands I issued to create a custom CAT.
 
-```
+```bash
 cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to txch14t42glxxe93hy29nevq56j4mdupfgazkmkgxzt38p5achh3vmu0qwsqdnt --amount 100000000000 -m 100000000 --as-bytes --select-coin
 ```
 
 Response:
 
-```
+```json
 {
     "amount": 999889999998,
     "parent_coin_info": "0x4d847cddc91a294b82f01c17e09bfdffb1ddadf0e41b6765a127ef1312b6ebf1",
@@ -93,7 +93,7 @@ Name: fa514c961ad13b154708da36750f28f905b45e0e5dd53e856b49e55886a18a20
 
 ```
 
-```
+```bash
 cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to txch14t42glxxe93hy29nevq56j4mdupfgazkmkgxzt38p5achh3vmu0qwsqdnt --amount 100000000000 -m 100000000 --as-bytes --curry 0xfa514c961ad13b154708da36750f28f905b45e0e5dd53e856b49e55886a18a20
 ```
 
@@ -109,7 +109,7 @@ Eve Coin ID: a16bcc6fbc1a21c6855f3e6f24bb9e16959932e79bd29662ab08690f50e723bf
 
 I then added this token to the wallet:
 
-```
+```bash
 chia wallet add_token -id 2b29eb7875ac24f4da73e55ea45c5f94471ab677de608bce6a5ddd1817724844 -n ccoin
 ```
 
@@ -121,7 +121,7 @@ Successfully added ccoin with wallet id 2 on key 1660000549
 
 I could then check my balance:
 
-```
+```bash
 chia wallet show
 ```
 
@@ -159,7 +159,7 @@ For this command you will need your wallet IDs, which you can get from `chia wal
 
 To create an offer to sell 1,000 of your new CAT for some Chia, issue the `make_offer` command:
 
-```
+```bash
 chia wallet make_offer -o <wallet_id:amount> -r <wallet_id:amount> <path>
 ```
 
@@ -170,7 +170,7 @@ Where `wallet_id:amount` could look like `1:1000`.
 
 This is the command I issued to create an offer to trade 1,000 of my custom CAT for .01 Chia.
 
-```
+```bash
 chia wallet make_offer -o 2:1000 -r 1:.01 -p ~/Desktop/offer1
 ```
 
@@ -190,7 +190,7 @@ OFFERING:
   Use chia wallet get_offers --id b6e2bf3162837a17a40369cb98bd3b8bfbc68fd58c922b3bfedd593f29f260dd -f 1660000549 to view status
 ```
 
-```
+```bash
 chia wallet get_offers --id b6e2bf3162837a17a40369cb98bd3b8bfbc68fd58c922b3bfedd593f29f260dd -f 1660000549
 ```
 
@@ -216,7 +216,9 @@ This creates a file on your computer and nothing is sent to the blockchain. Beca
 
 It'll look something like:
 
-`offer1qqz83wcsltt6wcmqvpsxygqqwc7hynr6hum6e0mnf72sn7uvvkpt68eyumkhelprk0adeg42nlelk2mpafs8tkhg2qa9qmzp08ydjpg006k9ju0r3x57a2gt5x9u7j0fn7gllxjau2udha0mvnqkm6uqf23vazn6cua3vt4mzmhwjahp50v807ma2fxwhd2kn2njcmytt2emzsln0u44xz8hzvrtqd2t9vz0alaa9m992xy5k9fhkjepaur0hlm088p2vandlnm747hmyl9dxafx44c83lfa0llef54rulm04tg0t7lmxth646y0289h36rexueuq4lq8c68mj37cpfujfr9k8ar4k8ar4k8dr4k8d84sx0fu3jmra6xkl2qptmstehm8cnmc6mdxn0rvdejdfpway2ccm6srenn6urvdmgvand96gat25z4tf4dlxa2yayde2t4h320uwtvf3z0wxta54n797slkhzka3wsnufzputks4vptnqsme69v3sgxdevw7mv507rlpluh89uy54njg6kfl8slkr383kw49j5ka73rre7dnut0v9v6xn9366zu7uaq0fz3yng7rsfcgrzqsgxx3qf5e0lzugx4c0adln8wuhcfavpmjzs5pcm0ya8xkzpcthp90t0n5fgtan0x4hjl28ecrh035ju0h90mp5xctxklh0j4m53hm6qq593ehls26aklf0mn7lvehj5xm26nywsvn389h87h2n2t36dhu68drpg0fp8e4z5q40klut3cvdu7a2vug0mnvwdh5g78wfu2kck6n8hq5vk08llzck4t46e0mtks2gtflmlc8pwcvle0wjpfra4cmd7t2lvncnnvadx68ean9axykk7dj8ypau2a08ll7p9ttuk6swrhx2u5jcljd9r4lt7ul9x9yjkzae8yn42nu66wl0a8wf0qaepevya6nc8ls0rmwhedawwerv0ja00un2md43mfs39dfqx4ucpfrn0p288p0eytsa3x6qa59tdnlc9sndx2u8t3qcjeh8vw6sv88hf7l8m0peahx24h5944y3dk247utstljgvf0lw67mslv0dcvzsdqk95vv02yetz7h06dmnj3ehayrtekh4kwnla285hg9avj0xq70lfndalp345pmt0wd446wtu7j3klxlzhhxgu8xuhc07tykcsjmlunqvt9jejg4903wwa9v39fxpkp0za4hg48t7jg7pjv8t0lhlkxr26hx4a5mk8hjqqr8hvtgyf3fnt4`
+```
+offer1qqz83wcsltt6wcmqvpsxygqqwc7hynr6hum6e0mnf72sn7uvvkpt68eyumkhelprk0adeg42nlelk2mpafs8tkhg2qa9qmzp08ydjpg006k9ju0r3x57a2gt5x9u7j0fn7gllxjau2udha0mvnqkm6uqf23vazn6cua3vt4mzmhwjahp50v807ma2fxwhd2kn2njcmytt2emzsln0u44xz8hzvrtqd2t9vz0alaa9m992xy5k9fhkjepaur0hlm088p2vandlnm747hmyl9dxafx44c83lfa0llef54rulm04tg0t7lmxth646y0289h36rexueuq4lq8c68mj37cpfujfr9k8ar4k8ar4k8dr4k8d84sx0fu3jmra6xkl2qptmstehm8cnmc6mdxn0rvdejdfpway2ccm6srenn6urvdmgvand96gat25z4tf4dlxa2yayde2t4h320uwtvf3z0wxta54n797slkhzka3wsnufzputks4vptnqsme69v3sgxdevw7mv507rlpluh89uy54njg6kfl8slkr383kw49j5ka73rre7dnut0v9v6xn9366zu7uaq0fz3yng7rsfcgrzqsgxx3qf5e0lzugx4c0adln8wuhcfavpmjzs5pcm0ya8xkzpcthp90t0n5fgtan0x4hjl28ecrh035ju0h90mp5xctxklh0j4m53hm6qq593ehls26aklf0mn7lvehj5xm26nywsvn389h87h2n2t36dhu68drpg0fp8e4z5q40klut3cvdu7a2vug0mnvwdh5g78wfu2kck6n8hq5vk08llzck4t46e0mtks2gtflmlc8pwcvle0wjpfra4cmd7t2lvncnnvadx68ean9axykk7dj8ypau2a08ll7p9ttuk6swrhx2u5jcljd9r4lt7ul9x9yjkzae8yn42nu66wl0a8wf0qaepevya6nc8ls0rmwhedawwerv0ja00un2md43mfs39dfqx4ucpfrn0p288p0eytsa3x6qa59tdnlc9sndx2u8t3qcjeh8vw6sv88hf7l8m0peahx24h5944y3dk247utstljgvf0lw67mslv0dcvzsdqk95vv02yetz7h06dmnj3ehayrtekh4kwnla285hg9avj0xq70lfndalp345pmt0wd446wtu7j3klxlzhhxgu8xuhc07tykcsjmlunqvt9jejg4903wwa9v39fxpkp0za4hg48t7jg7pjv8t0lhlkxr26hx4a5mk8hjqqr8hvtgyf3fnt4
+```
 
 </details>
 
@@ -245,13 +247,13 @@ This file can be uploaded anywhere, but there are many websites out there dedica
 
 You can accept an offer that has been downloaded to your personal machine with the `take_offer` command.
 
-```
+```bash
 chia wallet take_offer path
 ```
 
 Alternatively, you can accept an offer without any download by copying and pasting the contents of the file.
 
-```
+```bash
 chia wallet take_offer blob
 ```
 
@@ -282,7 +284,7 @@ Use chia wallet get_offers --id 41f5bfab75ff5f35489b0954597aa76c56ed7098aa9ad137
 You'll notice there is a line for `Included Fees`, which is currently 0. As the blockchain becomes more saturated, a fee may need to be applied by either the maker or taker with an additional CLI flag.
 Let's continue by getting the offer's information.
 
-```
+```bash
 chia wallet get_offers --id 41f5bfab75ff5f35489b0954597aa76c56ed7098aa9ad137f0132b584541119f -f 1660000549
 ```
 
@@ -313,7 +315,7 @@ If you are looking for more practice, you can work with offers on mainnet to tra
 
 NFTs can be defined individually or within a collection. For simplicity, we will create an individual NFT that is not part of a collection. Once you know how to do this, creating a collection will be a lot easier. The main goal of this lesson is to help you become familiar with the basics. Then, you can continue to study on your own.
 
-```
+```bash
 chia wallet nft create
 ```
 
@@ -325,7 +327,7 @@ Successfully created an NFT wallet with id 3 on key 1660000549
 
 This will create your NFT wallet. You can see this with:
 
-```
+```bash
 chia wallet show
 ```
 
@@ -347,7 +349,7 @@ To practice, start with royalty free images found online at places like [pexels.
 
 Once you find your image of choice, you'll need to get the hash of this image. There are many ways to do this. One way is through the CLI:
 
-```
+```bash
 curl -s <image URL> | shasum -a 256
 ```
 
@@ -359,7 +361,7 @@ You can check the hash also by uploading the image to an [online sha256 tool](ht
 
 Once you have the image URL and the hash, we can create the NFT with a command like this:
 
-```
+```bash
 chia wallet nft mint -i <wallet_id> -u <url> -nh <image hash> -m <fee>
 ```
 
@@ -368,7 +370,7 @@ If this command is issued successfully, you will have created an NFT on Chia!
 
 You can get the details of your new NFT with:
 
-```
+```bash
 chia wallet nft list -i <wallet ID>
 ```
 
@@ -377,7 +379,7 @@ chia wallet nft list -i <wallet ID>
 
 First, we will [find an image](https://images.pexels.com/photos/11053072/pexels-photo-11053072.jpeg). We can grab the URL and check the hash:
 
-```
+```bash
 curl -s https://images.pexels.com/photos/11053072/pexels-photo-11053072.jpeg | shasum -a 256
 ```
 
@@ -389,7 +391,7 @@ Response:
 
 Feeding the URL and hash in to the following command, we end up with:
 
-```
+```bash
  chia wallet nft mint -i 3 -u https://images.pexels.com/photos/11053072/pexels-photo-11053072.jpeg -nh 14836b86a48e1b2b5e857213af97534704475b4c155d34b2cb83ed4b7cba2bb0 -m 0.000265
 
 ```
@@ -431,7 +433,7 @@ NFT minted Successfully with spend bundle: {
 
 We can now see information about this new NFT by checking against our wallet:
 
-```
+```bash
 chia wallet nft list -i 3
 ```
 
@@ -486,7 +488,7 @@ Now that you have a top tier NFT, you can create an offer file including this as
 
 First, we will find the ID for the NFT we want to include in an offer.
 
-```
+```bash
 chia wallet nft list -i <wallet ID>
 ```
 
@@ -496,7 +498,7 @@ The NFT identifier will look something like `nft1w45su63nd0nzy0fjstt3ppd0xe4pe98
 
 When formatting your chia offer, you will use this for the `-o` option.
 
-```
+```bash
 chia wallet make_offer -o <nft offer>:1 -r <wallet id>:<amount> -p <path>
 ```
 
@@ -505,7 +507,7 @@ chia wallet make_offer -o <nft offer>:1 -r <wallet id>:<amount> -p <path>
 
 We can offer an NFT for .01 Chia with a command like this:
 
-```
+```bash
 chia wallet make_offer -o nft1w45su63nd0nzy0fjstt3ppd0xe4pe98fgxxztj5lt7af620qn2xss66c5t:1 -r 1:.01 -p ~/Desktop/offer2
 ```
 
@@ -526,7 +528,7 @@ Use chia wallet get_offers --id a5d3039b3ff2d91cfecd858708f53abdfddab4560b79422a
 
 ```
 
-```
+```bash
 chia wallet get_offers --id a5d3039b3ff2d91cfecd858708f53abdfddab4560b79422a1681c6ae11408d87 -f 1660000549
 ```
 
@@ -549,7 +551,7 @@ Status: PENDING_ACCEPT
 
 Let's practice by accepting our own offer. Accepting an NFT offer works the same as any other offer. You can open the file to get the hex content.
 
-```
+```bash
 chia wallet take_offer <blob>
 ```
 
@@ -560,7 +562,7 @@ If you are working with others, you can exchange these offer files (or the hex b
 <details>
 <summary>Example</summary>
 
-```
+```bash
 chia wallet take_offer offer1qqph3wlykhv8jcmqvpsxygqqwc7hynr6hum6e0mnf72sn7uvvkpt68eyumkhelprk0adeg42nlelk2mpafsyjlm5pqpj3dhq5d7ewswwa68td36nxv6jvvm8n7vrk4d6dm2ewleh56kn54h7m05p9v9eh9sw6twfnhnawlzjnyevlmwphk0yjy2vn5fh9tscd40ryttnels5735nn8lmwv59wqlkzgzzyhypmk6vj49tut4m7w5w5jmswkv7jwgen0dhlwgla2yaclpguauj4et8gg6a0csz4mksdmqj9xe6mhfr2a75nkshm3favu4lx2ed4emhvujkh3zxdqkr9sjtkrgnzx8yzf4hgrrxwsxxd6ydc9qd9a5zlf25ds0maa08cu80xsnahf3mf8hthruufl5g7vyfzkmm480uvf9uml8lpd9r87dj3jee72werg6469mgt4hevffnukjk8rl248ulrwlxdglf34dmur7cw539e7qggqmfmlegm4sutf0xwe2ht366577aj29uhlykns7k3wcjdg2h9cf38tey8xcyxqa0yvmugalvqzt7cypdl70pvhlzzjlvrsx0dl0kd4sv56m8j4wt2txevnws7qlltrnvnpmqlx30flcpj7xf9y5zvg4hmlwvmnz0f4rzhkpdfzk5n33tme8utn7c9r8ujt7xyl2rgvp4xccrwv3hmzy59ev9s9ex42t4tyy6p66rwcupfpehdkuj8e57mwxkytslt5urm4vaegmag3356d5adelwkhdnfdas8vqaplh2ysf6vaxu27dqje7hzzdvqewlpt7tmd8hm5drtxl0d370e5x64wnaatx2umttza8mqwt0h4e8ne49a0w4sj5g6yqja9yyxqavqdf6cpzuq00lgurm3zydylaqcuzpe2l2826l2kh9l3fqrk38ul7p38e5aflj9kltvjzhlnw8c29gmphdx0t4xkyrykpesmtvxxsa9qdp62q6asp5t59c5f057ckps8ufytwltakflw6mtxct07hvadfm047782f2rvhx7kf4qrcehvfsrdmqtx9prcnydsvkhkpwmszph0rpc728nfame5t9uwlnu8tjnt2ahffe97a8pfwfn0fpev6yeke36mr8l9jj36xm45qnlxfw8y7hdal8nm7a8fvfnkyqft7jw8r8lutaclrutum0m3lv04avl4j7t95dzw0dvfvxpytcm6su797h26205e0fe5pmkrp53qp8vv9swyrx9sqxkqtpqxjzs3jqgcrhsjsy4y8pcsv00hl7l7p2jsw6089mw0d4x56x4wh9kkj2dshtn45nfh7km0wzv9k88tljgdpncrewhwhmkxlh2rf5ynjqfxrleadkxdtp7xevmlmh4n285c05yysw6mh7tjt5f8ga3ah3m7llcmmnsl74humt2993zpq7t740kyjeltt6xdfewd2gx08muauteyl4xv8x7hwsegat7xl3atr84afn57wn0n8fgua64lhvv3gzqr72c7kg2k9k8m
 
 ```
