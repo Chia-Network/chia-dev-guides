@@ -1,13 +1,16 @@
 ---
-slug: /crash-course/intro-to-chialisp
+slug: /crash-course/chialisp
 title: Chialisp
 ---
 
+```mdx-code-block
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+```
 
 To get started with Chialisp you will first want to install the Chia Dev Tools. You can refer to the [Chia Dev Tools repository](https://github.com/Chia-Network/chia-dev-tools) for more information, but the summary of the installation is here:
 
+```mdx-code-block
 <Tabs groupId="OS"
 defaultValue="windows"
 values={[
@@ -15,6 +18,7 @@ values={[
 {label: 'Linux/MacOS', value: 'linux-macos'},
 ]}>
 <TabItem value="windows">
+```
 
 ```
 mkdir learning
