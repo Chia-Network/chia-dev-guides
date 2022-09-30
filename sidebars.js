@@ -62,7 +62,7 @@ const sidebars = {
       items: ['nft/nft-intro', 'nft/nft-cli', 'nft/nft-rpc', 'nft/nft-bulk-mint'],
     },
     'datalayer/datalayer-user-guide',
-    'simulator/simulator_user_guide',
+    'simulator/simulator-user-guide',
   ],
 };
 
