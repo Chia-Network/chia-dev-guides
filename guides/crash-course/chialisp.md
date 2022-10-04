@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 For this section of the course, you will learn how to set up your development environment, write Chialisp code, and execute it on the command-line.
 
-## Development Environment
+## Dev Tools
 
 To get started with Chialisp, you will first want to [install Chia Dev Tools](https://github.com/Chia-Network/chia-dev-tools).
 
@@ -193,10 +193,10 @@ Going with a contrived example, let's say we wanted to add two numbers and retur
 You can compare two values like so:
 
 ```chialisp
-(> arg1 arg2)
+(> apples oranges)
 ```
 
-If `arg1` is larger than `arg2`, this returns `1`. Otherwise, the output is `()`, which is equivalent to `0`.
+If `apples` is larger than `oranges`, this returns `1`. Otherwise, the output is `()`, which is equivalent to `0`.
 
 You can then use an if statement to return one of two different things depending on the result.
 
@@ -253,3 +253,31 @@ large
 ```
 
 The difference here being the new solution of `(10 91)`. When added together, `10` and `91` are greater than `100`.
+
+## Text Editor
+
+Up to this point, we've been using the command line to write and run Chialisp programs. While this is efficient for quickly prototyping and testing small programs, it doesn't scale very well.
+
+When writing larger programs in Chialisp, it'll be much easier to use a text editor of your choice and save them to a file. Both [Atom](https://atom.io) and [Visual Studio Code](https://code.visualstudio.com) have extensions to improve the quality of life of writing Chialisp code. However, any LISP-based syntax highlighting will help as well.
+
+:::info
+If you decide to use [Visual Studio Code](https://code.visualstudio.com), we have begun development on a [Chialisp language server extension](https://marketplace.visualstudio.com/items?itemName=ChiaNetwork.chialisp).
+
+You may need to click the dropdown in the editor to install the prerelease version.
+:::
+
+## Chialisp Files
+
+We will be storing Chialisp code in files, then building and running the files on the command line using Chia Dev Tools. There are a few commands that we can use more effectively after setting up a project in this way.
+
+### Convention
+
+The following file extensions are used for Chialisp:
+
+| Extension   | Description                     |
+| ----------- | ------------------------------- |
+| `.clsp`     | Chialisp source code            |
+| `.clvm`     | Deserialized CLVM bytecode      |
+| `.clvm.hex` | Serialized CLVM bytecode        |
+| `.clsp.hex` | Generated CLVM bytecode         |
+| `.sym`      | Generated Chialisp symbol table |
