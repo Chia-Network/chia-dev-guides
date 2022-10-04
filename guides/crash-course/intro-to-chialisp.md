@@ -272,3 +272,30 @@ A function will give a name to some lines of code, often taking an input and ret
 ```
 code sum.clsp
 ```
+
+```
+(mod(arg1 arg2)
+    (defun sum(s1 s2)
+        (+ s1 s2)
+    )
+    (sum arg1 arg2)
+)
+```
+
+This example is silly because we are just adding two numbers, but it shows that we can define a function with parameters. Now, while our solution parameters are still `arg1` and `arg2`, we've introduced `s1` and `s2`. We define the function following this structure:
+
+```
+(defun function_name(parameters)
+  (function body)
+)
+```
+
+We can then refer to this function by name later on in our code body:
+
+```
+function_name(arguments)
+```
+
+## A more complicated Function
+
+Now that we have a basic function, we can build on this to create a sum function to add all values from a list.
