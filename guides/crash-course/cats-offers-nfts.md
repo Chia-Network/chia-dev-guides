@@ -3,6 +3,9 @@ slug: /crash-course/cats-offers-nfts
 title: CATs, Offers and NFTs
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 For this lesson you will want Chia installed and synced on testnet.
 
 ## What is a CAT?
@@ -17,17 +20,37 @@ For example, the TAIL may limit the creation to **single-issuance**. Any tokens 
 
 Up next we will clone the CAT creation tool which will simplify creating a cat by providing all of the necessary TAIL Chialisp files.
 
+<Tabs groupId="OS"
+defaultValue="windows"
+values={[
+{label: 'Windows', value: 'windows'},
+{label: 'Linux/MacOS', value: 'linux-macos'},
+]}>
+<TabItem value="windows">
+
 ```
-sudo apt-get install -y build-essential python3-dev
-git clone https://github.com/Chia-Network/CAT-admin-tool.git -b main --recurse-submodules
+git clone https://github.com/Chia-Network/CAT-admin-tool.git
+cd CAT-admin-tool
+py -m venv venv
+./venv/Scripts/activate
+python -m pip install --upgrade pip setuptools wheel
+pip install .
+```
+
+  </TabItem>
+  <TabItem value="linux-macos">
+
+```
+git clone https://github.com/Chia-Network/CAT-admin-tool.git
 cd CAT-admin-tool
 python3 -m venv venv
 . ./venv/bin/activate
 py -m pip install --upgrade pip setuptools wheel
 pip install .
-pip install chia-dev-tools --no-deps
-pip install pytest
 ```
+
+  </TabItem>
+</Tabs>
 
 At this point you should be able to execute `cats --help` and `cdv --help`.
 
