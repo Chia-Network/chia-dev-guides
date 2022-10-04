@@ -270,7 +270,7 @@ You may need to click the dropdown in the editor to install the prerelease versi
 
 We will be storing Chialisp code in files, then building and running the files on the command line using Chia Dev Tools. There are a few commands that we can use more effectively after setting up a project in this way.
 
-### Convention
+### Conventions
 
 The following file extensions are used for Chialisp:
 
@@ -349,3 +349,48 @@ We can then refer to this function by name later on in our code body:
 ## More Complicated Function
 
 Now that we have a basic function, we can build on this to create a sum function to add all values from a list.
+
+```chialisp
+(mod (items)
+  (defun sum (items)
+    (if items
+      (+ (f items) (sum (r items)))
+      0
+    )
+  )
+
+  (sum items)
+)
+```
+
+Chialisp will use a lot of recursion. In this example, we will use `(f items)` to refer to the first element in the list, and `(r items)` to refer to the rest of the items in the list. By saying `+ (f items) (sum (r items)))`, we are adding the first element with a recursive call to the sum of the rest of the elements. This will repeat until items is empty, returning 0.
+
+Imagine passing in a list `(10 5 3 7)`, we would have a call stack like this:
+
+```chialisp
+(+ 10 (sum (list 5 3 7)))
+        ↪ (+ 5 (sum (list 3 7)))
+                 ↪ (+ 3 (sum (list 7)))
+                          ↪ (+ 7 (sum (list)))
+                                   ↪ 0
+```
+
+We make our way through these calls until we return (0). We then work our way back up adding 0 with 7, 7 with 3, 10 with 5, and finally 15 with 10.
+
+Because we need to stop the recursive calls when the list is empty, we check if the `items` has a value. This can be done with `if items`.
+
+### Invoking our Code
+
+We now have just a single parameter called `items`. This is expected to be a list, so we will pass a solution that is a list. We would normally pass a solution in `()` and a list is surrounded with `()`, so it may look like `"((10 5 3 7))"`:
+
+```
+
+brun "$(run sum.clsp)" "((10 5 3 7))"
+
+```
+
+Response:
+
+```
+
+```
