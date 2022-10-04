@@ -392,5 +392,5 @@ brun "$(run sum.clsp)" "((10 5 3 7))"
 Response:
 
 ```
-
+25
 ```
