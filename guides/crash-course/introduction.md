@@ -10,6 +10,10 @@ import TabItem from '@theme/TabItem';
 
 This course is designed to give you an end-to-end introduction to Chia. We'll start off with a foundational understanding of the Chia blockchain. This includes what blockchains are for and what makes Chia different from other options. Once you understand the basics, we'll learn about plotting and farming. Finally, we'll cover many of the DeFi possibilities including fungible tokens (CATs), non-fungible tokens (NFTs), and writing custom coins in Chialisp.
 
+:::info
+Chialisp is Chia's on-chain programming language for writing custom coins. If you want to skip ahead to development, see the [Intro to Chialisp section](/crash-course/intro-to-chialisp) of this course.
+:::
+
 ## Intro to Chia
 
 The goal of cryptocurrency is to transfer monetary value on a peer-to-peer decentralized network. This means that there is no centralized intermediary to facilitate the transaction. Instead, blockchain relies on a network of nodes to confirm transactions according to some rules. Additionally, cryptocurrency makes the exchange of value extremely fast and easy, even for cross-border payments.
@@ -64,7 +68,7 @@ Use this line in Git Bash / terminal:
   <TabItem value="windows (Git Bash)">
 ```
 
-```
+```bash
 ~/AppData/Local/chia-blockchain/app-1.5.1/resources/app.asar.unpacked/daemon/chia.exe
 ```
 
@@ -73,7 +77,7 @@ Use this line in Git Bash / terminal:
   <TabItem value="nix">
 ```
 
-```
+```bash
 /Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/chia
 ```
 
@@ -141,7 +145,7 @@ Using this path each time can get old, so you have the option of creating an ali
   <TabItem value="windows (Git Bash)">
 ```
 
-```
+```bash
 alias chia=~/AppData/Local/chia-blockchain/app-1.5.1/resources/app.asar.unpacked/daemon/chia.exe
 ```
 
@@ -150,7 +154,7 @@ alias chia=~/AppData/Local/chia-blockchain/app-1.5.1/resources/app.asar.unpacked
   <TabItem value="nix">
 ```
 
-```
+```bash
 alias chia=/Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/chia
 ```
 
@@ -161,7 +165,7 @@ alias chia=/Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/ch
 
 Now, you can just say:
 
-```
+```bash
 chia
 ```
 
@@ -183,11 +187,11 @@ Add this to your path with `PATH=/Applications/Chia.app/Contents/Resources/app.a
 
 Now that you have the CLI running you can initialize Chia.
 
-```
+```bash
 chia init
 ```
 
-```
+```bash
 chia keys generate
 ```
 
@@ -196,7 +200,7 @@ It's possible to manage multiple keys from a single Chia client. These will be i
 
 Working with only a single fingerprint in your client is easier as if you have multiple you'll often need to specify which fingerprint you want to use. For example. here is the usuage for `chia wallet send`:
 
-```
+```bash
 chia wallet send [OPTIONS]
 
 Options:
@@ -220,15 +224,15 @@ If you are already on a testnet, skip to [instructions for the CLI](#cli).
 
 For most dev work on Chia, you'll want to be on the testnet. That way, you're learning with fake Chia and don't put any funds at risk.
 
-```
+```bash
 chia stop all -d
 ```
 
-```
+```bash
 chia configure --testnet true
 ```
 
-```
+```bash
 chia start farmer
 ```
 
@@ -245,7 +249,7 @@ chia_wallet: started
 
 At this point you should be able to use the CLI to get information about your farm and confirm you are on testnet.
 
-```
+```bash
 chia show --state
 ```
 
@@ -286,7 +290,7 @@ For many things you will need a synced full node. Fortunately, an official [test
 
 Once this file is downloaded, stop your node:
 
-```
+```bash
 chia stop all -d
 ```
 
@@ -294,13 +298,13 @@ Now, **unzip the file** and replace the `blockchain_v2_mainnet.sqlite` database 
 
 Once this is complete, you can restart chia.
 
-```
+```bash
 chia start farmer
 ```
 
 Now, you can confirm your sync height. It should be much closer to the peak height of the blockchain.
 
-```
+```bash
 chia show --state
 ```
 
@@ -312,19 +316,19 @@ For the rest of this workshop you will need some TXCH (Testnet Chia). You can ge
 
 For this you will need a receive address.
 
-```
+```bash
 chia wallet get_address
 ```
 
 Example response:
 
-```
+```bash
 txch14hdpnww04nezf9y7gmsdaryjtqpgnyrv6set8fykdx7v8u3jjvps5xjxre
 ```
 
 Once this transaction has been added to the blockchain and your wallet sees it, you will have a TXCH balance.
 
-```
+```bash
 chia wallet show
 ```
 
@@ -345,7 +349,7 @@ You can send Chia through the CLI as well. This requires a little more informati
 
 The command looks like this:
 
-```
+```bash
 chia wallet send -i 1 -a <amount in XCH> -m <amount in fee in XCH> -t <target address>
 ```
 
@@ -353,7 +357,7 @@ The `-i 1` is the wallet ID. Later on we will have multiple wallet IDs to store 
 
 Any Chia keys will have multiple receive addresses. You can test sending Chia by sending some to yourself (or a friend). Take a note of the response from `chia wallet get_address` command.
 
-```
+```bash
 chia wallet send -i 1 -a .01 -m 0 -t txch14hdpnww04nezf9y7gmsdaryjtqpgnyrv6set8fykdx7v8u3jjvps5xjxre
 ```
 
@@ -365,7 +369,7 @@ Transaction submitted to nodes: ...
 Run 'chia wallet get_transaction -f 1660000549 -tx 0x468399be58604e7199f6899d838d3206fada9c12b29f545410616856413457c7' to get status
 ```
 
-```
+```bash
 chia wallet get_transaction -f 1660000549 -tx 0x468399be58604e7199f6899d838d3206fada9c12b29f545410616856413457c7
 ```
 
@@ -383,7 +387,7 @@ You can see `Status: In mempool`, which means a full node has not yet confirmed 
 
 You can see all your transactions as well:
 
-```
+```bash
 chia wallet get_transactions
 ```
 
