@@ -371,3 +371,11 @@ In theory you can use any hosting site to host your NFT images. However, do make
 Certain decentralized services such as IPFS can be slow. The first time a user attempts to view an NFT in their wallet (before caching), it might take a long time to load.
 
 Chia NFTs use a list to store image URIs, so it is possible to add multiple locations to increase permanance. However, do make sure each image's hash is the same as the data hash.
+
+## NFT Metadata Standards
+
+Since the original release of this guide, a CHia Improvement Proposal ([CHIP](https://github.com/Chia-Network/chips/blob/main/CHIPs/chip-0001.md#what-is-a-chip "CHIP explanation")) that standardizes the JSON metadata schema for Chia NFTs has been finalized.
+
+See [CHIP-7](https://github.com/Chia-Network/chips/blob/main/assets/chip-0007/schema.json) for the correct formatting. Usage of this CHIP is recommended in order to give marketplaces the best opportunity to parse your NFTs' metadata properly.
+
+Note that additional NFT metadata CHIPs are likely to be released in the future. However, there are no plans to deprecate CHIP-7 when this happens.

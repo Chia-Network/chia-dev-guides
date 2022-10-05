@@ -16,6 +16,16 @@ Also, make sure to use a wallet fingerprint that has enough XCH to pay for trans
 
 :::
 
+:::info
+
+It is important that you format your NFTs' metadata properly, as this cannot be changed after minting.
+
+See [CHIP-7](https://github.com/Chia-Network/chips/blob/main/assets/chip-0007/schema.json) for the first (and so far only) standardized JSON metadata schema for Chia NFTs. Usage of this CHIP is recommended in order to give marketplaces the best opportunity to parse your NFTs' metadata properly.
+
+Note that additional NFT metadata CHIPs are likely to be released in the future. However, there are no plans to deprecate CHIP-7 when this happens.
+
+:::
+
 ## Create a DID Wallet
 
 An NFT wallet has the option of being associated with a DID. In this section, we'll create a new DID. Later we'll create two NFT wallets -- one that is associated with a DID and one that is not.
