@@ -59,7 +59,12 @@ const sidebars = {
         description:
           "This tutorial will guide you through the process of creating DIDs that conform to Chia's DID standard, as well as minting NFTs that adhere to Chia's NFT standard.",
       },
-      items: ['nft/nft-intro', 'nft/nft-cli', 'nft/nft-rpc', 'nft/nft-bulk-mint'],
+      items: [
+        'nft/nft-intro',
+        'nft/nft-cli',
+        'nft/nft-rpc',
+        'nft/nft-bulk-mint',
+      ],
     },
     'datalayer/datalayer-user-guide',
     'simulator/simulator-user-guide',
