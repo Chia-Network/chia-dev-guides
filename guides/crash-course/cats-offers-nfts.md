@@ -36,8 +36,8 @@ values={[
 git clone https://github.com/Chia-Network/CAT-admin-tool.git
 cd CAT-admin-tool
 py -m venv venv
-.\venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip setuptools wheel
+./venv/Scripts/activate
+py -m pip install --upgrade pip setuptools wheel
 pip install .
 ```
 
@@ -51,7 +51,7 @@ git clone https://github.com/Chia-Network/CAT-admin-tool.git
 cd CAT-admin-tool
 python3 -m venv venv
 . ./venv/bin/activate
-py -m pip install --upgrade pip setuptools wheel
+python -m pip install --upgrade pip setuptools wheel
 pip install .
 ```
 
