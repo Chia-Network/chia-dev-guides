@@ -13,9 +13,11 @@ In this lesson, we will be writing a puzzle that requires a simple password to u
 While this is great for learning the fundamentals, it is an insecure way to protect funds on a blockchain. We will explore the reason and better methods later on.
 :::
 
-## The basics
+## The Basics
 
-Let's create a little program to have the user guess a password. We are going to build up to a more advanced password-protected coin, but let's start with the basics. We will hardcode the correct password to be `hello`. If the user provides `hello` as the solution, they got the correct password! Here is the Chialisp:
+Let's create a little program to have the user guess a password. We are going to build up to a more advanced password-protected coin, but let's start with the basics. We will hardcode the correct password to be `hello`. If the user provides `hello` as the solution, they got the correct password.
+
+Write the following in a file named `password.clsp`:
 
 ```chialisp title="password.clsp"
 (mod (password)
@@ -26,11 +28,13 @@ Let's create a little program to have the user guess a password. We are going to
 )
 ```
 
-```
+Run the following command to check the password against it:
+
+```bash
 brun "$(run password.clsp)" "(hello)"
 ```
 
-Output:
+Which should produce the following output:
 
 ```
 Correct!
@@ -38,11 +42,11 @@ Correct!
 
 However, if you provide a different solution, you'll get a different result:
 
-```
-brun "$(run password.clsp)" "(mypassword)"
+```bash
+brun "$(run password.clsp)" "(goodbye)"
 ```
 
-Output:
+Which should produce the following output:
 
 ```
 Incorrect :(
@@ -52,9 +56,11 @@ This is cool, but we want to avoid hardcoded values when possible. This introduc
 
 ## Intro to Currying
 
-Our goal is to allow more than just the hardcoded password of `hello`. In addition to this, we want to hide the password to the best of our ability with hashing. I'll show how to use hashing in a minute. For now, our new Chialisp code will look like this:
+Our goal is to allow more than just the hardcoded password of `hello`. In addition to this, we want to hide the password to the best of our ability with hashing (which we will explore in more detail later).
 
-```chialisp
+Replace the contents of `passwords.clsp` with the following:
+
+```chialisp title="password.clsp"
 (mod (CORRECT_PASSWORD provided_password)
     (if (= CORRECT_PASSWORD provided_password)
         "Correct!"
@@ -67,79 +73,61 @@ Our goal is to allow more than just the hardcoded password of `hello`. In additi
 Values that are expected to be curried in are often written in ALL_CAPS. While we explain currying here, you can also check out the [Currying Guide](/guides/chialisp-currying) to learn more about what currying is and how it works.
 :::
 
-To curry in a value, we will use `cdv clsp curry`:
+Run the following command to curry in the password:
 
-```
+```bash
 cdv clsp curry password.clsp -a "hello"
 ```
 
-Output:
+Which should produce the following result:
 
-```
+```chialisp
 (a (q 2 (i (= 2 5) (q 1 . "Correct!") (q 1 . "Incorrect :(")) 1) (c (q . "hello") 1))
 ```
 
-Which we can now execute with a provided solution using `brun`:
+Which we can now execute with a provided solution:
 
-```
+```bash
 brun '(a (q 2 (i (= 2 5) (q 1 . "Correct!") (q 1 . "Incorrect :(")) 1) (c (q . "hello") 1))' "(hello)"
 ```
 
+Now that we've introduced currying, we can create a different puzzle using a different `CORRECT_PASSWORD` without modifying any of the source code.
+
 :::note
-A friendly reminder that we can nest commands. Because the `curry` command returns Chialisp bytecode, we can do this:
-
-```
-curry % brun "$(cdv clsp curry password-basic.clsp -a 'hello')" "(hello)"
-```
-
-Or, testing an incorrect solution:
-
-```
-curry % brun "$(cdv clsp curry password-basic.clsp -a 'hello')" "(goodbye)"
-```
+Because currying outputs CLVM, we can nest it as input to the compiler to make the process of testing this out easier.
 
 An important thing to note here is that the nesting will not work properly if surrounded with single quotes, thus, we would use `"$()"` and not `'$()'`. This requires us to flip all nested quotes (specifically `'hello'` in this case) so that we have single quotes inside of the double quote.
 :::
 
-Now that we've introduced currying, we can create a different puzzle using a different `CORRECT_PASSWORD` without modifying any of the source code.
+You can try it with a new password:
 
-```
-cdv clsp curry password.clsp -a "goodbye"
-```
-
-Output:
-
-```
-(a (q 2 (i (= 2 5) (q 1 . "Correct!") (q 1 . "Incorrect :(")) 1) (c (q . "goodbye") 1))
+```bash
+brun "$(cdv clsp curry password.clsp -a 'goodbye')" "(goodbye)"
 ```
 
-Now, to get the correct password, you must provide "goodbye" as the solution:
-
-```
-brun '(a (q 2 (i (= 2 5) (q 1 . "Correct!") (q 1 . "Incorrect :(")) 1) (c (q . "goodbye") 1))' "(hello)"
-```
-
-Output:
-
-```
-Incorrect :(
-```
-
-```
-brun '(a (q 2 (i (= 2 5) (q 1 . "Correct!") (q 1 . "Incorrect :(")) 1) (c (q . "goodbye") 1))' "(goodbye)"
-```
-
-Output:
+Which should output the following result:
 
 ```
 Correct!
 ```
 
-We're making progress, but there's still a glaring issue. The password is directly visible in the Chialisp bytecode. When we get to spending coins this information will be revealed to the world, allowing _anyone_ to know the password. Let's see what we can do about this.
+This time, try using the wrong password:
+
+```bash
+brun "$(cdv clsp curry password.clsp -a 'goodbye')" "(hello)"
+```
+
+Which should output the following result:
+
+```
+Incorrect :(
+```
+
+We're making progress, but there's still some issues with this program. The password is directly visible in the Chialisp bytecode. When we get to spending coins this information will be revealed to the world, allowing _anyone_ to know the password. Let's see what we can do about this.
 
 ## Hashing
 
-Although not the ultimate solution, it's important to understand hashing and how it can be used to mask values.
+Although this won't make the password more secure, it's important to understand hashing and how it can be used to keep values hidden until it is necessary to reveal them.
 
 A hash function will take an input and return a hash value. One of the most popular hashing algorithms is **sha256** which is directly supported within Chialisp. A few important notes about hash functions:
 
@@ -149,7 +137,7 @@ A hash function will take an input and return a hash value. One of the most popu
 
 We can use these principles to our advantage by currying a hash of the expected password instead of the password value itself. This prevents us from revealing the expected password while still allowing us to check if the provided password is correct. This is done by hashing the provided password. You can think of this operation as:
 
-```
+```chialisp
 (if (= (sha256 password) PASSWORD_HASH)
 ```
 
@@ -218,7 +206,7 @@ Friendly reminder, the output here is specific to the hash you used.
 
 We now have the same functioning password check, but the expected password is not revealed in the bytecode. We can try it out with:
 
-```
+```bash
 brun '(a (q 2 (i (= (sha256 5) 2) (q 1 . "Correct!") (q 1 . "Incorrect :(")) 1) (c (q . 0x2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824) 1))' "(hello)"
 ```
 
@@ -240,6 +228,8 @@ The solution to this problem is to instead use signatures, which we will get to.
 While we know the use of hashes is not perfect, we will still use them to get some practice creating coins. This will allow us to see the security problems as well.
 
 This is a slightly more complicated Chialisp program than what we've explored before. As such, we've provided comments to explain each part.
+
+Write the following in `password.clsp`:
 
 ```chialisp title="password.clsp"
 ;;; This puzzle locks coins with a password.
@@ -268,63 +258,15 @@ The key differences are the introduction of `conditions` in the parameter list a
 
 - First off, the `(x)` is easy. If the password is invalid, the `if` evaluates to `false` and the program fails. The coin remains unspent.
 
-- The conditions is a list that will be provided by the spender to control what happens with the coin. Now, instead of only being able to output a value like `Correct!`, the user can customize the functionality by providing specific requests in their provided solution. We'll see this in action!
+- Conditions is a list that will be provided by the spender to control what happens with the coin. Instead of only being able to output a value like `Correct!`, the user can customize the functionality by providing specific requests in their provided solution. We'll see this in action and learn how to write the conditions later.
 
----
+:::note
+The blockchain doesn't understand anything other than a list of conditions as an output. Anything else will be ignored and cause the spend to be thrown out.
 
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
-## Conditions
-
-There are many commands we can issue through conditions, but one of the most important is called `CREATE_COIN`. This will be identified by the number `51`. This condition is used to create a new coin and send it to someone. Each condition is defined as a list taking parameters. In the case of `CREATE_COIN`, we will give it a `puzzle hash` (an alternative, unencoded format for an _address_) and an `amount`.
-
-```
-chia wallet get_address
-```
-
-Output (yours will be different):
-
-```
-txch1u6rk0w3tgv0t3m7ehrwsmdng6hqvqrr6qn5r767x2pxq7f3xlhmq2gva00
-```
-
-This will give you one of your addresses, which can be converted to a puzzle hash with (being sure to use **your** address and not the one listed here):
-
-```
-cdv decode txch1u6rk0w3tgv0t3m7ehrwsmdng6hqvqrr6qn5r767x2pxq7f3xlhmq2gva00
-```
-
-Output:
-
-```
-e68767ba2b431eb8efd9b8dd0db668d5c0c00c7a04e83f6bc6504c0f2626fdf6
-```
-
-:::important
-For `CREATE_COIN` condition we will use this puzzle hash prefixed with `0x`.
+Everything up to this point has just been a readable example that can be run on the CLI.
 :::
 
-The end condition may look something like this:
-
-```
-(51 0xe68767ba2b431eb8efd9b8dd0db668d5c0c00c7a04e83f6bc6504c0f2626fdf6 9900000000)
-```
-
-### Puzzle Hash
+## Puzzle Hash
 
 A coin id consists of the following things hashed together:
 
@@ -340,19 +282,23 @@ In other words, you can calculate the coin id in Chialisp like this:
 
 We need to calculate the puzzle hash before we can create the coin.
 
+:::note
+If this command outputs two values, copy the first one.
+:::
+
 Paste the compiled CLVM into this command to calculate the hash:
 
 ```bash
 opc -H "<Compiled CLVM>"
 ```
 
-:::note
-If this command outputs two values, copy the first one.
-:::
-
 Write this value down somewhere you can refer to later.
 
-### Puzzle Reveal
+:::note
+Whenever you see `PuzzleHash`, replace it with this value.
+:::
+
+## Puzzle Reveal
 
 The puzzle reveal is just a serialized form of the puzzle, written in hex. It is what you must reveal on-chain when spending a coin, and is compared against the puzzle hash to validate it.
 
@@ -365,6 +311,10 @@ opc "<Compiled CLVM>"
 ```
 
 Write this value down somewhere you can refer to later.
+
+:::note
+Whenever you see `PuzzleReveal`, replace it with this value.
+:::
 
 ## Creating the Coin
 
@@ -381,5 +331,57 @@ cdv encode -p txch "0xPuzzleHash"
 ```
 
 ## Spending the Coin
+
+## Create Coin Condition
+
+There are many conditions that can enable advanced functionality, but one of the most important ones is `CREATE_COIN`. It is identified by the opcode `51` and is used to create a new coin if the spend is successful. Each condition is defined as a list (beginning with the opcode, followed by each parameter). In the case of `CREATE_COIN`, we will give it a `puzzle_hash` (an alternative, unencoded format for an _address_) and an `amount`.
+
+### Get the Address
+
+:::caution
+Your address will be different than the one shown below. Do not copy this value.
+:::
+
+Run the following command to get your address:
+
+```bash
+chia wallet get_address
+```
+
+Which should produce an output similar to this:
+
+```
+txch1u6rk0w3tgv0t3m7ehrwsmdng6hqvqrr6qn5r767x2pxq7f3xlhmq2gva00
+```
+
+### Convert to Puzzle Hash
+
+:::caution
+The decoded puzzle hash will also be different than the one shown below.
+:::
+
+Now that you have one of your addresses, you can convert it to a puzzle hash with this command:
+
+```bash
+cdv decode "Your Address"
+```
+
+Which should produce an output similar to this:
+
+```
+e68767ba2b431eb8efd9b8dd0db668d5c0c00c7a04e83f6bc6504c0f2626fdf6
+```
+
+### Build the Condition
+
+:::important
+For the `CREATE_COIN` condition we will use this puzzle hash prefixed with `0x`.
+:::
+
+The condition will end up looking something like this:
+
+```
+(51 0xe68767ba2b431eb8efd9b8dd0db668d5c0c00c7a04e83f6bc6504c0f2626fdf6 9900000000)
+```
 
 ## Security
