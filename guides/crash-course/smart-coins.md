@@ -469,4 +469,27 @@ cdv pushtx spendbundle.json
 
 If everything was successful, this transaction should be successful, and you should see your wallet balance increase after some time passes. It won't be identical to when you started because of the total of `0.0001` network fees added throughout the process.
 
-## Security
+## Security Concerns
+
+Using a password to lock coins is good to teach various concepts, but it is insecure in practice.
+
+There are a couple of reasons for this:
+
+- The password is publicly revealed to all nodes when the coin is spent
+- The transaction can be intercepted and modified freely by malicious farmers
+
+Let's explore these in more detail.
+
+### Password is Revealed
+
+When you spend a coin, you reveal the its puzzle and the solution you are using to spend it. The password is contained in plain text in the solution, for anyone with a node to read. This means that any use of the same password is compromised, including any other coins locked with the same puzzle.
+
+If this were the only problem, it wouldn't be that big of a deal, since you could simply use the password only once, make it very secure to prevent brute force attacks, and not use it anywhere external to the blockchain. However, this is not the only problem with using a password rather than traditional methods.
+
+### Spend Interception
+
+When you spend a coin, you create a transaction which is then added to the mempool. Everyone's transactions get collected together. Then, whichever farmer happens to farm the block has full control on which transactions to include in that block (typically based on the fees if there are more transactions than available block space).
+
+However, a farmer which happens to also be a malicious attacker could also change _anything_ about the transaction, not only whether or not it's included. The way to prevent this is to make the spend not valid if anything is tampered with (mainly by signing the solution and requiring the signature in the puzzle).
+
+But because this puzzle has no way to prevent tampering in this way, it would be possible to replace the puzzle hash in the `CREATE_COIN` condition. In other words, the attacker could steal your funds by sending it to their wallet rather than yours.So even if you use the most secure password possible, it is simply not sufficient.
