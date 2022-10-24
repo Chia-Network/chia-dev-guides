@@ -6,7 +6,7 @@ title: Coin Lifecycle and Testing
 
 In these videos, Chia developer Matt Hauff covers creating your first smart coin in Chia and running tests through the example of a piggybank smart coin.
 
-If you haven't watched [the video on setting up your environment](/docs/tutorials/tools_and_setup), do that first.
+If you haven't watched [the video on setting up your environment](/guides/tools-and-setup-video-series), do that first.
 
 You can download the piggybank coin example files [here](/files/Piggybank_Example.zip).
 

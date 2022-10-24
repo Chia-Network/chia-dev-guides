@@ -4,7 +4,7 @@ slug: /coin-spend-rpc-tutorial
 title: RPC Coin Spend
 ---
 
-This tutorial teaches you how to spend a coin with any puzzle using RPC calls. We will be using the password-locked coin puzzle from [How to lock coin with a custom puzzle](custom_puzzle_lock) as an example.
+This tutorial teaches you how to spend a coin with any puzzle using RPC calls. We will be using the [password-locked coin](/guides/chialisp-first-smart-coin) puzzle as an example.
 
 ## Get your coin's info (amount, puzzle hash & parent info)
 
@@ -40,7 +40,7 @@ _WARNING: You have to change this solution and replace the target puzzle hash wi
 
 ### Serialization using [clvm_tools](https://github.com/Chia-Network/clvm_tools)
 
-The same command that we used for getting the puzzle hash in [How to lock coin with a custom puzzle](custom_puzzle_lock#get-puzzle-hash-from-a-puzzle) (`opc -H <compiled_puzzle>`) can be used for getting the serialized version of our puzzle and solution as well. The serialized version will be included in the response **on the second line**.
+The `opc -H <CLVM>` command can be used for getting the serialized version of our puzzle and solution as well. The serialized version will be included in the response **on the second line**.
 
 ```bash
 opc -H '(a (q 2 (i (= (sha256 5) (q . 0x2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824)) (q 4 (c 2 (c 11 (c 23 ()))) ()) (q 8)) 1) (c (q . 51) 1))'
