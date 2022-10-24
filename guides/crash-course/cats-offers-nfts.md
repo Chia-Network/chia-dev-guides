@@ -3,6 +3,11 @@ slug: /crash-course/cats-offers-nfts
 title: CATs, Offers and NFTs
 ---
 
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
 For this lesson you will want Chia installed and synced on testnet.
 
 ## What is a CAT?
@@ -17,19 +22,63 @@ For example, the TAIL may limit the creation to **single-issuance**. Any tokens 
 
 Up next we will clone the CAT creation tool which will simplify creating a cat by providing all of the necessary TAIL Chialisp files.
 
+```mdx-code-block
+<Tabs groupId="OS"
+defaultValue="windows"
+values={[
+{label: 'Windows', value: 'windows'},
+{label: 'Linux/MacOS', value: 'linux-macos'},
+]}>
+  <TabItem value="windows">
+```
+
 ```bash
-sudo apt-get install -y build-essential python3-dev
-git clone https://github.com/Chia-Network/CAT-admin-tool.git -b main --recurse-submodules
+git clone https://github.com/Chia-Network/CAT-admin-tool.git
+cd CAT-admin-tool
+py -m venv venv
+./venv/Scripts/activate
+py -m pip install --upgrade pip setuptools wheel
+pip install .
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="linux-macos">
+```
+
+```bash
+git clone https://github.com/Chia-Network/CAT-admin-tool.git
 cd CAT-admin-tool
 python3 -m venv venv
 . ./venv/bin/activate
-py -m pip install --upgrade pip setuptools wheel
+python -m pip install --upgrade pip setuptools wheel
 pip install .
-pip install chia-dev-tools --no-deps
-pip install pytest
 ```
 
-At this point you should be able to execute `cats --help` and `cdv --help`.
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
+At this point you should be able to execute `cats --help`.
+
+We will also need Chia Dev Tools:
+
+```
+pip install chia-dev-tools
+```
+
+Now, you can issue `cdv`:
+
+```
+cdv --help
+```
+
+We will also want to be sure to use the correct version of Chia Blockchain. At the time of this writing, we will need to use Chia blockchain 1.5.0.
+
+```
+pip install chia-blockchain==1.5.0
+```
 
 Verify your node is synced:
 
@@ -41,7 +90,13 @@ And you can confirm you have TXCH (or XCH on mainnet) with:
 
 ### Creating a Single-Issuance CAT
 
-We will only be worrying about creating a single-issuance CAT in this lesson. If you want more experience, you can move on to create a multiple-issuance CAT. **For every 1 CAT created you will need to spend 1,000 Mojo**. This means spending 0.1 Chia (100,000,000,000 Mojo) will produce a CAT with a max supply of 100 million.
+We will only be worrying about creating a single-issuance CAT in this lesson. If you want more experience, you can move on to create a multiple-issuance CAT.
+
+:::info
+Multiple-issuance CATs allow you to create more of the token at a later time. This is in contrast to a single-issuance CAT which can only be issued once.
+:::
+
+**For every 1 CAT created you will need to spend 1,000 Mojo**. This means spending 0.1 Chia (100,000,000,000 Mojo) will produce a CAT with a max supply of 100 million.
 
 ```bash
 cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <XCH mojos> -m <fee in XCH mojos> --as-bytes --select-coin
@@ -49,9 +104,18 @@ cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to <your receiv
 
 For the fee we recommend 100 million Mojo (`-m 100000000`).
 
+:::note
+You can retrieve one of your wallet addresses with:
+
+```
+chia wallet get_address
+```
+
+:::
+
 The final line of the output will be `Name: <Coin ID>`. You’ll use the coin ID value in the next step.
 
-Run the same command again, this time removing the --select-coin flag and adding a new flag, `--curry <Coin ID>`. It’s very important to preface the coin ID with 0x here to make CLVM interpret the value as bytes and not a string. Here’s the full command to run:
+Run the same command again, this time removing the `--select-coin` flag and adding a new flag, `--curry <Coin ID>`. It’s very important to preface the coin ID with 0x here to make CLVM interpret the value as bytes and not a string. Here’s the full command to run:
 
 ```bash
 cats --tail ./reference_tails/genesis_by_coin_id.clsp.hex --send-to <your receive address> --amount <XCH mojos> -m <fee in XCH mojos> --as-bytes --curry 0x<Coin ID>
@@ -499,7 +563,7 @@ The NFT identifier will look something like `nft1w45su63nd0nzy0fjstt3ppd0xe4pe98
 When formatting your chia offer, you will use this for the `-o` option.
 
 ```bash
-chia wallet make_offer -o <nft offer>:1 -r <wallet id>:<amount> -p <path>
+chia wallet make_offer -o <nft id>:1 -r <wallet id>:<amount> -p <path>
 ```
 
 <details>

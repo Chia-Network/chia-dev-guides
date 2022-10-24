@@ -19,6 +19,16 @@ This is just an example, we do not know the specific values your commands will n
 Also, make sure to use a wallet fingerprint that has enough XCH to pay for transaction fees.
 :::
 
+:::info
+
+It is important that you format your NFTs' metadata properly, as this cannot be changed after minting.
+
+See [CHIP-7](https://github.com/Chia-Network/chips/blob/main/assets/chip-0007/schema.json) for the first (and so far only) standardized JSON metadata schema for Chia NFTs. Usage of this CHIP is recommended in order to give marketplaces the best opportunity to parse your NFTs' metadata properly.
+
+Note that additional NFT metadata CHIPs are likely to be released in the future. However, there are no plans to deprecate CHIP-7 when this happens.
+
+:::
+
 ## Create a DID Wallet
 
 :::warning important
@@ -316,7 +326,7 @@ That should produce an output similar to this:
             "royalty_percentage": null,
             "royalty_puzzle_hash": null,
             "edition_number": 1,
-            "edition_count": 1,
+            "edition_total": 1,
             "supports_did": false,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -337,7 +347,7 @@ The values used in these commands are specific to this guide. Change any values 
 You can mint your NFT with a DID like this:
 
 ```bash
-chia rpc wallet nft_mint_nft '{"wallet_id": 6, "uris": ["https://images.pexels.com/photos/1509582/pexels-photo-1509582.jpeg"], "hash": "0ebedcd2cda065c75132218f745cecc3a1c131927f70b192b3fe6bbebaf437c4", "meta_uris": ["https://pastebin.com/raw/BHZc1suk", "https://pastebin.com/raw/bnzGwjmB"], "meta_hash": "07cb3cc71732d1979abd357af86475e1e35f6c2b41ed2387b309e4b486a89a51", "license_uris": ["https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/LICENSE"], "license_hash": "30a358857da6b49f57cfe819c1ca43bfe007f528eb784df5da5cb64577e0ffc6", "royalty_address": "txch1ape36g8rn8fm7d53z8rvngjkwhlkr83p28vnrpha94zt25szh8aq6anp3y", "royalty_percentage": 175, "target_address": "txch1ezy69gr6gpmu5e3hvyrn07ls7gqrw66s93pt555xcw50x25a2g7q3l3f8m", "edition_number": 1, "edition_count": 5, "fee": 615000000}'
+chia rpc wallet nft_mint_nft '{"wallet_id": 6, "uris": ["https://images.pexels.com/photos/1509582/pexels-photo-1509582.jpeg"], "hash": "0ebedcd2cda065c75132218f745cecc3a1c131927f70b192b3fe6bbebaf437c4", "meta_uris": ["https://pastebin.com/raw/BHZc1suk", "https://pastebin.com/raw/bnzGwjmB"], "meta_hash": "07cb3cc71732d1979abd357af86475e1e35f6c2b41ed2387b309e4b486a89a51", "license_uris": ["https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/LICENSE"], "license_hash": "30a358857da6b49f57cfe819c1ca43bfe007f528eb784df5da5cb64577e0ffc6", "royalty_address": "txch1ape36g8rn8fm7d53z8rvngjkwhlkr83p28vnrpha94zt25szh8aq6anp3y", "royalty_percentage": 175, "target_address": "txch1ezy69gr6gpmu5e3hvyrn07ls7gqrw66s93pt555xcw50x25a2g7q3l3f8m", "edition_number": 1, "edition_total": 5, "fee": 615000000}'
 ```
 
 That should produce an output similar to this:
@@ -407,9 +417,9 @@ Here is a description of the parameters used in the command:
 | "royalty_percentage"         | The royalty percentage expressed as tens of thousandths of a percent.                                                                                               |
 | "target_address"             | The address of the owner.                                                                                                                                           |
 | "series_number" (deprecated) | Beginning in Chia version 1.5, please use the `edition_number` parameter instead of this one.                                                                       |
-| "series_total" (deprecated)  | Beginning in Chia version 1.5, please use the `edition_count` RPC instead of this one.                                                                              |
+| "series_total" (deprecated)  | Beginning in Chia version 1.5, please use the `edition_total` RPC instead of this one.                                                                              |
 | "edition_number"             | If this NFT has multiple **editions** (multiple identical copies of an NFT), then this parameter indicates the edition number of this NFT.                          |
-| "edition_count"              | If this NFT has multiple **editions**, then this parameter indicates the total number of editions of this NFT. This parameter should be used with `edition_number`. |
+| "edition_total"              | If this NFT has multiple **editions**, then this parameter indicates the total number of editions of this NFT. This parameter should be used with `edition_number`. |
 
 Wait a few minutes for your NFT to be confirmed on the blockchain.
 
@@ -448,7 +458,7 @@ That should produce an output similar to this:
             "royalty_percentage": 175,
             "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
             "edition_number": 1,
-            "edition_count": 5,
+            "edition_total": 5,
             "supports_did": true,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -503,7 +513,7 @@ That should produce an output similar to this:
             "royalty_percentage": 175,
             "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
             "edition_number": 1,
-            "edition_count": 5,
+            "edition_total": 5,
             "supports_did": true,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -547,7 +557,7 @@ That should produce an output similar to this:
         "royalty_percentage": 175,
         "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
         "edition_number": 1,
-        "edition_count": 5,
+        "edition_total": 5,
         "supports_did": true,
         "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
     },
@@ -766,7 +776,7 @@ Which will eventually produce an output similar to this:
 You can also check the list of NFTs once it has been updated:
 
 ```bash
-chia rpc wallet nft_get_nfts '{"wallet_id": 2}'
+chia rpc wallet nft_get_nfts '{"wallet_id": 5}'
 ```
 
 Which will eventually produce an output similar to this:
@@ -781,7 +791,7 @@ Which will eventually produce an output similar to this:
         "https://images.pexels.com/photos/11053072/pexels-photo-11053072.jpeg"
       ],
       "did_owner": "",
-      "edition_count": 1,
+      "edition_total": 1,
       "edition_number": 1,
       "launcher_id": "C2F3F7D54D254381FD33FBE2B6C031E5BE3BA1267215A2FA182E064ED6015FEF",
       "license_hash": "",
@@ -884,7 +894,7 @@ That should produce an output similar to this:
             "royalty_percentage": null,
             "royalty_puzzle_hash": null,
             "edition_number": 1,
-            "edition_count": 1,
+            "edition_total": 1,
             "supports_did": false,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -931,7 +941,7 @@ That should produce an output similar to this:
             "royalty_percentage": 175,
             "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
             "edition_number": 1,
-            "edition_count": 5,
+            "edition_total": 5,
             "supports_did": true,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -1068,7 +1078,7 @@ That should produce an output similar to this:
             "royalty_percentage": null,
             "royalty_puzzle_hash": null,
             "edition_number": 1,
-            "edition_count": 1,
+            "edition_total": 1,
             "supports_did": false,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         },
@@ -1098,7 +1108,7 @@ That should produce an output similar to this:
             "royalty_percentage": 175,
             "royalty_puzzle_hash": "0xe8731d20e399d3bf369111c6c9a25675ff619e2151d93186fd2d44b55202b9fa",
             "edition_number": 1,
-            "edition_count": 5,
+            "edition_total": 5,
             "supports_did": true,
             "updater_puzhash": "0xfe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78b"
         }
@@ -1112,7 +1122,7 @@ That should produce an output similar to this:
 
 After you are comfortable with creating and using DIDs and NFTs on the testnet, you may wish to move to mainnet. Please keep in mind that there are extra risks inherent to publishing code on a public blockchain. For example, an NFT's data, metadata and license hashes are not allowed to change after minting. Proceed with caution.
 
-That said, the code is the same for both testnet and mainnet usage. You can continue to run off of the release/1.4.0 code branch, which will eventually be merged into main.
+That said, the code is the same for both testnet and mainnet usage.
 
 When you are ready to move to mainnet, the first step is to run `chia configure -t false`, which will instruct Chia to switch your configuration to mainnet.
 

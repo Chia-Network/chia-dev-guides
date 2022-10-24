@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 This course is designed to give you an end-to-end introduction to Chia. We'll start off with a foundational understanding of the Chia blockchain. This includes what blockchains are for and what makes Chia different from other options. Once you understand the basics, we'll learn about plotting and farming. Finally, we'll cover many of the DeFi possibilities including fungible tokens (CATs), non-fungible tokens (NFTs), and writing custom coins in Chialisp.
 
 :::info
-Chialisp is Chia's on-chain programming language for writing custom coins. If you want to skip ahead to development, see the [Intro to Chialisp section](/crash-course/intro-to-chialisp) of this course.
+Chialisp is Chia's on-chain programming language for writing custom coins. If you want to skip ahead to development, see the [Intro to Chialisp section](/guides/crash-course/intro-to-chialisp) of this course.
 :::
 
 ## Intro to Chia
@@ -30,7 +30,7 @@ The rules are known as the **consensus** and are rules defined in the software e
 
 Chia follows a consensus algorithm known as **Proof of Space and Time** (PoST). The way it works is by utilizing hard drive space and elapsed time as your contribution to the network. This is required to prevent what's known as a [Sybil attack](https://en.wikipedia.org/wiki/Sybil_attack).
 
-Chia is intentionally different than networks that use **Proof of Stake** (PoS). Many argue that staking has a centralizing effect of the network as there are much fewer decision-making nodes, and they continue to gain power. Chia, on the other hand, has over 350,000 full nodes all following the PoST consensus mechanism, a protocol that is similar to that of Bitcoin (but with less electricity usage required).
+Chia is intentionally different than networks that use **Proof of Stake** (PoS). Many argue that staking has a centralizing effect of the network as there are much fewer decision-making nodes, and they continue to gain power. Chia, on the other hand, has over 100K full nodes all following the PoST consensus mechanism, a protocol that is similar to that of Bitcoin (but with less electricity usage required).
 
 ### Decentralization
 
