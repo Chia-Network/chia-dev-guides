@@ -78,24 +78,6 @@ const sidebars = {
     'simulator/simulator-user-guide',
     {
       type: 'category',
-      label: 'Crash Course',
-      collapsible: true,
-      collapsed: true,
-      link: {
-        type: 'generated-index',
-        slug: '/crash-course',
-        title: 'Crash Course',
-        description:
-          'These lessons will guide you through the essentials of Chia.',
-      },
-      items: [
-        'crash-course/introduction',
-        'crash-course/cats-offers-nfts',
-        'crash-course/chialisp',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Tutorials',
       collapsible: true,
       collapsed: true,
