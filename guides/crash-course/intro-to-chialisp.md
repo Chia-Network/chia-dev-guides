@@ -10,6 +10,16 @@ import TabItem from '@theme/TabItem';
 
 For this section of the course, you will learn how to set up your development environment, write Chialisp code, and execute it on the command-line.
 
+:::note
+If you are using PowerShell, make sure to install the PowerShell 7.3 preview version:
+
+```bash
+winget install --id Microsoft.Powershell.Preview --source winget
+```
+
+This version fixes nested quoting, which is required for many of the commands on this page.
+:::
+
 ## Dev Tools
 
 To get started with Chialisp, you will first want to [install Chia Dev Tools](https://github.com/Chia-Network/chia-dev-tools).
