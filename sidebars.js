@@ -1,14 +1,3 @@
-/**
- * Creating a sidebar enables you to:
- - create an ordered group of docs
- - render a sidebar for each doc of that group
- - provide next/previous navigation
-
- The sidebars can be generated from the filesystem, or explicitly defined here.
-
- Create as many sidebars as you want.
- */
-
 // @ts-check
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
@@ -17,6 +6,8 @@ const sidebars = {
     {
       type: 'category',
       label: 'Chialisp Primer',
+      collapsible: true,
+      collapsed: true,
       link: {
         type: 'generated-index',
         slug: '/chialisp-primer',
@@ -35,6 +26,8 @@ const sidebars = {
     {
       type: 'category',
       label: 'Chialisp Concepts',
+      collapsible: true,
+      collapsed: true,
       link: {
         type: 'generated-index',
         slug: '/chialisp-concepts',
@@ -51,6 +44,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'NFT Guide',
+      collapsible: true,
       collapsed: false,
       link: {
         type: 'generated-index',
@@ -66,8 +60,50 @@ const sidebars = {
         'nft/nft-bulk-mint',
       ],
     },
+    {
+      type: 'category',
+      label: 'CAT Guide',
+      collapsible: true,
+      collapsed: true,
+      link: {
+        type: 'generated-index',
+        slug: '/cat-developer-guide',
+        title: 'CAT Developer Guide',
+        description:
+          "These guides will guide you through the process of creating CATs that conform to Chia's CAT standard.",
+      },
+      items: ['cat/cat-creation-tutorial'],
+    },
     'datalayer/datalayer-user-guide',
     'simulator/simulator-user-guide',
+    {
+      type: 'category',
+      label: 'Tutorials',
+      collapsible: true,
+      collapsed: true,
+      items: [
+        {
+          'Video Series': [
+            'tutorials/video-series/why-chia-is-great',
+            'tutorials/video-series/developing-applications',
+            'tutorials/video-series/tools-and-setup',
+            'tutorials/video-series/programming-chialisp',
+            'tutorials/video-series/coin-lifecycle-and-testing',
+            'tutorials/video-series/singleton-contracts',
+            'tutorials/video-series/state-coins-announcements',
+            'tutorials/video-series/security-arguments-signing',
+            'tutorials/video-series/announcements-oracles',
+            'tutorials/video-series/single-issuance-cat',
+            'tutorials/video-series/multiple-issuance-cat',
+          ],
+        },
+        'tutorials/custom-puzzle-lock',
+        'tutorials/coin-spend-rpc',
+        'tutorials/application-structure',
+        'tutorials/offers-gui',
+        'tutorials/offers-cli',
+      ],
+    },
   ],
 };
 

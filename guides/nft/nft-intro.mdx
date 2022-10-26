@@ -13,10 +13,10 @@ This document will guide you through the process of creating DIDs that conform t
 
 Detailed instructions for each of the commands from this tutorial are available from the following references on Chia Docs:
 
-- [DID CLI reference](https://docs.chia.net/docs/13cli/did_cli 'Chia DIDs: CLI reference')
-- [NFT CLI reference](https://docs.chia.net/docs/13cli/nft_cli 'Chia NFTs: CLI reference')
-- [DID RPC reference](https://docs.chia.net/docs/12rpcs/did_rpcs 'Chia DIDs: RPC reference')
-- [NFT RPC reference](https://docs.chia.net/docs/12rpcs/nft_rpcs 'Chia NFTs: RPC reference')
+- [DID CLI reference](https://docs.chia.net/did-clis)
+- [NFT CLI reference](https://docs.chia.net/nft-clis)
+- [DID RPC reference](https://docs.chia.net/did-rpcs)
+- [NFT RPC reference](https://docs.chia.net/nft-rpcs)
 
 :::info
 As detailed in our [CLVM reference](https://chialisp.com/docs/clvm/lang_reference#evaluating-cost-for-a-typical-transaction), the CLVM cost for an XCH transaction with two inputs and two outputs is around 17 million.
@@ -38,7 +38,7 @@ The maximum CLVM cost in a transaction block is 11 billion. If you plan to mint 
 <details>
   <summary>Note about Python <code>RuntimeError</code> on Windows</summary>
 
-If you are running on Windows, you might occasionally see a Python Runtime Error. This is a [known issue in Python](https://github.com/aio-libs/aiohttp/issues/4324 'More info about this issue') and can be safely ignored. For example:
+If you are running on Windows, you might occasionally see a Python Runtime Error. This is a [known issue in Python](https://github.com/aio-libs/aiohttp/issues/4324) and can be safely ignored. For example:
 
 ```bash
 chia stop -d all
@@ -61,36 +61,22 @@ daemon: {'ack': True, 'command': 'exit', 'data': {'success': True}, 'destination
 
 ## Install Testnet
 
-This section will show you how to install the latest version of Chia, configure your installation to run on the testnet, sync your node, and obtain some TXCH. If you have already done all of these things, you can skip to the next section, [Create an NFT wallet (CLI)](#create-an-nft-wallet-cli 'Create an NFT wallet (CLI)').
+This section will show you how to install the latest version of Chia, configure your installation to run on the testnet, sync your node, and obtain some TXCH. If you have already done all of these things, you can skip to the next section, [Obtain images with corresponding hashes](#obtain-images-with-corresponding-hashes).
 
 :::tip
 Your firewall might give warnings when installing Chia. This is normal. Allow the installations to continue.
 :::
 
-You can either run on a full node, or use the light wallet. A full node takes longer to sync (see detailed instructions below), but once it is synced, it is generally faster than the light wallet. You also have the option of starting the light wallet and switching to the full node after it is synced.
+You can either run on a full node or use the light wallet. You also have the option of installing from source or using a binary installer.
 
-If you wish to run a full testnet node, you can safely [download a copy of the database](https://download.chia.net/testnet10/blockchain_v2_testnet10.sqlite.gz) and save the file to your downloads folder. Make sure you have enough free space before beginning the download.
+### Binary installer
 
-:::danger
-Never download the mainnet database, since you can never fully trust the source you are getting it from. Only do this on testnet, and from the official download link. This is for development purposes only.
-:::
+If you choose to run a binary installer, download the latest version of Chia from the [Chia download page](https://www.chia.net/downloads).
 
-You may continue with the next steps while the download is in progress.
-
-If Chia is already installed on your system, make sure it is stopped:
-
-```bash
-chia stop -d all
-```
-
-Ensure there are no `chia` related processes running. If you are unsure, you may want to uninstall Chia before continuing.
-
-### Using the installer
-
-You can download the latest version of Chia using the official installer on the [Chia download page](https://www.chia.net/downloads).
+After the installer has downloaded, execute it and Chia will install automatically.
 
 :::info
-If you want to run a binary Chia installer, here's how to create an alias and switch to using the testnet:
+If the `chia` command isn't already in your system's path, you can create an alias:
 
 ```mdx-code-block
 <Tabs
@@ -102,9 +88,10 @@ If you want to run a binary Chia installer, here's how to create an alias and sw
   <TabItem value="windows">
 ```
 
+Be sure to replace `<username>` and `<version>` with the actual folder names.
+
 ```bash
 Set-Alias -Name chia "C:\Users\<username>\AppData\Local\chia-blockchain\app-<version>\resources\app.asar.unpacked\daemon\chia.exe"
-chia configure -t true
 ```
 
 ```mdx-code-block
@@ -114,7 +101,6 @@ chia configure -t true
 
 ```bash
 alias chia="/Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/chia"
-chia configure -t true
 ```
 
 ```mdx-code-block
@@ -126,68 +112,11 @@ chia configure -t true
 
 ### Installing from source
 
-You can also download Chia from source instead, which makes using the command-line easier.
+To install Chia from source, follow our [installation wiki](https://github.com/Chia-Network/chia-blockchain/wiki/INSTALL), which includes instructions for intalling on all supported operating systems.
 
-:::note
-If you don't already have the `git` CLI tool installed, [follow these instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to install it
-:::
+### Switching to testnet
 
-```mdx-code-block
-<Tabs
-  defaultValue="windows"
-  values={[
-    {label: 'Windows', value: 'windows'},
-    {label: 'Linux/MacOS', value: 'nix'},
-  ]}>
-  <TabItem value="windows">
-```
-
-```bash
-git clone https://github.com/Chia-Network/chia-blockchain chia-blockchain
-cd chia-blockchain
-.\Install.ps1
-.\venv\Scripts\Activate.ps1
-chia init
-```
-
-```mdx-code-block
-  </TabItem>
-  <TabItem value="nix">
-```
-
-```bash
-git clone https://github.com/Chia-Network/chia-blockchain chia-blockchain
-cd chia-blockchain
-sh install.sh
-. ./activate
-chia init
-```
-
-```mdx-code-block
-  </TabItem>
-</Tabs>
-```
-
-:::tip
-If you receive the message `WARNING: UNPROTECTED SSL FILE!` then run:
-
-```bash
-chia init --fix-ssl-permissions
-```
-
-:::
-
-Check the version of the Chia software:
-
-```bash
-chia version
-```
-
-Run the following command to set up Chia to use the testnet:
-
-```bash
-chia configure --testnet true
-```
+By default, Chia will run on mainnet. To switch to the testnet (recommended) for this guide, see [our wiki guide](https://github.com/Chia-Network/chia-blockchain/wiki/How-to-Connect-to-the-Testnet).
 
 ## Configuration
 
@@ -240,7 +169,7 @@ Your seed phrase is all that is required to recover your wallet. If you lose you
 If you ever need to display your address, run `chia keys show`. This command will only output your public keys and address; your private keys and seed phrase will not be shown.
 :::
 
-Note: At this point we'll start the Chia light wallet, but not the full node. As noted above, the full node is not required for minting NFTs, but it will generally be faster than the light wallet. The main reason not to start the node now is because the database file might still be downloading. If your database download has completed and you want to run the full node now, run steps 13, 14, and 15, then return here.
+Note: At this point we'll start the Chia light wallet, but not the full node. As noted above, the full node is not required for minting NFTs, but it will generally be faster than the light wallet.
 
 Start your wallet by running:
 
@@ -286,21 +215,7 @@ Open our [testnet faucet page](https://testnet10-faucet.chia.net "Chia's testnet
 
 You'll receive this message: `Accepted. Your request is in the queue and will be processed in the order it was received.` At some point you'll receive 1 TXCH. Depending on how busy the faucet and the testnet are, this could take several minutes. However, you don't need to wait for your coins to arrive before continuing.
 
-Create the folder where your database will reside:
-
-```bash
-mkdir ~/.chia/mainnet/db
-```
-
-You must wait for your database file to finish downloading before continuing. After the download has completed, use an archive manager such as [7-Zip](https://www.7-zip.org/ "7-Zip's website") to extract the file. You should now have a file in your Downloads folder called `blockchain_v2_testnet10.sqlite`.
-
-Move the database to the folder you just created:
-
-```bash
-mv ~/Downloads/blockchain_v2_testnet10.sqlite ~/.chia/mainnet/db
-```
-
-Start the full node, which will begin syncing to the database file:
+(Optional) Start the full node:
 
 ```bash
 chia start node
@@ -322,45 +237,7 @@ Genesis Challenge: ae83525ba8d1dd3f09b277de18ca3e43fc0af20d20c4b3e92ef2a48bd291c
 Current Blockchain Status: Full Node Synced
 ```
 
-Optionally install and run Chia's GUI:
-
-```mdx-code-block
-<Tabs
-  defaultValue="windows"
-  values={[
-    {label: 'Windows', value: 'windows'},
-    {label: 'Linux/MacOS', value: 'nix'},
-  ]}>
-  <TabItem value="windows">
-```
-
-```powershell
-(You should be in the <chia-blockchain> folder)
-
-.\Install-gui.ps1
-cd .\chia-blockchain-gui
-npm run electron
-```
-
-```mdx-code-block
-  </TabItem>
-  <TabItem value="nix">
-```
-
-```bash
-(You should be in the <chia-blockchain> folder)
-
-sh install-gui.sh
-cd ./chia-blockchain-gui
-npm run electron &
-```
-
-```mdx-code-block
-  </TabItem>
-</Tabs>
-```
-
-Once you have a synced full node and some TXCH, you may proceed to the next section. If your requested TXCH has not yet arrived, post your address on the #dev channel on Keybase. Someone might be able to send some to you.
+Once you have a synced wallet and some TXCH, you may proceed to the next section. If your requested TXCH has not yet arrived, post your address on the #dev channel on Keybase. Someone might be able to send some to you.
 
 <details>
   <summary>Note about Chia wallets</summary>
@@ -494,3 +371,11 @@ In theory you can use any hosting site to host your NFT images. However, do make
 Certain decentralized services such as IPFS can be slow. The first time a user attempts to view an NFT in their wallet (before caching), it might take a long time to load.
 
 Chia NFTs use a list to store image URIs, so it is possible to add multiple locations to increase permanance. However, do make sure each image's hash is the same as the data hash.
+
+## NFT Metadata Standards
+
+Since the original release of this guide, a CHia Improvement Proposal ([CHIP](https://github.com/Chia-Network/chips/blob/main/CHIPs/chip-0001.md#what-is-a-chip 'CHIP explanation')) that standardizes the JSON metadata schema for Chia NFTs has been finalized.
+
+See [CHIP-7](https://github.com/Chia-Network/chips/blob/main/assets/chip-0007/schema.json) for the correct formatting. Usage of this CHIP is recommended in order to give marketplaces the best opportunity to parse your NFTs' metadata properly.
+
+Note that additional NFT metadata CHIPs are likely to be released in the future. However, there are no plans to deprecate CHIP-7 when this happens.

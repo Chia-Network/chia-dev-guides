@@ -9,9 +9,7 @@ If you haven't already, you will need to [clone the Chia Blockchain repository](
 ## Setup
 
 :::tip
-
 If you are using Windows, we recommend PowerShell, and you may need to replace forward slashes `/` with backslashes `\`.
-
 :::
 
 1.  Open the `chia-blockchain` folder in a command prompt of your choice.
@@ -35,4 +33,4 @@ Now you can set up the wallet and use a faucet to receive Testnet coins to use i
 
 ## Conclusion
 
-You should now be ready to use the Testnet to create and spend smart coins. As always, if you ran into any issues while setting up the Testnet, feel free to ask for support on our [Keybase](https://keybase.io/team/chia_network.public).
+You should now be ready to use the Testnet to create and spend smart coins. As always, if you ran into any issues while setting up the Testnet, feel free to ask for support on our [Keybase team](https://keybase.io/team/chia_network.public).

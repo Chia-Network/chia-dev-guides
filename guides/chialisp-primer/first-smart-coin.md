@@ -11,9 +11,7 @@ By now, you should understand what Chialisp is and how you can use it to write p
 The previous guide detailed how to set up the testnet. You will need to follow it to continue.
 
 :::tip
-
 While this guide can be followed on the command-line like the first, we recommend writing more complicated Chialisp programs like this one that you plan on reusing in a text editor of your choice, then using the command-line to compile it and use the RPC commands.
-
 :::
 
 ## Password Puzzle
@@ -62,7 +60,7 @@ In this example, the curried in `PASSWORD_HASH` represents the hash of the passw
 
 A condition consists of a condition number followed by its arguments. They can do a variety of things, from the creation of new coins and requiring other spends to happen at the same time, to various assertions related to the state of the blockchain.
 
-A complete list of conditions can be found [here](https://chialisp.com/docs/coins_spends_and_wallets#conditions), but we will only be using one in this tutorial: condition `51`, or `CREATE_COIN`, creates a new coin with the given `puzzle_hash` and `amount` if the spend is valid. It is used to send money to another puzzle hash (which is analagous to an address).
+A complete list of conditions can be found on the [Conditions page](https://docs.chia.net/conditions), but we will only be using one in this tutorial: condition `51`, or `CREATE_COIN`, creates a new coin with the given `puzzle_hash` and `amount` if the spend is valid. It is used to send money to another puzzle hash (which is analagous to an address).
 
 ## Coins
 
@@ -83,9 +81,7 @@ We will now use these concepts and the `password.clsp` file you just wrote to cr
 ### Creating the Coin
 
 :::danger
-
 Don't use a password that you use or plan to use for anything else, as this is not a secure smart coin. The most ideal choice for this is any number of random characters of your choice, such as `x7h2dDkE`. Just write it down for later.
-
 :::
 
 The first step is to curry the puzzle with the password's hash and get the puzzle hash and puzzle reveal:
@@ -125,9 +121,7 @@ cdv decode "txch1WalletAddress"
 ```
 
 :::caution
-
 Make sure you put the `0x` prefix in front of the wallet's puzzle hash in this command. It isn't required for the other commands, but in this case it will compile as a string without it, which you don't want.
-
 :::
 
 Then, get the solution in hex, with the password and your wallet puzzle hash:
@@ -167,7 +161,7 @@ Finally, run the following command to push the transaction to the Testnet:
 cdv rpc pushtx spendbundle.json
 ```
 
-If all went well, this should spend the coin! Otherwise, retrace your steps carefully to try to find what went wrong. If you still can't figure it out, don't hesitate to ask us on our [Keybase](https://keybase.io/team/chia_network.public) and we will answer as soon as we can.
+If all went well, this should spend the coin! Otherwise, retrace your steps carefully to try to find what went wrong. If you still can't figure it out, don't hesitate to ask us on our [Keybase team](https://keybase.io/team/chia_network.public) and we will answer as soon as we can.
 
 ## Potential Questions
 
@@ -179,7 +173,7 @@ We allow any conditions to be passed in the solution. While you might think that
 
 ### Why are Password Coins Insecure?
 
-When you spend one or more coins, the puzzle and its solution go into the [mempool](https://docs.chia.net/docs/06mempool/mempool) until the block is inevitably farmed. This means that anyone can read the password in plain text during this time, or after the coin is spent.
+When you spend one or more coins, the puzzle and its solution go into the [mempool](https://docs.chia.net/mempool) until the block is inevitably farmed. This means that anyone can read the password in plain text during this time, or after the coin is spent.
 
 A simple solution to that would be to use a new random password every time you create a coin. However, a malicious farmer can actually change the solution to spends however they would like before adding it to their block. In doing so, they could change where the money will go in order to steal the coin.
 

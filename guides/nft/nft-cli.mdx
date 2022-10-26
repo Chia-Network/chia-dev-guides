@@ -7,12 +7,20 @@ title: Minting NFTs With CLI
 The next section of this tutorial will demonstrate how to create and use DIDs and NFTs on the CLI. If you wish to use RPCs instead, you can skip ahead to the [RPC version](/guides/nft-rpc).
 
 :::note
-
 It is very important that you replace any DID, id, name, or other value in the following commands with your own.
 
 This is just an example, we do not know the specific values your commands will need in order to work.
 
 Also, make sure to use a wallet fingerprint that has enough XCH to pay for transaction fees.
+:::
+
+:::info
+
+It is important that you format your NFTs' metadata properly, as this cannot be changed after minting.
+
+See [CHIP-7](https://github.com/Chia-Network/chips/blob/main/assets/chip-0007/schema.json) for the first (and so far only) standardized JSON metadata schema for Chia NFTs. Usage of this CHIP is recommended in order to give marketplaces the best opportunity to parse your NFTs' metadata properly.
+
+Note that additional NFT metadata CHIPs are likely to be released in the future. However, there are no plans to deprecate CHIP-7 when this happens.
 
 :::
 
@@ -209,7 +217,7 @@ The values used in these commands are specific to this guide. Change any values 
 Next we'll mint an NFT that is associated with a DID. For this example, we'll use most of the available options:
 
 ```bash
-chia wallet nft mint -f 2086972020 -i 4 -ra txch10e2hg2xkd7n2rfyh0frg6ls3q9v27ty0rfawxuvergrfyl0502vsx5se2t -ta txch1rhrkwf9a53v89r5ghn2du4e5vadt68crdfjuxcuq8zpykejw7vzq2t85nx -u https://images.pexels.com/photos/11053072/pexels-photo-11053072.jpeg -nh 14836b86a48e1b2b5e857213af97534704475b4c155d34b2cb83ed4b7cba2bb0 -mu "https://pastebin.com/raw/PnaQGQiH, https://pastebin.com/raw/KTwUQ8hM" -mh e9e9366f050e90ceb04a4778f2adfa02dfb565327d225eb35101f0de553ac20b -lu https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/LICENSE -lh 30a358857da6b49f57cfe819c1ca43bfe007f528eb784df5da5cb64577e0ffc6 -sn 1 -st 5 -rp 300 -m 0.000615
+chia wallet nft mint -f 2086972020 -i 4 -ra txch10e2hg2xkd7n2rfyh0frg6ls3q9v27ty0rfawxuvergrfyl0502vsx5se2t -ta txch1rhrkwf9a53v89r5ghn2du4e5vadt68crdfjuxcuq8zpykejw7vzq2t85nx -u https://images.pexels.com/photos/11053072/pexels-photo-11053072.jpeg -nh 14836b86a48e1b2b5e857213af97534704475b4c155d34b2cb83ed4b7cba2bb0 -mu "https://pastebin.com/raw/PnaQGQiH, https://pastebin.com/raw/KTwUQ8hM" -mh e9e9366f050e90ceb04a4778f2adfa02dfb565327d225eb35101f0de553ac20b -lu https://raw.githubusercontent.com/Chia-Network/chia-blockchain/main/LICENSE -lh 30a358857da6b49f57cfe819c1ca43bfe007f528eb784df5da5cb64577e0ffc6 -en 1 -et 5 -rp 300 -m 0.000615
 ```
 
 That should produce an output similar to this:
@@ -268,9 +276,9 @@ Here is a description of the options used:
 | `-lu`                | A comma-separated list of URIs where the image's license may be found.                               |
 | `-lh`                | The hash of the NFT's license.                                                                       |
 | -sn (deprecated)     | Beginning in Chia version 1.5, please use `en` (`edition-number`) instead.                           |
-| -st (deprecated)     | Beginning in Chia version 1.5, please use `ec` (`edition-count`) instead.                            |
+| -st (deprecated)     | Beginning in Chia version 1.5, please use `et` (`edition-total`) instead.                            |
 | -en                  | The edition number. Specify if this NFT has multiple editions (multiple identical copies of an NFT). |
-| -ec                  | The edition total number. Specify if this NFT has multiple editions.                                 |
+| -et                  | The edition total number. Specify if this NFT has multiple editions.                                 |
 | `-rp`                | The royalty percentage expressed as tens of thousandths of a percent.                                |
 | `--no-did-ownership` | Disables DID ownership.                                                                              |
 | `-m`                 | The fee for this transaction in XCH.                                                                 |
@@ -296,7 +304,7 @@ That should produce an output similar to this:
         "https://images.pexels.com/photos/11053072/pexels-photo-11053072.jpeg"
       ],
       "did_owner": "",
-      "edition_count": 1,
+      "edition_total": 1,
       "edition_number": 1,
       "launcher_id": "C2F3F7D54D254381FD33FBE2B6C031E5BE3BA1267215A2FA182E064ED6015FEF",
       "license_hash": "",
