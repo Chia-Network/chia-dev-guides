@@ -4,13 +4,13 @@ slug: /
 title: 1. Intro to Chialisp
 ---
 
-[Chialisp](https://chialisp.com) is a language based on [Lisp](<https://en.wikipedia.org/wiki/Lisp_(programming_language)>) that is used on the Chia blockchain to dictate how and when [coins](https://docs.chia.net/docs/01introduction/chia-system-overview#coins-and-transactions) can be spent. It's designed to be as simple and efficient as possible, but still provide broad functionality and [Turing Completeness](https://en.wikipedia.org/wiki/Turing_completeness).
+[Chialisp](https://chialisp.com) is a language based on [Lisp](<https://en.wikipedia.org/wiki/Lisp_(programming_language)>) that is used on the Chia blockchain to dictate how and when [coins](https://docs.chia.net/chia-concepts#coins-and-transactions) can be spent. It's designed to be as simple and efficient as possible, but still provide broad functionality and [Turing Completeness](https://en.wikipedia.org/wiki/Turing_completeness).
 
 Throughout this guide you will learn the basics of Chialisp, and by the end you should have the skills required to write working programs using it. No prior knowledge of Lisp is required.
 
 ## Installation
 
-You can follow [this guide](https://github.com/Chia-Network/chia-dev-tools/#install) to install and use Chia Dev Tools. You will be using these tools and a simple text editor of your choice to write and run snippets of code.
+You can follow the [Chia Dev Tools installation guide](https://github.com/Chia-Network/chia-dev-tools/#install) to install and use Chia Dev Tools. You will be using these tools and a simple text editor of your choice to write and run snippets of code.
 
 Once you have it set up, run the following command:
 
@@ -55,7 +55,7 @@ And here is an operator:
 run '(+ 2 3)'
 ```
 
-As you can see, just about everything in this language is based on lists, hence the name Lisp (an abbreviation for List Processor). You can see a full list of built-in operators [here](https://chialisp.com/docs/clvm/lang_reference/#operator-summary).
+As you can see, just about everything in this language is based on lists, hence the name Lisp (an abbreviation for List Processor). You can see a full list of built-in operators [here](https://chialisp.com/operators).
 
 ## Example
 
@@ -71,4 +71,4 @@ If 3 is greater than 2, it's 10, otherwise 5. Then multiply it by 10. The result
 
 Hopefully this guide has been a good introduction into the world of Chialisp. There is a lot more to learn, but this is the foundation that everything else is built on top of.
 
-If you really want to get started with using it, the best way is to try out these examples yourself, and play around a little yourself. Feel free to ask questions on our [Keybase](https://keybase.io/team/chia_network.public) that come up along the way. We are always happy to help you learn.
+If you really want to get started with using it, the best way is to try out these examples yourself, and play around a little yourself. Feel free to ask questions on our [Keybase team](https://keybase.io/team/chia_network.public) that come up along the way. We are always happy to help you learn.
