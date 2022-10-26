@@ -104,9 +104,11 @@ brun '(a (q 2 (i (= 2 5) (q 1 . "Correct!") (q 1 . "Incorrect :(")) 1) (c (q . "
 Now that we've introduced currying, we can create a different program using a different `CORRECT_PASSWORD` without modifying any of the source code.
 
 :::note
+Now, let's nest a command.
+
 Because currying outputs CLVM, we can nest it as input to the compiler to make the process of testing this out easier.
 
-An important thing to note here is that the nesting will not work properly if surrounded with single quotes, thus, we would use `"$()"` and not `'$()'`. This requires us to flip all nested quotes (specifically `'hello'` in this case) so that we have single quotes inside of the double quote.
+An important thing to note here is that the nesting will not work properly if surrounded with single quotes, thus, we would use `"$()"` and not `'$()'`. This requires us to flip all nested quotes so that we have single quotes inside of the double quote (in this upcoming example take a look at `'goodbye'`. ).
 :::
 
 You can try it with a new password:
@@ -276,6 +278,10 @@ Run the following command:
 cdv clsp curry password.clsp -a "0x2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
 ```
 
+:::warning
+Remember the 0x before the hash.
+:::
+
 Which, with this hash, outputs the following compiled CLVM program:
 
 ```chialisp
@@ -318,7 +324,7 @@ Write this value down somewhere you can refer to later.
 
 The puzzle reveal is just a serialized form of the puzzle, written in hex. It is what you must reveal on-chain when spending a coin.
 
-Paste the compiled CLVM into this command to calculate the hash:
+Paste the compiled CLVM into this command to calculate the puzzle:
 
 ```bash
 opc "<Compiled CLVM>"
@@ -409,8 +415,12 @@ It is especially important that you use **your wallet address** here, not the ex
 The solution is a list of arguments, consisting of a list of conditions containing the one above:
 
 ```
-opc "(((51 0xe68767ba2b431eb8efd9b8dd0db668d5c0c00c7a04e83f6bc6504c0f2626fdf6 9950000000)))"
+opc "('hello' ((51 0xe68767ba2b431eb8efd9b8dd0db668d5c0c00c7a04e83f6bc6504c0f2626fdf6 9950000000)))"
 ```
+
+:::warning
+Remember the 0x before your puzzle hash.
+:::
 
 Which should produce an output similar to this:
 
@@ -453,9 +463,39 @@ Now, using that as a reference, write the following in a file named `spendbundle
       "puzzle_reveal": "<Puzzle Reveal>",
       "solution": "<Solution>"
     }
-  ]
+  ],
+    "aggregated_signature": "0xc00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
 }
 ```
+
+<details>
+<summary>Example Spend Bundle</summary>
+
+```json
+{
+  "coin_spends": [
+    {
+      "coin": {
+        "amount": 10000000000,
+        "parent_coin_info": "0x138d7e723b9f06ff3f4af8fba066cebb7ecb5b6c7f3353ae1b6a89309314c42d",
+        "puzzle_hash": "0x87444f0b48929c0f11d512e5e0c7794a71c9aa20e1c303154ccda68e7c1c1a45"
+      },
+      "puzzle_reveal": "ff02ffff01ff02ffff03ffff09ffff0bff0580ff0280ffff010bffff01ff088080ff0180ffff04ffff01a02cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824ff018080",
+      "solution": "ff8568656c6c6fffffff33ffa0697f2559a54b0963c8fbd33f34888f2cd94eafa80eb880e2a3a01021fc88fbfdff85025110f380808080"
+    }
+  ],
+  "aggregated_signature": "0xc00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+}
+```
+
+</details>
+
+:::info
+
+The puzzle reveal will be confirmed against the puzzle hash of the coin. If you used the same exact puzzle you will have the same value here. The solution will vary depending on what puzzle hash you used for `51 CREATE_COIN`.
+
+The `aggregated_signature` requires no custom value, but you will be required to use the default value here. Copy and Paste this. We will talk about this more
+:::
 
 :::note
 For the `coin` field, copy and paste the coin found using the `coinrecords` command. This is the coin that you created before, and are now spending.
@@ -464,7 +504,7 @@ For the `coin` field, copy and paste the coin found using the `coinrecords` comm
 Finally, submit the transaction to the mempool by running this final command:
 
 ```bash
-cdv pushtx spendbundle.json
+cdv rpc pushtx spendbundle.json
 ```
 
 If everything was successful, this transaction should be successful, and you should see your wallet balance increase after some time passes. It won't be identical to when you started because of the total of `0.0001` network fees added throughout the process.
