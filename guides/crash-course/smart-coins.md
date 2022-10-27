@@ -3,9 +3,9 @@ slug: /crash-course/smart-coins
 title: Smart Coins
 ---
 
-Everything on the Chia blockchain is a **coin**. They are often referred to as **smart coins** because every coin has a Chialisp program associated with it. That program, known as a **puzzle**, decides how and when the coin can be spent, and what happens when it is. NFTs, CATs, and standard transactions are all defined using puzzles.
+Everything on the Chia blockchain is a **coin**. They are often referred to as **smart coins** because every coin has a Chialisp program associated with it. That program, known as a **puzzle**, decides how and when the coin can be spent, and what happens when it is. NFTs, CATs, and standard transactions are all defined using puzzles. Another example of something you can do with Chialisp is lock up funds until a certain amount of time has elapsed.
 
-Now that you have learned how to write basic Chialisp programs, you can apply that to puzzles. There's a bit more involved in creating a puzzle and using it for a coin, but we'll get into that more later.
+Now that you have learned how to write basic Chialisp programs, you can apply that to more complex puzzles. There's a bit more involved in creating a puzzle and using it for a coin, but we'll get into that more later.
 
 In this lesson, we will be writing a puzzle that requires a simple password to unlock coins that use it.
 
@@ -453,6 +453,10 @@ This should produce an output similar to this:
 ]
 ```
 
+:::note
+If multiple coins exist with this same puzzle_hash, you will see a list of coins. Most likely you can grab the one with the highest block index (the most recent).
+:::
+
 Now, using that as a reference, write the following in a file named `spendbundle.json`:
 
 ```json
@@ -508,6 +512,10 @@ cdv rpc pushtx spendbundle.json
 ```
 
 If everything was successful, this transaction should be successful, and you should see your wallet balance increase after some time passes. It won't be identical to when you started because of the total of `0.0001` network fees added throughout the process.
+
+## Common Mistakes
+
+A few mistakes you may run in to is forgetting the 0x for both the curried in password and the receive puzzle hash in the provided solution. These both require 0x! You will also want to have 0x for the `coin` object. The safest way to make sure your coin record is correct is to copy it exactly from the RPC, just make sure you grab the right coin (remember, multiple coins can have the same puzzle hash value).
 
 ## Security Concerns
 
