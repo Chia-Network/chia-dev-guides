@@ -74,6 +74,23 @@ const sidebars = {
       },
       items: ['cat/cat-creation-tutorial'],
     },
+    {
+      type: 'category',
+      label: 'Custody Tool',
+      collapsible: true,
+      collapsed: true,
+      link: {
+        type: 'generated-index',
+        slug: '/custody-tool-description',
+        title: 'Custody Tool',
+        description:
+          "How to use Chia's Custody Tool to secure your own coins.",
+      },
+      items: [
+        'custody/custody-tool-description',
+        'custody/custody-tool-user-guide'
+      ],
+    },
     'datalayer/datalayer-user-guide',
     'simulator/simulator-user-guide',
     {
