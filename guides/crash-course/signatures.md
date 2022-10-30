@@ -298,7 +298,9 @@ Now, craft the complete solution, **make sure to prefix with 0x for your puzzle 
 
 # Solution
 
+```
 opc "(((51 0x9ee6bfb3d3732c68fbff1fcce96fa26ab83ff8c5736eed25ceafe47cb4750f53 9950000000)))"
+```
 
 Response:
 
