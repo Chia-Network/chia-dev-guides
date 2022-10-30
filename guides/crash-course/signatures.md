@@ -331,7 +331,7 @@ d96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c1
 To sign the message we will actually need the `coin_id` and the genesis challenge.
 
 :::info Genesis Challenge?
-`AGG_SIG_ME` requires multiple pieces of information as to prevent reusable signatures. One of these things is the genesis challenge, which a different value for every network. You will find this information in the `config.yaml` file of your chia configuration.
+`AGG_SIG_ME` requires multiple pieces of information as to prevent reusable signatures. One of these things is the genesis challenge, which is a different value for every network. You will find this information in the `config.yaml` file of your chia configuration.
 
 ```
 cat ~/.chia/mainnet/config/config.yaml
