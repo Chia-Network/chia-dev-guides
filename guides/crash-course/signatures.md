@@ -180,7 +180,9 @@ Great! Now you have all of the information to create your coin!
 
 To create a coin we send a certain amount of chia to the address for this Chialisp. The `amount` is up to you, the value used determines the value of this locked-up coin.
 
+```
 chia wallet send --amount 0.01 --fee 0.00005 --address txch14gxuvfmw2xdxqnws5agt3ma483wktd2lrzwvpj3f6jvdgkmf5gtq8g3aw3
+```
 
 Response:
 
@@ -342,38 +344,40 @@ and then search for `genesis_challenge`, picking the one for the appropriate net
 
 ## Get Coin Id
 
-The coin ID is actually the hash of the parent coin info, the coin puzzle hash, and the amount. You can calculate it like so.
+The coin ID is actually the hash of the parent coin info, the coin puzzle hash, and the amount.
 
-Reminder, you can get the parent coin info from `cdv rpc coinrecords --by puzzlehash <puzlehash>`.
+One way to get the coin ID is to retrieve a coin through `cdv inspect`. This will take the parent ID, your coin's puzzle hash, and the amount.
 
 ```
-run "(sha256 0x2ae27f44c228eeb9b16eb3f878c51e5bc468009eea79fce976e9d0a25b0e2b85 0xaa0dc6276e519a604dd0a750b8efb53c5d65b55f189cc0ca29d498d45b69a216 10000000000)"
+cdv inspect -id coins --parent-id 0x2ae27f44c228eeb9b16eb3f878c51e5bc468009eea79fce976e9d0a25b0e2b85 --puzzle-hash 0xaa0dc6276e519a604dd0a750b8efb53c5d65b55f189cc0ca29d498d45b69a216 --amount 10000000000
 ```
 
 Response:
 
 ```
-0x7bd1271b2cf558da23cefbdfb22df562527b17655a98561f4a5e803337e5a349
+['43ab980558015de0d255b7eadf763feb9de22233bcdfde22b1c2823dfa2a53b5']
 ```
+
+Now, we can use our coin ID to craft a message.
 
 # Concatenate Message
 
-`AGG_SIG_ME` expects this coin ID to be concatenated with the conditions tree hash and the genesis challenge:
+`AGG_SIG_ME` expects the concatenation of the conditions tree hash, coin ID, and the genesis challenge.
 
 ```
-run "(concat 0xd96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c1 0x559b6289427e4dc238fecd5e4bfcafbdde966781f88a64e21856d152f31f7a96 0xd25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15)"
+run "(concat 0xd96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c1 0x43ab980558015de0d255b7eadf763feb9de22233bcdfde22b1c2823dfa2a53b5 0xd25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15)"
 ```
 
 Response:
 
 ```
-0xd96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c1559b6289427e4dc238fecd5e4bfcafbdde966781f88a64e21856d152f31f7a96d25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15
+0xd96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c143ab980558015de0d255b7eadf763feb9de22233bcdfde22b1c2823dfa2a53b5d25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15
 ```
 
 # Sign Message
 
 ```
-chia keys sign --as-bytes --message 0xd96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c1559b6289427e4dc238fecd5e4bfcafbdde966781f88a64e21856d152f31f7a96d25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15
+chia keys sign --as-bytes --message 0xd96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c143ab980558015de0d255b7eadf763feb9de22233bcdfde22b1c2823dfa2a53b5d25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15
  --hd_path m
 ```
 
@@ -385,7 +389,7 @@ Response:
 
 ```
 Public key: b8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d
-Signature: 9735bc4d745236f3257aeac83b124bab792b3fb0e271a798cc82b10b4999d2a0df5d0ff35ef536adb18681dfc2e3947f0affbce45244effc3a2b8ff29495bcf53984b389475f8743054a2a33265e607391c34750abbb12b0183a7f16000d1690
+Signature: a3994dc9c0ef41a903d3335f0afe42ba16c88e7881706798492da4a1653cd10c69c841eeb56f44ae005e2bad27fb7ebb16ce8bbfbd708ea91dd4ff24f030497b50e694a8270eccd07dbc206b8ffe0c34a9ea81291785299fae8206a1e1bbc1d1
 ```
 
 # The Spend Bundle
@@ -405,7 +409,7 @@ Using the gathered info thus far, we can craft our spend bundle:
       "solution": "ffffff33ffa09ee6bfb3d3732c68fbff1fcce96fa26ab83ff8c5736eed25ceafe47cb4750f53ff85025110f380808080"
     }
   ],
-  "aggregated_signature": "0x9735bc4d745236f3257aeac83b124bab792b3fb0e271a798cc82b10b4999d2a0df5d0ff35ef536adb18681dfc2e3947f0affbce45244effc3a2b8ff29495bcf53984b389475f8743054a2a33265e607391c34750abbb12b0183a7f16000d1690"
+  "aggregated_signature": "a3994dc9c0ef41a903d3335f0afe42ba16c88e7881706798492da4a1653cd10c69c841eeb56f44ae005e2bad27fb7ebb16ce8bbfbd708ea91dd4ff24f030497b50e694a8270eccd07dbc206b8ffe0c34a9ea81291785299fae8206a1e1bbc1d1"
 }
 ```
 
@@ -414,6 +418,13 @@ cdv pushtx spendbundle.json
 ```
 
 Response:
+
+```
+{
+    "status": "SUCCESS",
+    "success": true
+}
+```
 
 If you have an incorrect signature, you'll get a message like this:
 
