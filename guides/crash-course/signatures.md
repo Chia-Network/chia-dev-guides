@@ -33,7 +33,7 @@ A digital signature allows you to use a private key to sign a message. This mess
 
 To see this in action, let's sign a message with the master public key. Each key is labeled with a keypath from `chia keys sign`, it resembles `m/12381/8444/0/0`, or just `m` for your master public key.
 
-```
+```bash
 chia keys sign --message "hello" --hd_path m
 ```
 
@@ -46,7 +46,7 @@ Choose key:
 
 Or, you can pass that in as an additional flag to `chia keys sign`:
 
-```
+```bash
 chia keys sign --message "hello" --hd_path m --fingerprint 1660000549
 ```
 
@@ -65,13 +65,13 @@ This signature will be passed along with the message `hello` to whoever we want 
 1. the sender's public key,
 1. the message
 
-```
+```bash
 chia keys verify --message hello --signature 91c3d0504c2c5e02091f92cf0c3f79f2d7350656b0dc554dfc94f7e256b53d415e1a15108e329004ff1c5e91e24b445d18e52b2777e9a01a7a12d7f69a9df30c6fe3c196bdc5aa8072ea23d0edb6422253bb02d560bce721a459e6cf9e847aed --public_key b8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d
 ```
 
 Response:
 
-```
+```python
 True
 ```
 
@@ -89,7 +89,7 @@ The general syntax for this is `(50 public_key message)`
 
 Take a look at this example:
 
-```
+```chialisp
 (mod (PUBLIC_KEY conditions)
     (include condition_codes.clib)
     (include sha256tree.clib)
@@ -104,7 +104,7 @@ Take a look at this example:
 We will be introducing a few new things here, but let's first understand the basic signature requirement.
 This code expects the public key to be curried, with our `AGG_SIG_ME` condition being set up like so:
 
-```
+```chialisp
 (list AGG_SIG_ME PUBLIC_KEY (sha256tree conditions))
 ```
 
@@ -118,7 +118,7 @@ Let's go through creating this coin and spending it. As we go through this we wi
 
 First, let's get our public key:
 
-```
+```bash
 chia keys show
 ```
 
@@ -130,19 +130,19 @@ Master public key (m): b8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b67
 
 Now, curry in your public key **prefixed with 0x** (important). I'll use mine in this example, so be sure to update with the appropriate value!
 
-```
+```bash
 cdv clsp curry signature.clsp -a 0xb8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d
 ```
 
 Response (reminder, yours will be different):
 
-```
+```chialisp
 (a (q 2 (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1)) (c (q . 0xb8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d) 1))
 ```
 
 Now, use your compiled code to get the puzzle hash and the serialized version of the code (the puzzle reveal):
 
-```
+```bash
 opc "(a (q 2 (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1)) (c (q . 0xb8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d) 1))"
 ```
 
@@ -152,7 +152,7 @@ Response:
 ff02ffff01ff02ffff01ff04ffff04ff04ffff04ff05ffff04ffff02ff06ffff04ff02ffff04ff0bff80808080ff80808080ff0b80ffff04ffff01ff32ff02ffff03ffff07ff0580ffff01ff0bffff0102ffff02ff06ffff04ff02ffff04ff09ff80808080ffff02ff06ffff04ff02ffff04ff0dff8080808080ffff01ff0bffff0101ff058080ff0180ff018080ffff04ffff01b0b8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954dff018080
 ```
 
-```
+```bash
 opc -H "(a (q 2 (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1)) (c (q . 0xb8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d) 1))"
 ```
 
@@ -164,7 +164,7 @@ aa0dc6276e519a604dd0a750b8efb53c5d65b55f189cc0ca29d498d45b69a216
 
 Now, using this puzzle hash we can encode an address:
 
-```
+```bash
 cdv encode --prefix txch aa0dc6276e519a604dd0a750b8efb53c5d65b55f189cc0ca29d498d45b69a216
 ```
 
@@ -180,7 +180,7 @@ Great! Now you have all of the information to create your coin!
 
 To create a coin we send a certain amount of chia to the address for this Chialisp. The `amount` is up to you, the value used determines the value of this locked-up coin.
 
-```
+```bash
 chia wallet send --amount 0.01 --fee 0.00005 --address txch14gxuvfmw2xdxqnws5agt3ma483wktd2lrzwvpj3f6jvdgkmf5gtq8g3aw3
 ```
 
@@ -193,7 +193,7 @@ Run 'chia wallet get_transaction -f 1660000549 -tx 0x2bf4497e18147f2f857321829c5
 
 Let's get that status:
 
-```
+```bash
 chia wallet get_transaction -f 1660000549 -tx 0x2bf4497e18147f2f857321829c557dfa4e92b7e1dd1a183e423fa1d6697c0a49
 ```
 
@@ -234,25 +234,25 @@ Now, let's figure out the `coin`, `puzzle_reveal` (calculated earlier), `solutio
 
 Once this transaction is confirmed, we can retrieve the coin info needed to craft a spend bundle. To do this, we will need to use the puzzle hash we calculated earlier.
 
-```
+```bash
 cdv rpc coinrecords --by puzzlehash aa0dc6276e519a604dd0a750b8efb53c5d65b55f189cc0ca29d498d45b69a216
 ```
 
 Response:
 
-```
+```json
 [
-    {
-        "coin": {
-            "amount": 10000000000,
-            "parent_coin_info": "0x2ae27f44c228eeb9b16eb3f878c51e5bc468009eea79fce976e9d0a25b0e2b85",
-            "puzzle_hash": "0xaa0dc6276e519a604dd0a750b8efb53c5d65b55f189cc0ca29d498d45b69a216"
-        },
-        "coinbase": false,
-        "confirmed_block_index": 321848,
-        "spent_block_index": 0,
-        "timestamp": 1667114401
-    }
+  {
+    "coin": {
+      "amount": 10000000000,
+      "parent_coin_info": "0x2ae27f44c228eeb9b16eb3f878c51e5bc468009eea79fce976e9d0a25b0e2b85",
+      "puzzle_hash": "0xaa0dc6276e519a604dd0a750b8efb53c5d65b55f189cc0ca29d498d45b69a216"
+    },
+    "coinbase": false,
+    "confirmed_block_index": 321848,
+    "spent_block_index": 0,
+    "timestamp": 1667114401
+  }
 ]
 ```
 
@@ -260,7 +260,7 @@ You will only need the `coin` object from this response.
 
 Again, you can calculate the puzzle reveal with `opc`:
 
-```
+```bash
 opc "(a (q 2 (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1)) (c (q . 0xb8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d) 1))"
 ```
 
@@ -276,7 +276,7 @@ Now, let's take a moment to craft a solution.
 
 The solution for this puzzle requires us to provide a list of conditions. This is how we control what happens with the coin. We will continue to use `51 (CREATE_COIN)` which requires a puzzle hash for where to send the coin.
 
-```
+```bash
 chia wallet get_address
 ```
 
@@ -286,7 +286,7 @@ Response:
 txch1nmntlv7nwvkx37llrlxwjmazd2url7x9wdhw6fww4lj8edr4pafsh0y5l5
 ```
 
-```
+```bash
 cdv decode txch1nmntlv7nwvkx37llrlxwjmazd2url7x9wdhw6fww4lj8edr4pafsh0y5l5
 ```
 
@@ -300,7 +300,7 @@ Now, craft the complete solution, **make sure to prefix with 0x for your puzzle 
 
 # Solution
 
-```
+```bash
 opc "(((51 0x9ee6bfb3d3732c68fbff1fcce96fa26ab83ff8c5736eed25ceafe47cb4750f53 9950000000)))"
 ```
 
@@ -320,7 +320,7 @@ The expected message for our signature is the tree hash of our conditions (from 
 We are not calculating the tree hash for the entire solution, just the `CREATE_COIN`, so make sure you get the parenthesis right.
 :::
 
-```
+```bash
 opc -H "((51 0x9ee6bfb3d3732c68fbff1fcce96fa26ab83ff8c5736eed25ceafe47cb4750f53 9950000000))"
 ```
 
@@ -335,7 +335,7 @@ To sign the message we will actually need the `coin_id` and the genesis challeng
 :::info Genesis Challenge?
 `AGG_SIG_ME` requires multiple pieces of information as to prevent reusable signatures. One of these things is the genesis challenge, which is a different value for every network. You will find this information in the `config.yaml` file of your chia configuration.
 
-```
+```bash
 cat ~/.chia/mainnet/config/config.yaml
 ```
 
@@ -348,7 +348,7 @@ The coin ID is actually the hash of the parent coin info, the coin puzzle hash, 
 
 One way to get the coin ID is to retrieve a coin through `cdv inspect`. This will take the parent ID, your coin's puzzle hash, and the amount.
 
-```
+```bash
 cdv inspect -id coins --parent-id 0x2ae27f44c228eeb9b16eb3f878c51e5bc468009eea79fce976e9d0a25b0e2b85 --puzzle-hash 0xaa0dc6276e519a604dd0a750b8efb53c5d65b55f189cc0ca29d498d45b69a216 --amount 10000000000
 ```
 
@@ -364,7 +364,7 @@ Now, we can use our coin ID to craft a message.
 
 `AGG_SIG_ME` expects the concatenation of the conditions tree hash, coin ID, and the genesis challenge.
 
-```
+```bash
 run "(concat 0xd96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c1 0x43ab980558015de0d255b7eadf763feb9de22233bcdfde22b1c2823dfa2a53b5 0xd25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15)"
 ```
 
@@ -376,7 +376,7 @@ Response:
 
 # Sign Message
 
-```
+```bash
 chia keys sign --as-bytes --message 0xd96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c143ab980558015de0d255b7eadf763feb9de22233bcdfde22b1c2823dfa2a53b5d25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15
  --hd_path m
 ```
@@ -413,16 +413,16 @@ Using the gathered info thus far, we can craft our spend bundle:
 }
 ```
 
-```
+```bash
 cdv pushtx spendbundle.json
 ```
 
 Response:
 
-```
+```json
 {
-    "status": "SUCCESS",
-    "success": true
+  "status": "SUCCESS",
+  "success": true
 }
 ```
 
