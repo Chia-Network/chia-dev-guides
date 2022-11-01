@@ -53,8 +53,8 @@ title: Singletons
     (defun recreate_self (MOD_HASH new_message)
         (list
             (list CREATE_COIN (puzzle-hash-of-curried-function MOD_HASH
-                (sha256 new_message)
-                (sha256 MOD_HASH)
+                (sha256 1 new_message)
+                (sha256 1 MOD_HASH)
             ))
         )
     )
