@@ -29,17 +29,18 @@ What the inner puzzle and inner solution is exactly is up to the coin creator. H
 ```chialisp title="outer-puzzle.clsp"
 (mod (PUBLIC_KEY INNER_PUZZLE inner_solution)
     (include condition_codes.clib)
+    (include sha256tree.clib)
 
     ; Assert the signature matches and append the conditions.
-    (defun calculate_output (PUBLIC_KEY conditions)
+    (defun calculate_output (PUBLIC_KEY inner_solution conditions)
         (c
-            (list AGG_SIG_ME PUBLIC_KEY (sha256 conditions))
+            (list AGG_SIG_ME PUBLIC_KEY (sha256tree inner_solution))
             conditions
         )
     )
 
     ; Pass the output of the inner puzzle to `calculate_output`.
-    (calculate_output PUBLIC_KEY (a INNER_PUZZLE inner_solution))
+    (calculate_output PUBLIC_KEY inner_solution (a INNER_PUZZLE inner_solution))
 )
 ```
 
