@@ -3,7 +3,7 @@ slug: /crash-course/singletons
 title: Singletons
 ---
 
-```chialisp title="outer-puzzle.md"
+```chialisp title="outer-puzzle.clsp"
 (mod (PUBLIC_KEY INNER_PUZZLE inner_solution)
     (include condition_codes.clib)
 
@@ -20,7 +20,7 @@ title: Singletons
 )
 ```
 
-```chialisp title="inner-puzzle.md"
+```chialisp title="inner-puzzle.clsp"
 (mod (REQUIRED_BLOCKS conditions)
     (include condition_codes.clib)
 
@@ -31,7 +31,7 @@ title: Singletons
 )
 ```
 
-```chialisp title="inner-puzzle.md"
+```chialisp title="inner-puzzle.clsp"
 (mod (PARTY_ONE PARTY_TWO amount)
     (include condition_codes.clib)
 
@@ -45,7 +45,7 @@ title: Singletons
 
 ## Next
 
-```chialisp title="state.md"
+```chialisp title="state.clsp"
 (mod (MOD_HASH MESSAGE new_message)
     (include curry_and_treehash.clib)
     (include condition_codes.clib)
