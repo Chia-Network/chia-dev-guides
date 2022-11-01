@@ -3,6 +3,29 @@ slug: /crash-course/singletons
 title: Singletons
 ---
 
+Puzzles all have something in common, they output a list of conditions. This tells the blockchain what you want to do with the coin.
+We did this exact thing in an earlier lesson:
+
+```chialisp
+(mod (PUBLIC_KEY conditions)
+    (include condition_codes.clib)
+    (include sha256tree.clib)
+
+    (c
+        (list AGG_SIG_ME PUBLIC_KEY (sha256tree conditions))
+        conditions
+    )
+)
+```
+
+Here, we are outputting a custom `conditions` which is passed in as a solution.
+
+## Nested coins
+
+We can create a coin within a coin where the inner coin returns a list of conditions to the outer coin. To do this, we will use `(a INNER_PUZZLE inner_solution)`. The operator `a` means `apply` and is how you execute some code. The inner puzzle will be executed with the inner solution.
+
+What the inner puzzle and inner solution is exactly is up to the coin creator. Here is a more complex example for an outer coin:
+
 ```chialisp title="outer-puzzle.clsp"
 (mod (PUBLIC_KEY INNER_PUZZLE inner_solution)
     (include condition_codes.clib)
@@ -20,6 +43,14 @@ title: Singletons
 )
 ```
 
+This will first run `(a INNER_PUZZLE inner_solution)`, passing the result to our custom function `calculate_output`. This function will require a signature of the outputted conditions from the inner coin.
+
+You can think of the outer coin as additional layer to control the inner coin. Almost like a template for your coins.
+
+## Inner Puzzle Creation
+
+Let's create an inner puzzle. This will use a new condition code ASSERT_HEIGHT_RELATIVE, which will make sure a certain number of blocks have passed since coin creation before the coin can be spent.
+
 ```chialisp title="inner-puzzle.clsp"
 (mod (REQUIRED_BLOCKS conditions)
     (include condition_codes.clib)
@@ -30,6 +61,10 @@ title: Singletons
     )
 )
 ```
+
+This will take conditions as a solution and combine those with the ASSERT_HEIGHT_RELATIVE condition.
+
+## Splitting Funds
 
 ```chialisp title="inner-puzzle.clsp"
 (mod (PARTY_ONE PARTY_TWO amount)
