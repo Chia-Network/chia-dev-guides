@@ -1,6 +1,6 @@
 ---
-slug: /crash-course/nested-puzzles
-title: Nested Puzzles
+slug: /crash-course/inner-puzzles
+title: Inner Puzzles
 ---
 
 Puzzles all have something in common, they output a list of conditions. This tells the blockchain what you want to do with the coin.
