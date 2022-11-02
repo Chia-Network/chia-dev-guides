@@ -20,7 +20,7 @@ We did this exact thing in an earlier lesson:
 
 Here, we are outputting a custom `conditions` which is passed in as a solution.
 
-## Nested Puzzles
+## Inner Puzzles
 
 We can create a coin within a coin where the inner coin returns a list of conditions to the outer coin. To do this, we will use `(a INNER_PUZZLE inner_solution)`. The operator `a` means `apply` and is how you execute some code. The inner puzzle will be executed with the inner solution.
 
