@@ -101,7 +101,18 @@ Take a look at this example:
 )
 ```
 
-We will be introducing a few new things here, but let's first understand the basic signature requirement.
+We will be introducing a few new things here. The first new thing introduced is `c`, which will combine the new `AGG_SIG_ME` condition with the conditions passed in as a solution.
+
+The other new idea is an include, which allows us to use the names of conditions instead of the numbers.
+
+To get these include files, issue the command:
+
+```
+cdv clsp retrieve sha256tree
+cdv clsp retrieve condition_codes.clib
+```
+
+Let's now understand the basic signature requirement.
 This code expects the public key to be curried, with our `AGG_SIG_ME` condition being set up like so:
 
 ```chialisp
@@ -432,6 +443,12 @@ If you have an incorrect signature, you'll get a message like this:
 ("{'error': 'Failed to include transaction "
  '93247303fe92bf8c25459b912e5ea01bc13c5a59f876ad673e8455487a1056eb, error '
  "BAD_AGGREGATE_SIGNATURE', 'success': False}")
+```
+
+If this is the case, you'll want to double check your signing message. You can also try the debug command:
+
+```
+cdv inspect spendbundles spendbundle.json --debug
 ```
 
 Congratulations, you now have a working understanding of signatures!
