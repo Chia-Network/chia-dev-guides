@@ -151,7 +151,7 @@ Response (reminder, yours will be different):
 (a (q 2 (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1)) (c (q . 0xb8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d) 1))
 ```
 
-Now, use your compiled code to get the puzzle hash and the serialized version of the code (the puzzle reveal):
+Now, use your compiled code to get the serialized version of the code (the puzzle reveal) and the puzzle hash:
 
 ```bash
 opc "(a (q 2 (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1)) (c (q . 0xb8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d) 1))"
@@ -162,6 +162,8 @@ Response:
 ```
 ff02ffff01ff02ffff01ff04ffff04ff04ffff04ff05ffff04ffff02ff06ffff04ff02ffff04ff0bff80808080ff80808080ff0b80ffff04ffff01ff32ff02ffff03ffff07ff0580ffff01ff0bffff0102ffff02ff06ffff04ff02ffff04ff09ff80808080ffff02ff06ffff04ff02ffff04ff0dff8080808080ffff01ff0bffff0101ff058080ff0180ff018080ffff04ffff01b0b8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954dff018080
 ```
+
+That is the puzzle reveal, now for the puzzle hash:
 
 ```bash
 opc -H "(a (q 2 (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1)) (c (q . 0xb8f7dd239557ff8c49d338f89ac1a258a863fa52cd0a502e3aaae4b6738ba39ac8d982215aa3fa16bc5f8cb7e44b954d) 1))"
@@ -344,7 +346,7 @@ d96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c1
 To sign the message we will actually need the `coin_id` and the genesis challenge.
 
 :::info Genesis Challenge?
-`AGG_SIG_ME` requires multiple pieces of information as to prevent reusable signatures. One of these things is the genesis challenge, which is a different value for every network. You will find this information in the `config.yaml` file of your chia configuration.
+`AGG_SIG_ME` requires multiple pieces of information as to prevent reusable signatures. One of these things is the genesis challenge, which is a different value for every network. You will find this information from `chia show -s` or in the `config.yaml` file of your chia configuration.
 
 ```bash
 cat ~/.chia/mainnet/config/config.yaml
@@ -425,7 +427,7 @@ Using the gathered info thus far, we can craft our spend bundle:
 ```
 
 ```bash
-cdv pushtx spendbundle.json
+cdv rpc pushtx spendbundle.json
 ```
 
 Response:
