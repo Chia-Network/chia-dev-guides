@@ -6,9 +6,9 @@ title: Developing Applications
 
 Chia developer Matthew Howard gives a high level overview of the concepts involved in developing applications on Chia.
 
-<figure class="video-container">
-<iframe src="//www.youtube.com/embed/lh9spX6Qv8I" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen width="100%"></iframe>
-</figure>
+<div class="videoWrapper">
+<iframe src="//www.youtube.com/embed/lh9spX6Qv8I" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen width="560" height="315"></iframe>
+</div>
 
 ---
 

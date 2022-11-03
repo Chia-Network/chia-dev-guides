@@ -8,9 +8,9 @@ In this video, Chia developer Matt Hauff goes over what you need to set up so th
 
 ## 1 - Environment Setup
 
-<figure class="video-container">
-<iframe src="//www.youtube.com/embed/y8Thrrw25rQ" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen width="100%" frameborder="0"></iframe>
-</figure>
+<div class="videoWrapper">
+<iframe src="//www.youtube.com/embed/y8Thrrw25rQ" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen width="560" height="315" frameborder="0"></iframe>
+</div>
 
 ---
 
