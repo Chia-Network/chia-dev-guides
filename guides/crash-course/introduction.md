@@ -30,7 +30,7 @@ The rules are known as the **consensus** and are rules defined in the software e
 
 Chia follows a consensus algorithm known as **Proof of Space and Time** (PoST). The way it works is by utilizing hard drive space and elapsed time as your contribution to the network. This is required to prevent what's known as a [Sybil attack](https://en.wikipedia.org/wiki/Sybil_attack).
 
-Chia is intentionally different than networks that use **Proof of Stake** (PoS). Many argue that staking has a centralizing effect of the network as there are much fewer decision-making nodes, and they continue to gain power. Chia, on the other hand, has over 100K full nodes all following the PoST consensus mechanism, a protocol that is similar to that of Bitcoin (but with less electricity usage required).
+Chia is intentionally different than networks that use **Proof of Stake** (PoS). Many argue that staking has a centralizing effect on proof of stake networks as there are much fewer decision-making nodes, and they continue to gain power. Chia, on the other hand, has over 100K full nodes all following the PoST consensus mechanism, a protocol that is similar to that of Bitcoin (but with less electricity usage required).
 
 ### Decentralization
 
