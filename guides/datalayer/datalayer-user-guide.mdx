@@ -613,7 +613,7 @@ You can't do anything with this store until it is confirmed on-chain. To check t
 <details>
 <summary>get_root example 1</summary>
 
-Before the transaction has been confirmed, `get_root` will return an empty hash:
+Your data store will be empty when you first create it. In this case, `get_root` will return an empty hash:
 
 ```bash
 chia data get_root --id 1a119374fc7d7055d3419fdcd7f93065f28a1e4acacdf9c73b933b27b685550f
@@ -635,7 +635,7 @@ Response:
 <details>
 <summary>get_root example 2</summary>
 
-After the transaction has been confirmed, `get_root` will return a real hash:
+After you have added at least one key, `get_root` will return a real hash:
 
 ```bash
 chia data get_root --id 1a119374fc7d7055d3419fdcd7f93065f28a1e4acacdf9c73b933b27b685550f
