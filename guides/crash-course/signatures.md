@@ -89,7 +89,7 @@ The general syntax for this is `(50 public_key message)`
 
 Take a look at this example:
 
-```chialisp
+```chialisp title='signature.clsp'
 (mod (PUBLIC_KEY conditions)
     (include condition_codes.clib)
     (include sha256tree.clib)
@@ -108,8 +108,7 @@ The other new idea is an include, which allows us to use the names of conditions
 To get these include files, issue the command:
 
 ```
-cdv clsp retrieve sha256tree
-cdv clsp retrieve condition_codes.clib
+cdv clsp retrieve sha256tree condition_codes
 ```
 
 Let's now understand the basic signature requirement.
@@ -119,7 +118,7 @@ This code expects the public key to be curried, with our `AGG_SIG_ME` condition 
 (list AGG_SIG_ME PUBLIC_KEY (sha256tree conditions))
 ```
 
-The `message` in this case is `Sha256tree conditions` which takes the tree hash of our passed in conditions.
+The `message` in this case is `Sha256tree conditions` which takes the tree hash of our passed in conditions. We put anything in the message we do not want changed by the farmer. We will be using `sha256tree` on the value because you cannot use a list. `sha256tree` gets the tree hash of the conditions.
 
 By having this as the message of `AGG_SIG_ME` we will be able to prove that the conditions have not been modified (as we are verifying against the public key, similar to `chia keys verify`).
 
@@ -349,7 +348,7 @@ To sign the message we will actually need the `coin_id` and the genesis challeng
 `AGG_SIG_ME` requires multiple pieces of information as to prevent reusable signatures. One of these things is the genesis challenge, which is a different value for every network. You will find this information from `chia show -s` or in the `config.yaml` file of your chia configuration.
 
 ```bash
-cat ~/.chia/mainnet/config/config.yaml
+less ~/.chia/mainnet/config/config.yaml
 ```
 
 and then search for `genesis_challenge`, picking the one for the appropriate network (such as testnet10). The value will be a hex string such as `ae83525ba8d1dd3f09b277de18ca3e43fc0af20d20c4b3e92ef2a48bd291ccb2` (that is the value for testnet10).
@@ -390,8 +389,7 @@ Response:
 # Sign Message
 
 ```bash
-chia keys sign --as-bytes --message 0xd96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c143ab980558015de0d255b7eadf763feb9de22233bcdfde22b1c2823dfa2a53b5d25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15
- --hd_path m
+chia keys sign --as-bytes --message d96954e94653367e85bee3195b8a8f4a6470626e51ba10a96fc24d0e8bcdd7c143ab980558015de0d255b7eadf763feb9de22233bcdfde22b1c2823dfa2a53b5d25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15 --hd_path m
 ```
 
 :::info
