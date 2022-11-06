@@ -6,9 +6,9 @@ title: State, Coins, Announcements
 
 Adam Kelly discusses managing state, coin creation, and announcements in this Chialisp video.
 
-<figure class="video-container">
-<iframe src="//www.youtube.com/embed/lDXB4NlbQ-E" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen width="100%"></iframe>
-</figure>
+<div class="videoWrapper">
+<iframe src="//www.youtube.com/embed/lDXB4NlbQ-E" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen width="560" height="315"></iframe>
+</div>
 
 ---
 
