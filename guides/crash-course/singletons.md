@@ -20,7 +20,7 @@ You will often hear "everything is a coin" being said. This is true!
 
 This introduces some unique approaches to creating software on the Chia blockchain.
 
-To create chialisp on the Chia blockchain, we must create a coin. As part of the coin set model, spending a coin results in a collection of removals and additions. The removals are your existing coins used for the spend being destroyed, and the additions are new coins (including any change) being created.
+To use Chialisp on the Chia blockchain, we must create a coin. As part of the coin set model, spending a coin results in a collection of removals and additions. The removals are your existing coins used for the spend being destroyed, and the additions are new coins (including any change) being created.
 
 Here is an example
 
