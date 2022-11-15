@@ -14,7 +14,7 @@ Because the RPC is accessible through web requests to localhost, you can build s
 
 ## Quick Start
 
-This guide is meant to be an example that will give you some basic experience. We will be using Node.js with typescript to create a signature enforced coin. We'll use multiple libraries written by [Rigidity](https://github.com/Rigidity) which are open source if you want to see the details on how they work.
+This guide is meant to be an example that will give you some basic experience. We will be using Node.js with TypeScript to create a signature enforced coin. We'll use multiple libraries written by [Rigidity](https://github.com/Rigidity) which are open source if you want to see the details on how they work.
 
 - [BLS Signatures](https://npmjs.com/package/@rigidity/bls-signatures)
 - [CLVM](https://npmjs.com/package/@rigidity/clvm)
@@ -38,14 +38,14 @@ This wallet is used as an example. You'll never want to share your wallet mnemon
 
 You can securely save the mnemonic phrase in a `.env` file and load it in your program:
 
-```typescript title=".env"
+```ts title=".env"
 MNEMONIC =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
 This is how you load it:
 
-```typescript title="index.ts"
+```ts title="index.ts"
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -132,7 +132,7 @@ For creating a coin we will use `async` and `await`, so we define an `async` fun
 
 We will also need our genesis challenge, which we can add to `.env` on a new line:
 
-```typescript title=".env"
+```ts title=".env"
 MNEMONIC =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 GENESIS = 'd25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15';
