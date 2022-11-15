@@ -3,7 +3,7 @@ slug: /crash-course/chialisp-and-typescript
 title: Chialisp and TypeScript
 ---
 
-So far we've been working with the chia blockchain directly through the terminal using chia dev tools the Chia command line interface.
+So far we've been working with the Chia blockchain directly through the terminal using Chia Dev Tools the Chia command line interface.
 This is handy but sometimes you may want to write code around Chia to work with the Chia blockchain. You may hear this referred to as driver code.
 
 ## RPC Explained
@@ -14,36 +14,54 @@ Because the RPC is accessible through web requests to localhost, you can build s
 
 ## Quick Start
 
-This guide is meant to be an example that will give you some basic experience. We will be using Node.js with typescript to create a signature enforced coin. We'll use multiple libraries written by [Rigidity](#) which are open source if you want to see the details on how they work.
+This guide is meant to be an example that will give you some basic experience. We will be using Node.js with TypeScript to create a signature enforced coin. We'll use a few libraries written by [Rigidity](https://github.com/Rigidity), which are open source if you want to see the details on how they work:
 
-## Connecting to a Wallet
+- [BLS Signatures](https://npmjs.com/package/@rigidity/bls-signatures)
+- [CLVM](https://npmjs.com/package/@rigidity/clvm)
+- [RPCs](https://npmjs.com/package/@rigidity/chia)
+- [Wallet Helper](https://npmjs.com/package/@rigidity/chia-wallet)
 
-As this code uses a custom wallet implementation over the Chia wallet RPC, the mnemonic will be imported. This can be used directly in `index.ts`:
+## Mnemonic Phrase
 
-```
-const mnemonic = 'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
+As this code uses a custom wallet implementation instead of the Chia wallet RPC, the mnemonic will be imported. This can be used directly in `index.ts`:
+
+```ts
+const mnemonic =
+  'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
 :::warning
 This wallet is used as an example. You'll never want to share your wallet mnemonic with anyone!
 :::
 
-Or, be imported from a `.env` file.
+### Dot Env
+
+You can securely save the mnemonic phrase in a `.env` file and load it in your program:
 
 ```typescript title=".env"
 MNEMONIC =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
+This is how you load it:
+
 ```typescript title="index.ts"
 import dotenv from 'dotenv';
+
 dotenv.config();
+
 const mnemonic = process.env.MNEMONIC!;
 ```
 
-## How to Read Chialisp files in JavaScript
+And you can install `dotenv` using NPM or your favorite package manager:
 
-Now that we are connected to our wallet we will create a chialisp file to be used for this example.
+```bash
+npm install dotenv
+```
+
+## Loading Chialisp Files
+
+Now that we have the mnemonic phrase, we will create a Chialisp file to be used for this example.
 
 ```chialisp title="signature.clsp"
 (mod (PUBLIC_KEY conditions)
@@ -55,18 +73,18 @@ Now that we are connected to our wallet we will create a chialisp file to be use
         conditions
     )
 )
-
-This is a refresher of the content on signatures. This will require a signature from the spender with a message that includes the treehash of the condition to be used.
 ```
+
+This is a refresher of the content on signatures. This will require a signature from the spender with a message that includes the tree hash of the condition to be used.
 
 Here is how we can read chialisp. First, we get some dependencies and build the chialisp code:
 
-```
+```bash
 cdv clsp retrieve condition_codes sha256tree
 cdv clsp build signature.clsp
 ```
 
-This will create a `signature.clsp.hex` file to be read within Typescript.
+This will create a `signature.clsp.hex` file that can be read in our code.
 
 ```typescript
 const program = Program.deserializeHex(
@@ -78,14 +96,14 @@ console.log(program.toString());
 
 Output:
 
-```
+```chialisp
 (a (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1))
 ```
 
-To be sure, we can check this with Chia dev tools:
+To be sure, we can check this with Chia Dev Tools:
 
-```
-...
+```bash
+run signature.clsp -i include
 ```
 
 This is not complete as this is the puzzle with no curried values. We will want to curry the public key expected so not anyone can sign for this coin to be spent.
@@ -104,15 +122,15 @@ console.log(curried.toString());
 
 The final curried puzzle:
 
-```
+```chialisp
 (a (q 2 (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1)) (c (q . 0xa9d31f69a4337bd10aa8179cbede90af1cdfdfbd804c8f1bc7b69ced9f769ee4f9938a40dbed4242baafabf641adea2b) 1))
 ```
 
 ## Creating the Coin
 
-For creating a coin we will use async / await, so we define an async function `main`.
+For creating a coin we will use `async` and `await`, so we define an `async` function `main`.
 
-We will also need our genesis challenge, which we can add to .env on a new line.
+We will also need our genesis challenge, which we can add to `.env` on a new line:
 
 ```typescript title=".env"
 MNEMONIC =
@@ -128,7 +146,7 @@ chia show -s
 
 Testnet10 has the genesis `ae83525ba8d1dd3f09b277de18ca3e43fc0af20d20c4b3e92ef2a48bd291ccb2`. You can see this in `~/.chia/mainnet/config/config.yaml` as well with:
 
-```
+```bash
 less ~/.chia/mainnet/config/config.yaml
 ```
 
@@ -153,7 +171,7 @@ main();
 
 Output:
 
-```
+```js
 { status: 'SUCCESS', success: true }
 ```
 
@@ -218,7 +236,7 @@ const signature = AugSchemeMPL.sign(
 ).toHex();
 ```
 
-## coin Spend
+## Spend the Coin
 
 ```typescript
 const spendBundle: SpendBundle = {
@@ -237,6 +255,6 @@ console.log(await node.pushTx(spendBundle));
 
 Output:
 
-```
+```js
 { status: 'SUCCESS', success: true }
 ```
