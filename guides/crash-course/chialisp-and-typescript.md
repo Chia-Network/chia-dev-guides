@@ -14,7 +14,7 @@ Because the RPC is accessible through web requests to localhost, you can build s
 
 ## Quick Start
 
-This guide is meant to be an example that will give you some basic experience. We will be using Node.js with typescript to create a signature enforced coin. We'll use multiple libraries written by [Rigidity](#) which are open source if you want to see the details on how they work.
+This guide is meant to be an example that will give you some basic experience. We will be using Node.js with typescript to create a signature enforced coin. We'll use multiple libraries written by [Rigidity](https://github.com/Rigidity) which are open source if you want to see the details on how they work.
 
 ## Connecting to a Wallet
 
