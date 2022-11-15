@@ -30,13 +30,12 @@ This wallet is used as an example. You'll never want to share your wallet mnemon
 
 Or, be imported from a `.env` file.
 
-```javascript title=".env"
+```typescript title=".env"
 MNEMONIC =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
-```javascript title="index.ts"
-
+```typescript title="index.ts"
 import dotenv from 'dotenv';
 dotenv.config();
 const mnemonic = process.env.MNEMONIC!;
@@ -93,7 +92,7 @@ This is not complete as this is the puzzle with no curried values. We will want 
 
 ## Currying a Value
 
-```
+```typescript
 const mnemonic = process.env.MNEMONIC!;
 const privateKey = PrivateKey.fromSeed(mnemonicToSeedSync(mnemonic));
 const publicKey = privateKey.getG1();
