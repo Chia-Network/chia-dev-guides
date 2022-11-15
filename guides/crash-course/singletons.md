@@ -3,7 +3,7 @@ slug: /crash-course/singletons
 title: Singletons
 ---
 
-## Coin set Refresher
+## Coin Set Refresher
 
 Before we jump in to the bulk of this lesson I wanted to remind you of how the chia blockchain works. Chia uses a **coin set** model very similar to that of Bitcoin's UTXO model. This is very different than the account model used in other major chains. Instead of having an account with a _balance_, you just have a collection of unspent coins that you are able to spend.
 
@@ -20,7 +20,7 @@ You will often hear "everything is a coin" being said. This is true!
 
 This introduces some unique approaches to creating software on the Chia blockchain.
 
-To create chialisp on the Chia blockchain, we must create a coin. As part of the coin set model, spending a coin results in a collection of removals and additions. The removals are your existing coins used for the spend being destroyed, and the additions are new coins (including any change) being created.
+To use Chialisp on the Chia blockchain, we must create a coin. As part of the coin set model, spending a coin results in a collection of removals and additions. The removals are your existing coins used for the spend being destroyed, and the additions are new coins (including any change) being created.
 
 Here is an example
 
@@ -42,7 +42,7 @@ Another example:
 
 We are now going to be discussing the idea of state. State is used to maintain some value on-chain. In the world of Chia, this is done with a singleton coin.
 
-A singleton is something that can only have a single instance, but to update a singleton in Chia the existing is destryoed and a new is created. Because the singleton will be a series of spent coins and new coins created over time, we need a different way than the coin ID to identify a singleton. A singleton is instead identified by its **launcher ID**, which is the coin ID of the singletons parent coin. This parent coin is the coin used to create the initial coin of the singleton.
+A singleton is something that can only have a single instance, but to update a singleton in Chia the existing is destroyed and a new is created. Because the singleton will be a series of spent coins and new coins created over time, we need a different way than the coin ID to identify a singleton. A singleton is instead identified by its **launcher ID**, which is the coin ID of the singletons parent coin. This parent coin is the coin used to create the initial coin of the singleton.
 
 ## Why are Singletons Important?
 
