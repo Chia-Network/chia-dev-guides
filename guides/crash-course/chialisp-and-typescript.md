@@ -6,22 +6,39 @@ title: Chialisp and TypeScript
 So far we've been working with the Chia blockchain directly through the terminal using Chia Dev Tools the Chia command line interface.
 This is handy but sometimes you may want to write code around Chia to work with the Chia blockchain. You may hear this referred to as driver code.
 
-## RPC Explained
-
-You can interact with the Chia blockchain through the RPC, which is [documented](https://docs.chia.net/rpc/) with sections on the full node, NFTs and more.
-
-Because the RPC is accessible through web requests to localhost, you can build software using the Chia blockchain node. You can create all this code yourself or you can used wrappers that others have created.
-
 ## Quick Start
 
-This guide is meant to be an example that will give you some basic experience. We will be using Node.js with TypeScript to create a signature enforced coin. We'll use multiple libraries written by [Rigidity](https://github.com/Rigidity) which are open source if you want to see the details on how they work.
+This guide is meant to be an example that will give you some basic experience. We will be using Node.js with TypeScript to create a signature enforced coin. We'll use multiple TypeScript libraries for this project, which are open source if you want to see the details on how they work.
 
 - [BLS Signatures](https://npmjs.com/package/@rigidity/bls-signatures)
 - [CLVM](https://npmjs.com/package/@rigidity/clvm)
 - [RPCs](https://npmjs.com/package/@rigidity/chia)
 - [Wallet Helper](https://npmjs.com/package/@rigidity/chia-wallet)
+- [DotEnv](https://npmjs.com/package/dotenv)
+- [BIP39](https://npmjs.com/package/bip39)
 
-# Project Setup
+### Full Node RPC
+
+You can interact with the Chia blockchain through the RPC, which is [documented](https://docs.chia.net/rpc/) with sections on the full node, NFTs and more.
+
+Because the RPC is accessible through web requests to localhost, you can build software using the Chia blockchain node. You can create all this code yourself or you can used wrappers that others have created.
+
+The full node RPC allows us to fetch coin records, push transactions to the mempool, and many other important things when building applications on Chia.
+
+### BLS Signatures
+
+We've been using `chia keys` to get our keys and sign the messages needed to spend coins on the Chia blockchain so far. We will now use the actual library used to implement this command directly, since we will be calculating it from code. Here is some terminology that will be helpful in understanding the related code.
+
+**Mnemonic** - The 12 or 24 word phrase found with `chia keys show --show-mnemonic-seed`.  
+**Seed** - An array of bytes used as entropy, derived from the mnemonic.  
+**Private Key** - A private key (or secret key) is used for signing messages and should not be shared publicly.  
+**Public Key** - A public key is used for verifying the authenticity of signatures and can be shared publicly.  
+**Signature** - A value that corresponds to a given message proving that it has been signed by a specific key.  
+**Aggregated Signature** - One or more signatures aggregated together. This can be used to verify multiple signatures simultaneously.  
+**Jacobian Point** - A point on the BLS 12-381 elliptic curve used to represent a public key or signature.  
+**G1Element** - A public key represented as a Jacobian point.  
+**G2Element** - A signature represented as a Jacobian point.
+**AugScemeMPL** - The signing scheme used by the Chia blockchain for aggregated signatures.
 
 ## Initializing a Project
 
@@ -298,11 +315,11 @@ async function create() {
 create();
 ```
 
-Let's break this down a bit. First, we are syncing the wallet like you would any other. This is important to ensure that all of the coins that can be spent are loaded before they are needed.
+:::note
+The `wallet.sync` method generates new child keys and corresponding addresses until there are a certain number of unused addresses available. This ensures that we have loaded all unspent coins that are available to us, which will be needed to create spends later on. This is what the Chia wallet does on startup, but since we are loading a wallet in this code, we need it to be synced every time we start the program.
+:::
 
-Next, we create a new spend to create a coin with the puzzle hash of the curried in signature puzzle we created earlier. The amount is `0.01` XCH and the fee is `0.00005` XCH.
-
-Finally, we push the spend bundle into the mempool and the transaction should be successful.
+We first create a new spend to create a coin with the puzzle hash of the curried in signature puzzle we created earlier. The amount is `0.01` XCH and the fee is `0.00005` XCH. Then, we can push the spend bundle into the mempool and the transaction should be successful.
 
 Run this command:
 
@@ -377,6 +394,12 @@ const conditions = Program.fromSource(
 // Create a solution from the conditions.
 const solution = Program.fromSource(`(${conditions})`).serializeHex();
 ```
+
+:::note
+The `Program.fromSource` method takes a string and converts it into a CLVM object, which allows it to be hashed or serialized as such. The reason we call it again on the conditions to make the solution is that we need to wrap it in a set of parenthesis to form a list.
+
+Remember that the solution is a list of arguments, of which the first one is the list of conditions.
+:::
 
 ## Calculate the Signature
 
