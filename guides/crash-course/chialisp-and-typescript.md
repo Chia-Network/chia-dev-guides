@@ -286,7 +286,7 @@ const genesis = fromHex(process.env.GENESIS!);
 For creating a coin we will use `async` and `await`, so we define an `async` function `create` (call it whatever you want).
 
 ```typescript
-async function main() {
+async function create() {
   await wallet.sync({ unusedAddressCount: 10 });
 
   const spend = wallet.createSpend();
@@ -295,7 +295,7 @@ async function main() {
   console.log(await node.pushTx(spend));
 }
 
-main();
+create();
 ```
 
 Let's break this down a bit. First, we are syncing the wallet like you would any other. This is important to ensure that all of the coins that can be spent are loaded before they are needed.
@@ -334,7 +334,7 @@ chia wallet send --amount 0.01 --fee 0.00005 --address txch14gxuvfmw2xdxqnws5agt
 We will need to give adequate time for the coin go sucesfully go to the mempool and then for it to be included by a full node. Because of this, we will issue the creation code separate from the retrieval code.
 
 ```typescript
-async function main() {
+async function spend() {
   await wallet.sync({ unusedAddressCount: 10 });
 
   const coinRecords = await node.getCoinRecordsByPuzzleHash(curried.hashHex());
@@ -345,7 +345,7 @@ async function main() {
   console.log(record);
 }
 
-main();
+spend();
 ```
 
 This will fetch the first coin record that matches our curried puzzle hash with the full node RPC. We will use this in the next step to spend the coin.
