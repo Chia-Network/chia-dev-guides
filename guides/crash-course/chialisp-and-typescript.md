@@ -536,3 +536,13 @@ spend();
 ```
 
 </details>
+
+## What Next
+
+You have now put together what you have learned to build an actual program that can create and spend coins on the Chia blockchain using the puzzle written in an earlier lesson. This set of tools, in any language that supports them, is a powerful way to build decentralized applications.
+
+Here are a few examples of how you can expand on this:
+
+- Modify the puzzle and code to require two sets of signatures (either two mnemonics or by using two child keys from the key store).
+- Modify the puzzle to add an additional condition requiring the spend to happen at least 10 blocks after the coin is created.
+- Modify the puzzle and code to require at least 2 of 3 signatures from the corresponding keys curried in (referred to as an M of N).
