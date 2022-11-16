@@ -111,7 +111,7 @@ const mnemonic =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
-Our imports will ultimately look like:
+So I don't have to mention imports throughout the doc, Our imports will ultimately look like:
 
 ```ts
 import {
