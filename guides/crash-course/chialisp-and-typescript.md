@@ -21,6 +21,87 @@ This guide is meant to be an example that will give you some basic experience. W
 - [RPCs](https://npmjs.com/package/@rigidity/chia)
 - [Wallet Helper](https://npmjs.com/package/@rigidity/chia-wallet)
 
+# Project Setup
+
+## Initializing a Project
+
+You will first need `npm`, which you can get by [downloading node.js](https://nodejs.org/en/download/).
+
+Once you have that installed, enter this in the terminal inside of a folder for your project:
+
+```
+npm init
+```
+
+Go through the prompts answering as you wish. This will initialize a `package.json` where you can define your dependencies and scripts for the project.
+
+We will be using typescript, so issue this command:
+
+```
+npm install typescript ts-node
+```
+
+Now, add a `tsconfig.json` file with this content:
+
+```json
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "ESNext",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "inlineSourceMap": true,
+    "declaration": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitOverride": true,
+    "strict": true
+  },
+  "include": ["src"]
+}
+```
+
+We will put all of our code inside of a `src` folder, so add that folder now with an `index.ts` file:
+
+```ts title="src/index.ts"
+console.log('hello chia');
+```
+
+To run this, we can add a `start` command of `ts-node src/index.ts` to our `package.json`. Our file will look something like this:
+
+```json title="package.json"
+{
+  "name": "tschia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
+  }
+}
+```
+
+Now, you should be able to run the project from the terminal:
+
+```
+npm run start
+```
+
+## Other dependencies
+
+For this project we are going to need add a few more dependencies. You can install these all at once with:
+
+```
+npm install @rigidity/bls-signatures @rigidity/clvm @rigidity/chia @rigidity/chia-wallet bip39 dotenv
+```
+
 ## Mnemonic Phrase
 
 As this code uses a custom wallet implementation instead of the Chia wallet RPC, the mnemonic will be imported. This can be used directly in `index.ts`:
@@ -30,11 +111,30 @@ const mnemonic =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
+Our imports will ultimately look like:
+
+```ts
+import {
+  PrivateKey,
+  fromHex,
+  AugSchemeMPL,
+  concatBytes,
+} from '@rigidity/bls-signatures';
+import { mnemonicToSeedSync } from 'bip39';
+import dotenv from 'dotenv';
+import { Program } from '@rigidity/clvm';
+import fs from 'fs';
+import path from 'path';
+import { FullNode, formatHex, SpendBundle, toCoinId } from '@rigidity/chia';
+import { KeyStore, StandardWallet } from '@rigidity/chia-wallet';
+import os from 'os';
+```
+
+### Dot Env
+
 :::warning
 This wallet is used as an example. You'll never want to share your wallet mnemonic with anyone!
 :::
-
-### Dot Env
 
 You can securely save the mnemonic phrase in a `.env` file and load it in your program:
 
@@ -53,11 +153,7 @@ dotenv.config();
 const mnemonic = process.env.MNEMONIC!;
 ```
 
-And you can install `dotenv` using NPM or your favorite package manager:
-
-```bash
-npm install dotenv
-```
+If you use Git, you'll want to make sure the `.env` file is added to the `.gitignore` so this is not checked in to a shared repository.
 
 ## Loading Chialisp Files
 
@@ -128,13 +224,12 @@ The final curried puzzle:
 
 ## Creating the Coin
 
-For creating a coin we will use `async` and `await`, so we define an `async` function `main`.
+For creating a coin we will use `async` and `await`, so we define an `async` function `create` (call it whatever you want).
 
 We will also need our genesis challenge, which we can add to `.env` on a new line:
 
 ```ts title=".env"
-MNEMONIC =
-  'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
+MNEMONIC = '...';
 GENESIS = 'd25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15';
 ```
 
