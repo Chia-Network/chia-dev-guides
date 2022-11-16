@@ -254,7 +254,7 @@ To get the final curried puzzle:
 
 We will need the network's genesis challenge, which we can add to `.env` on a new line:
 
-```ts title=".env"
+```text title=".env"
 MNEMONIC=...
 GENESIS=d25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15
 ```
