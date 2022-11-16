@@ -100,7 +100,7 @@ Now, you should be able to run the project from the terminal:
 npm run start
 ```
 
-## Other dependencies
+### Other Dependencies
 
 For this project we are going to need add a few more dependencies. You can install these all at once with:
 
