@@ -149,6 +149,12 @@ MNEMONIC =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
+This value can be retrieved with:
+
+```bash
+chia keys show --show-mnemonic-seed
+```
+
 This is how you load the file for later:
 
 ```ts title="index.ts"
