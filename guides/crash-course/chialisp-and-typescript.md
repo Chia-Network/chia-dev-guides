@@ -25,7 +25,7 @@ This guide is meant to be an example that will give you some basic experience. W
 
 ## Initializing a Project
 
-You will first need `npm`, which you can get by [downloading node.js](https://nodejs.org/en/download/).
+You will first need `npm`, which you can get by [downloading Node.js](https://nodejs.org/en/download/).
 
 Once you have that installed, enter this in the terminal inside of a folder for your project:
 
@@ -33,12 +33,18 @@ Once you have that installed, enter this in the terminal inside of a folder for 
 npm init
 ```
 
-Go through the prompts answering as you wish. This will initialize a `package.json` where you can define your dependencies and scripts for the project.
+Go through the prompts, making sure to change the entry point as described below. This will initialize a `package.json` where you can define your dependencies and scripts for the project.
 
-We will be using typescript, so issue this command:
+:::note
+Set the entry point to `dist/index.js` rather than `index.js` since we will be compiling the code.
+
+If you forget to do this, you can set it later in `package.json` in the `main` field.
+:::
+
+We will be using TypeScript, so issue this command:
 
 ```
-npm install typescript ts-node
+npm install --save-dev typescript ts-node
 ```
 
 Now, add a `tsconfig.json` file with this content:
@@ -64,17 +70,17 @@ Now, add a `tsconfig.json` file with this content:
 We will put all of our code inside of a `src` folder, so add that folder now with an `index.ts` file:
 
 ```ts title="src/index.ts"
-console.log('hello chia');
+console.log('Hello, Chia!');
 ```
 
-To run this, we can add a `start` command of `ts-node src/index.ts` to our `package.json`. Our file will look something like this:
+To run this, we can add a `start` script of `ts-node src/index.ts` to our `package.json`. Our file will look something like this:
 
 ```json title="package.json"
 {
   "name": "tschia",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -94,7 +100,7 @@ Now, you should be able to run the project from the terminal:
 npm run start
 ```
 
-## Other dependencies
+### Other Dependencies
 
 For this project we are going to need add a few more dependencies. You can install these all at once with:
 
@@ -104,7 +110,7 @@ npm install @rigidity/bls-signatures @rigidity/clvm @rigidity/chia @rigidity/chi
 
 ## Mnemonic Phrase
 
-As this code uses a custom wallet implementation instead of the Chia wallet RPC, the mnemonic will be imported. This can be used directly in `index.ts`:
+As this code uses a custom wallet implementation instead of the Chia wallet RPC, we will need to keep track of the mnemonic ourselves. Here is an example mnemonic phrase:
 
 ```ts
 const mnemonic =
@@ -143,21 +149,19 @@ MNEMONIC =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
-This is how you load it:
+This is how you load the file for later:
 
 ```ts title="index.ts"
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-const mnemonic = process.env.MNEMONIC!;
 ```
 
 If you use Git, you'll want to make sure the `.env` file is added to the `.gitignore` so this is not checked in to a shared repository.
 
 ## Loading Chialisp Files
 
-Now that we have the mnemonic phrase, we will create a Chialisp file to be used for this example.
+Now that we have the mnemonic phrase, we will create a Chialisp file named `signature.clsp` to be used for this example:
 
 ```chialisp title="signature.clsp"
 (mod (PUBLIC_KEY conditions)
@@ -190,7 +194,13 @@ const program = Program.deserializeHex(
 console.log(program.toString());
 ```
 
-Output:
+Run this command:
+
+```bash
+npm run start
+```
+
+Which should produce the following result:
 
 ```chialisp
 (a (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1))
@@ -204,29 +214,38 @@ run signature.clsp -i include
 
 This is not complete as this is the puzzle with no curried values. We will want to curry the public key expected so not anyone can sign for this coin to be spent.
 
-## Currying a Value
+## Currying the Key
+
+Now that we have the program loaded, we can use the mnemonic we loaded to derive the keypair and curry the public key into the signature puzzle.
 
 ```typescript
 const mnemonic = process.env.MNEMONIC!;
 const privateKey = PrivateKey.fromSeed(mnemonicToSeedSync(mnemonic));
 const publicKey = privateKey.getG1();
 const curried = program.curry([Program.fromJacobianPoint(publicKey)]);
+
 console.log(curried.toString());
 ```
 
+:::tip
 `privateKey.getG1()` is the equivalent of getting your **master public key** with `chia keys show`.
+:::
 
-The final curried puzzle:
+Run this command:
+
+```bash
+npm run start
+```
+
+To get the final curried puzzle:
 
 ```chialisp
 (a (q 2 (q 4 (c 4 (c 5 (c (a 6 (c 2 (c 11 ()))) ()))) 11) (c (q 50 2 (i (l 5) (q 11 (q . 2) (a 6 (c 2 (c 9 ()))) (a 6 (c 2 (c 13 ())))) (q 11 (q . 1) 5)) 1) 1)) (c (q . 0xa9d31f69a4337bd10aa8179cbede90af1cdfdfbd804c8f1bc7b69ced9f769ee4f9938a40dbed4242baafabf641adea2b) 1))
 ```
 
-## Creating the Coin
+## Setting up the Wallet
 
-For creating a coin we will use `async` and `await`, so we define an `async` function `create` (call it whatever you want).
-
-We will also need our genesis challenge, which we can add to `.env` on a new line:
+We will need the network's genesis challenge, which we can add to `.env` on a new line:
 
 ```ts title=".env"
 MNEMONIC = '...';
@@ -245,13 +264,21 @@ Testnet10 has the genesis `ae83525ba8d1dd3f09b277de18ca3e43fc0af20d20c4b3e92ef2a
 less ~/.chia/mainnet/config/config.yaml
 ```
 
+Now you can start the full node RPC client and wallet like this:
+
 ```typescript
 const node = new FullNode(os.homedir() + '/.chia/mainnet');
 const keyStore = new KeyStore(privateKey);
 
 const wallet = new StandardWallet(node, keyStore);
 const genesis = fromHex(process.env.GENESIS!);
+```
 
+## Creating the Coin
+
+For creating a coin we will use `async` and `await`, so we define an `async` function `create` (call it whatever you want).
+
+```typescript
 async function main() {
   await wallet.sync({ unusedAddressCount: 10 });
 
@@ -264,19 +291,31 @@ async function main() {
 main();
 ```
 
-Output:
+Let's break this down a bit. First, we are syncing the wallet like you would any other. This is important to ensure that all of the coins that can be spent are loaded before they are needed.
+
+Next, we create a new spend to create a coin with the puzzle hash of the curried in signature puzzle we created earlier. The amount is `0.01` XCH and the fee is `0.00005` XCH.
+
+Finally, we push the spend bundle into the mempool and the transaction should be successful.
+
+Run this command:
+
+```bash
+npm run start
+```
+
+Which should produce the following result:
 
 ```js
 { status: 'SUCCESS', success: true }
 ```
 
-:::info
-Reminder, each time you run this code you will be spending more Chia. You should be on testnet sending small amounts as you learn.
+:::note
+Each time you run this code you will be spending more Chia. You should be using testnet and sending small amounts as you learn.
 :::
 
-When expecting a value in Mojo, you can convert from Chia to mojo with `e12`. So, `0.01e12 Mojo` is the same as `0.01 XCH`.
+When expecting a value in mojos, you can convert from Chia to mojos with `e12`. So, `0.01e12 Mojo` is the same as `0.01 XCH`. This is because there are a trillion mojos in an XCH.
 
-This is the equivalent to:
+This code is roughly equivalent to:
 
 ```bash
 cdv encode --prefix txch 0x9de4380ab079ec73720d75916990be23de3bfaa727ff52d6bc09d93d66be79da
@@ -302,21 +341,33 @@ async function main() {
 main();
 ```
 
+This will fetch the first coin record that matches our curried puzzle hash with the full node RPC. We will use this in the next step to spend the coin.
+
+Run this command to ensure that the coin record is there:
+
+```bash
+npm run start
+```
+
 ## Crafting a Solution
 
-THe solution for this puzzle is a list of conditions. To write Chialisp within JavaScript we can use the `Program.fromSource()` method.
-We will use a `51 CREATE_COIN` condition delivering the value to our wallet puzzle hash.
+THe solution for this puzzle consists of a list of conditions. To write Chialisp within JavaScript we can use the `Program.fromSource()` method.
+We will use a `51` (`CREATE_COIN`) condition delivering the value to our wallet puzzle hash.
 
 ```typescript
+// Calculate an unused address we can send the value to.
 const [targetIndex] = await wallet.findUnusedIndices(1, []);
 const target = wallet.puzzleCache[targetIndex];
 
+// A fee of 0.00005 XCH.
 const fee = 0.00005e12;
 
+// Create a coin on the target, leaving a fee to be sent to the farmer.
 const conditions = Program.fromSource(
   `((51 ${formatHex(target.hashHex())} ${record.coin.amount - fee}))`
 );
 
+// Create a solution from the conditions.
 const solution = Program.fromSource(`(${conditions})`).serializeHex();
 ```
 
@@ -333,6 +384,8 @@ const signature = AugSchemeMPL.sign(
 
 ## Spend the Coin
 
+Finally, we can put everything together in a spend bundle and push the transaction to the mempool.
+
 ```typescript
 const spendBundle: SpendBundle = {
   coin_spends: [
@@ -348,7 +401,13 @@ const spendBundle: SpendBundle = {
 console.log(await node.pushTx(spendBundle));
 ```
 
-Output:
+Run this command:
+
+```bash
+npm run start
+```
+
+Which should produce the following result:
 
 ```js
 { status: 'SUCCESS', success: true }
