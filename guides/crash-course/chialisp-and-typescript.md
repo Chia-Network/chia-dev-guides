@@ -117,25 +117,6 @@ const mnemonic =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
-So I don't have to mention imports throughout the doc, Our imports will ultimately look like:
-
-```ts
-import {
-  PrivateKey,
-  fromHex,
-  AugSchemeMPL,
-  concatBytes,
-} from '@rigidity/bls-signatures';
-import { mnemonicToSeedSync } from 'bip39';
-import dotenv from 'dotenv';
-import { Program } from '@rigidity/clvm';
-import fs from 'fs';
-import path from 'path';
-import { FullNode, formatHex, SpendBundle, toCoinId } from '@rigidity/chia';
-import { KeyStore, StandardWallet } from '@rigidity/chia-wallet';
-import os from 'os';
-```
-
 ### Dot Env
 
 :::warning
@@ -158,6 +139,27 @@ dotenv.config();
 ```
 
 If you use Git, you'll want to make sure the `.env` file is added to the `.gitignore` so this is not checked in to a shared repository.
+
+### Imports
+
+To not have to mention imports throughout the doc, Our imports will ultimately look like:
+
+```ts
+import {
+  PrivateKey,
+  fromHex,
+  AugSchemeMPL,
+  concatBytes,
+} from '@rigidity/bls-signatures';
+import { mnemonicToSeedSync } from 'bip39';
+import dotenv from 'dotenv';
+import { Program } from '@rigidity/clvm';
+import fs from 'fs';
+import path from 'path';
+import { FullNode, formatHex, SpendBundle, toCoinId } from '@rigidity/chia';
+import { KeyStore, StandardWallet } from '@rigidity/chia-wallet';
+import os from 'os';
+```
 
 ## Loading Chialisp Files
 
