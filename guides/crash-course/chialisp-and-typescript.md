@@ -12,16 +12,43 @@ You can interact with the Chia blockchain through the RPC, which is [documented]
 
 Because the RPC is accessible through web requests to localhost, you can build software using the Chia blockchain node. You can create all this code yourself or you can used wrappers that others have created.
 
+## Language Choice
+
+You can do RPC calls with pretty much any language, but to create larger applications you will need packages for BLS signatures and CLVM. Currently, this is possible in JavaScript/TypeScript, Python, C++, Rust, and Dart.
+
 ## Quick Start
 
-This guide is meant to be an example that will give you some basic experience. We will be using Node.js with TypeScript to create a signature enforced coin. We'll use multiple libraries written by [Rigidity](https://github.com/Rigidity) which are open source if you want to see the details on how they work.
+This guide is meant to be an example that will give you some basic experience. We will be using Node.js with TypeScript to create a signature enforced coin. We'll use multiple TypeScript libraries for this project, which are open source if you want to see the details on how they work.
 
 - [BLS Signatures](https://npmjs.com/package/@rigidity/bls-signatures)
 - [CLVM](https://npmjs.com/package/@rigidity/clvm)
 - [RPCs](https://npmjs.com/package/@rigidity/chia)
 - [Wallet Helper](https://npmjs.com/package/@rigidity/chia-wallet)
+- [DotEnv](https://npmjs.com/package/dotenv)
+- [BIP39](https://npmjs.com/package/bip39)
 
-# Project Setup
+### Full Node RPC
+
+You can interact with the Chia blockchain through the RPC, which is [documented](https://docs.chia.net/rpc/) with sections on the full node, NFTs and more.
+
+Because the RPC is accessible through web requests to localhost, you can build software using the Chia blockchain node. You can create all this code yourself or you can used wrappers that others have created.
+
+The full node RPC allows us to fetch coin records, push transactions to the mempool, and many other important things when building applications on Chia.
+
+### BLS Signatures
+
+We've been using `chia keys` to get our keys and sign the messages needed to spend coins on the Chia blockchain so far. We will now use the actual library used to implement this command directly, since we will be calculating it from code. Here is some terminology that will be helpful in understanding the related code.
+
+**Mnemonic** - The 12 or 24 word phrase found with `chia keys show --show-mnemonic-seed`.  
+**Seed** - An array of bytes used as entropy, derived from the mnemonic.  
+**Private Key** - A private key (or secret key) is used for signing messages and should not be shared publicly.  
+**Public Key** - A public key is used for verifying the authenticity of signatures and can be shared publicly.  
+**Signature** - A value that corresponds to a given message proving that it has been signed by a specific key.  
+**Aggregated Signature** - One or more signatures aggregated together. This can be used to verify multiple signatures simultaneously.  
+**Jacobian Point** - A point on the BLS 12-381 elliptic curve used to represent a public key or signature.  
+**G1Element** - A public key represented as a Jacobian point.  
+**G2Element** - A signature represented as a Jacobian point.
+**AugScemeMPL** - The signing scheme used by the Chia blockchain for aggregated signatures.
 
 ## Initializing a Project
 
@@ -117,25 +144,6 @@ const mnemonic =
   'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
 ```
 
-So I don't have to mention imports throughout the doc, Our imports will ultimately look like:
-
-```ts
-import {
-  PrivateKey,
-  fromHex,
-  AugSchemeMPL,
-  concatBytes,
-} from '@rigidity/bls-signatures';
-import { mnemonicToSeedSync } from 'bip39';
-import dotenv from 'dotenv';
-import { Program } from '@rigidity/clvm';
-import fs from 'fs';
-import path from 'path';
-import { FullNode, formatHex, SpendBundle, toCoinId } from '@rigidity/chia';
-import { KeyStore, StandardWallet } from '@rigidity/chia-wallet';
-import os from 'os';
-```
-
 ### Dot Env
 
 :::warning
@@ -144,9 +152,8 @@ This wallet is used as an example. You'll never want to share your wallet mnemon
 
 You can securely save the mnemonic phrase in a `.env` file and load it in your program:
 
-```ts title=".env"
-MNEMONIC =
-  'nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close';
+```text title=".env"
+MNEMONIC=nasty sunny kingdom popular turn core rifle river twenty edit sort pill rice claw hollow please wash inform cannon empower emotion caught salt close
 ```
 
 This value can be retrieved with:
@@ -164,6 +171,27 @@ dotenv.config();
 ```
 
 If you use Git, you'll want to make sure the `.env` file is added to the `.gitignore` so this is not checked in to a shared repository.
+
+### Imports
+
+To not have to mention imports throughout the doc, Our imports will ultimately look like:
+
+```ts
+import {
+  PrivateKey,
+  fromHex,
+  AugSchemeMPL,
+  concatBytes,
+} from '@rigidity/bls-signatures';
+import { mnemonicToSeedSync } from 'bip39';
+import dotenv from 'dotenv';
+import { Program } from '@rigidity/clvm';
+import fs from 'fs';
+import path from 'path';
+import { FullNode, formatHex, SpendBundle, toCoinId } from '@rigidity/chia';
+import { KeyStore, StandardWallet } from '@rigidity/chia-wallet';
+import os from 'os';
+```
 
 ## Loading Chialisp Files
 
@@ -253,9 +281,9 @@ To get the final curried puzzle:
 
 We will need the network's genesis challenge, which we can add to `.env` on a new line:
 
-```ts title=".env"
-MNEMONIC = '...';
-GENESIS = 'd25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15';
+```text title=".env"
+MNEMONIC=...
+GENESIS=d25b25b897564035695996922aa0f9ff9d611bd38cd2ecd0d2383a99a70dfc15
 ```
 
 You can retrieve your network's Genesis challenege in the terminal with:
@@ -285,7 +313,7 @@ const genesis = fromHex(process.env.GENESIS!);
 For creating a coin we will use `async` and `await`, so we define an `async` function `create` (call it whatever you want).
 
 ```typescript
-async function main() {
+async function create() {
   await wallet.sync({ unusedAddressCount: 10 });
 
   const spend = wallet.createSpend();
@@ -294,14 +322,14 @@ async function main() {
   console.log(await node.pushTx(spend));
 }
 
-main();
+create();
 ```
 
-Let's break this down a bit. First, we are syncing the wallet like you would any other. This is important to ensure that all of the coins that can be spent are loaded before they are needed.
+:::note
+The `wallet.sync` method generates new child keys and corresponding addresses until there are a certain number of unused addresses available. This ensures that we have loaded all unspent coins that are available to us, which will be needed to create spends later on. This is what the Chia wallet does on startup, but since we are loading a wallet in this code, we need it to be synced every time we start the program.
+:::
 
-Next, we create a new spend to create a coin with the puzzle hash of the curried in signature puzzle we created earlier. The amount is `0.01` XCH and the fee is `0.00005` XCH.
-
-Finally, we push the spend bundle into the mempool and the transaction should be successful.
+We first create a new spend to create a coin with the puzzle hash of the curried in signature puzzle we created earlier. The amount is `0.01` XCH and the fee is `0.00005` XCH. Then, we can push the spend bundle into the mempool and the transaction should be successful.
 
 Run this command:
 
@@ -333,7 +361,7 @@ chia wallet send --amount 0.01 --fee 0.00005 --address txch14gxuvfmw2xdxqnws5agt
 We will need to give adequate time for the coin go sucesfully go to the mempool and then for it to be included by a full node. Because of this, we will issue the creation code separate from the retrieval code.
 
 ```typescript
-async function main() {
+async function spend() {
   await wallet.sync({ unusedAddressCount: 10 });
 
   const coinRecords = await node.getCoinRecordsByPuzzleHash(curried.hashHex());
@@ -344,7 +372,7 @@ async function main() {
   console.log(record);
 }
 
-main();
+spend();
 ```
 
 This will fetch the first coin record that matches our curried puzzle hash with the full node RPC. We will use this in the next step to spend the coin.
@@ -376,6 +404,12 @@ const conditions = Program.fromSource(
 // Create a solution from the conditions.
 const solution = Program.fromSource(`(${conditions})`).serializeHex();
 ```
+
+:::note
+The `Program.fromSource` method takes a string and converts it into a CLVM object, which allows it to be hashed or serialized as such. The reason we call it again on the conditions to make the solution is that we need to wrap it in a set of parenthesis to form a list.
+
+Remember that the solution is a list of arguments, of which the first one is the list of conditions.
+:::
 
 ## Calculate the Signature
 
@@ -512,3 +546,13 @@ spend();
 ```
 
 </details>
+
+## What Next
+
+You have now put together what you have learned to build an actual program that can create and spend coins on the Chia blockchain using the puzzle written in an earlier lesson. This set of tools, in any language that supports them, is a powerful way to build decentralized applications.
+
+Here are a few examples of how you can expand on this:
+
+- Modify the puzzle and code to require two sets of signatures (either two mnemonics or by using two child keys from the key store).
+- Modify the puzzle to add an additional condition requiring the spend to happen at least 10 blocks after the coin is created.
+- Modify the puzzle and code to require at least 2 of 3 signatures from the corresponding keys curried in (referred to as an M of N).
