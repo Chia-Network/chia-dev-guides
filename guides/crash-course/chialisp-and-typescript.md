@@ -6,6 +6,16 @@ title: Chialisp and TypeScript
 So far we've been working with the Chia blockchain directly through the terminal using Chia Dev Tools the Chia command line interface.
 This is handy but sometimes you may want to write code around Chia to work with the Chia blockchain. You may hear this referred to as driver code.
 
+## RPC Explained
+
+You can interact with the Chia blockchain through the RPC, which is [documented](https://docs.chia.net/rpc/) with sections on the full node, NFTs and more.
+
+Because the RPC is accessible through web requests to localhost, you can build software using the Chia blockchain node. You can create all this code yourself or you can used wrappers that others have created.
+
+## Language Choice
+
+You can do RPC calls with pretty much any language, but to create larger applications you will need packages for BLS signatures and CLVM. Currently, this is possible in JavaScript/TypeScript, Python, C++, Rust, and Dart.
+
 ## Quick Start
 
 This guide is meant to be an example that will give you some basic experience. We will be using Node.js with TypeScript to create a signature enforced coin. We'll use multiple TypeScript libraries for this project, which are open source if you want to see the details on how they work.
