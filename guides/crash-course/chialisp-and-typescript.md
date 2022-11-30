@@ -47,7 +47,7 @@ We've been using `chia keys` to get our keys and sign the messages needed to spe
 **Aggregated Signature** - One or more signatures aggregated together. This can be used to verify multiple signatures simultaneously.  
 **Jacobian Point** - A point on the BLS 12-381 elliptic curve used to represent a public key or signature.  
 **G1Element** - A public key represented as a Jacobian point.  
-**G2Element** - A signature represented as a Jacobian point.
+**G2Element** - A signature represented as a Jacobian point.  
 **AugScemeMPL** - The signing scheme used by the Chia blockchain for aggregated signatures.
 
 ## Initializing a Project
