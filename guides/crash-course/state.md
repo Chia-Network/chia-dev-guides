@@ -5,7 +5,7 @@ title: State
 
 ## Coin Set Refresher
 
-Before we jump in to the bulk of this lesson I wanted to remind you of how the Chia blockchain works. Chia uses a **coin set** model very similar to that of Bitcoin's UTXO model. This is very different than the account model used in other major chains. Instead of having an account with a _balance_, you just have a collection of unspent coins that you are able to spend.
+Before we jump in to the bulk of this lesson I wanted to remind you of how the Chia blockchain works. Chia uses a **[coin set](https://docs.chia.net/coin-set-intro)** model very similar to that of Bitcoin's UTXO model. This is very different than the account model used in other major chains. Instead of having an account with a _balance_, you just have a collection of unspent coins that you are able to spend.
 
 For example:
 
