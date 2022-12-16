@@ -9,14 +9,48 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 ```
 
-This document will guide you through the process of creating DIDs that conform to [Chia's DID standard](https://github.com/Chia-Network/chips/pull/18), as well as minting NFTs that adhere to [Chia's NFT standard](https://github.com/Chia-Network/chips/pull/19). It will demonstrate this functionality using both the command-line and RPCs on Windows, MacOS and Linux. It will also show you how to verify that your NFTs are working as designed in Chia's Electron wallet. We'll use the testnet for most of this guide, but we'll also give you some tips on deploying NFTs on Chia's mainnet.
+## About This Document
 
-Detailed instructions for each of the commands from this tutorial are available from the following references on Chia Docs:
+Rather than simply copy what other blockchains had already done, we modeled our NFT standard after the traditional art world. Art is far from the only use case for Chia NFTs, but it was our starting point nonetheless.
+
+This document will guide you through the process of creating DIDs that conform to [Chia's DID standard](https://github.com/Chia-Network/chips/pull/18), as well as minting NFTs that adhere to [Chia's NFT standard](https://github.com/Chia-Network/chips/blob/main/CHIPs/chip-0005.md). It will demonstrate this functionality using both the command-line and RPCs on Windows, MacOS and Linux. It will also show you how to verify that your NFTs are working as designed in Chia's reference wallet. We'll use the testnet for most of this guide, but we'll also give you some tips on deploying NFTs on Chia's mainnet.
+
+For detailed instructions on running each of the commands from this tutorial, see:
 
 - [DID CLI reference](https://docs.chia.net/did-clis)
 - [NFT CLI reference](https://docs.chia.net/nft-clis)
 - [DID RPC reference](https://docs.chia.net/did-rpcs)
 - [NFT RPC reference](https://docs.chia.net/nft-rpcs)
+
+For more documentation about Chia NFTs and DIDs, see:
+* [Off-chain metadata format for NFT1](https://github.com/Chia-Network/chips/blob/main/CHIPs/chip-0007.md)
+* [Explanation of NFT puzzles](https://chialisp.com/nfts)
+* [Explanation of DID puzzles](https://chialisp.com/dids)
+
+### Key features
+
+Chia NFTs focus on three key features:
+- Marketplace Independence -- you never are required to transfer your NFT to a marketplace in order to sell it. While marketplace custody is allowed, self custody has been standard with Chia NFTs from Day 1.
+- Consistent Provenance -- DIDs enable the tracking of an NFT's complete history. You are highly encouraged to attach your DID to all of the NFTs you create. The DID will later be used to verify the NFTs' authenticity.
+- Digital Permanance -- You can add a list of links to your NFTs' data, metadata, and license. Each link is verified with a hash, which is permanently embedded in the NFT itself. If one link changes or disappears, you can rely on another existing link, or create a new one. Even if all of the links disappear, as long as someone maintains a copy of the original file, the owner can always prepend a new link to the list.
+
+### Collections
+
+While some creators may wish to release their NFTs as individual pieces (so-called "1-of-1s"), most will want to create a _collection_. This is a generic term for a set of NFTs that are intentionally grouped together. For example, an artist could release several paintings of fruit as a collection called "Fruits of the World".
+
+#### Series
+
+"Series" describes a set of _distinct_ NFTs that belong together in a collection. Chia NFTs use two parameters in their _off-chain_ metadata related to series:
+* `series_number` is the sequence number of this NFT in the collection. Following the Fruits of the World example, if the collection consists of ten images of distinct types of fruit, these could be labeled "Fruits of the World #1", "Fruits of the World #2", etc. Typically, NFT collections will list the series number in each NFT's title. However, this is not mandatory. It is also possible to include the series number in the off-chain metadata.
+* `series_total` is the total number of NFTs in the series. Creators have the option to either specify the `series_total` upon the collection's initial minting, or to leave this parameter unspecified. In the latter case, potential buyers won't know the total number that will be minted, which could have a negative impact on the price of individual NFTs.
+
+#### Edition
+
+"Edition" means multiple NFTs with _identical_ data and metadata. In the NFT1 standard, the NFT's edition is part of the _on-chain_ metadata. This means that it is built into the NFT itself. There are two parmeters related to edition:
+* `edition_number` is the sequence number of this NFT's edition. For example, if the collection contains ten identical images of an apple, the NFTs could be labeled `Apple #1 of 10`, `Apple #2 of 10`, etc. The `edition_number` would then be `1`, `2`, etc. If each NFT in a collection is distinct, then the `edition_number` for each NFT is `1`. In this case, most NFT creators will choose not to specify this redundant `edition_number`.
+* `edition_count` is the total number of identical NFTs that are part of this edition. If `edition_number` is specified for an NFT, then `edition_count` is required. In the above example, each NFT that contains an identical apple image would have an `edition_count` of 10. Because this parameter must be specified upon an NFT's minting, it gives prospective buyers confidence that no surprise copies of an NFT will later be minted.
+
+## CLVM Cost
 
 :::info
 As detailed in our [CLVM reference](https://chialisp.com/docs/clvm/lang_reference#evaluating-cost-for-a-typical-transaction), the CLVM cost for an XCH transaction with two inputs and two outputs is around 17 million.
