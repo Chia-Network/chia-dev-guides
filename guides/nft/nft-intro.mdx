@@ -21,18 +21,21 @@ Detailed instructions for each of the commands from this tutorial are available 
 :::info
 As detailed in our [CLVM reference](https://chialisp.com/docs/clvm/lang_reference#evaluating-cost-for-a-typical-transaction), the CLVM cost for an XCH transaction with two inputs and two outputs is around 17 million.
 
-The cost for minting and modifying NFTs is significantly higher. The following chart shows the approximate CLVM cost (rounded up to the nearest million), as well as the recommended minimum fee (at 5 mojos per cost). Note that the minimum fees listed here will only apply when the mempool is full.
+The cost for minting and modifying NFTs is significantly higher. The following chart shows the approximate CLVM cost (rounded up to the nearest million), as well as the recommended minimum fee (at 5 mojos per cost), and the approximate cost in USD.
 
-| Operation                       | Cost (approx) | Min fee (mojos) |
-| :------------------------------ | ------------: | :-------------- |
-| Minting NFT without DID         |    53 million | 265 million     |
-| Minting NFT with DID            |   123 million | 615 million     |
-| Adding a URI to NFT without DID |    41 million | 205 million     |
-| Transfer NFT with DID           |    67 million | 335 million     |
-| Assign DID to NFT               |   107 million | 535 million     |
-| Adding URI to NFT with DID      |    71 million | 355 million     |
+**Note that the minimum fees listed here will only apply when the mempool is full.**
 
-The maximum CLVM cost in a transaction block is 11 billion. If you plan to mint several NFTs at once, be careful not to exceed this cost or your CLVM program will fail. Even if your spend bundle's total cost is less than the maximum, it may take a very long time to be included in a block if an insufficient fee is included. We therefore recommended that you create multiple spend bundles with only a few mintings that adhere to the minimum fees laid out above, which will increase the likelihood of your blocks making it onto the chain in a timely manner.
+If the mempool is not full, then a 1-mojo fee will be sufficient for any of these spends to be included in the next transaction block. To view the current status of the mempool, see the [Mempool Cost](https://dashboard.chia.net/d/46EAA05E/mempool-transactions-and-fees?orgId=1&viewPanel=40) table on our dashboard site. (If the green line representing the current mempool cost is close to the red line representing the maximum cost, then the mempool is full, and the following table should be used.)
+
+| Operation                       | Cost (approx) | Min fee (mojos) | Cost in USD at $30/XCH |
+| :------------------------------ | ------------: | :-------------- | :--------------------- |
+| Minting NFT without DID         |    53 million | 265 million     | $0.00795               |
+| Minting NFT with DID            |   123 million | 615 million     | $0.01845               |
+| Adding a URI to NFT without DID |    41 million | 205 million     | $0.00615               |
+| Transfer NFT with DID           |    67 million | 335 million     | $0.01005               |
+| Assign DID to NFT               |   107 million | 535 million     | $0.01605               |
+| Adding URI to NFT with DID      |    71 million | 355 million     | $0.01065               |
+
 :::
 
 <details>
