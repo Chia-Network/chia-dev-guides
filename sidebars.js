@@ -93,6 +93,7 @@ const sidebars = {
     },
     'datalayer/datalayer-user-guide',
     'simulator/simulator-user-guide',
+    'walletconnect/walletconnect-user-guide',
     {
       type: 'category',
       label: 'Tutorials',
