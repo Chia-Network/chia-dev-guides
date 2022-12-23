@@ -45,7 +45,7 @@ Theoretically, it would be possible to set the CAT:mojo ratio to something other
 
 With one XCH, you can issue 1 billion CATs. The face value of these tokens could be zero, or multiple XCH, or anywhere in between. This value is decided by the market -- it's worth whatever someone is willing to pay for it. The value of the tokens has nothing to do with the underlying XCH, other than their 1000-mojo melt value.
 
-These concepts are discussed in greater detail in our [CAT primitive page](https://chialisp.com/cats/).
+These concepts are discussed in greater detail in our [CAT primitive page](https://chialisp.com/cats/#valuation).
 
 ---
 
