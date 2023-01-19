@@ -15,7 +15,7 @@ jobs:
         apk add python3 make g++ git
 
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: "yarn deps"
       run: |
