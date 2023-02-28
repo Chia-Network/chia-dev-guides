@@ -84,13 +84,19 @@ We will now use these concepts and the `password.clsp` file you just wrote to cr
 Don't use a password that you use or plan to use for anything else, as this is not a secure smart coin. The most ideal choice for this is any number of random characters of your choice, such as `x7h2dDkE`. Just write it down for later.
 :::
 
-The first step is to curry the puzzle with the password's hash and get the puzzle hash and puzzle reveal:
+The first step is to curry the puzzle with the password's hash and get the puzzle hash:
 
 ```bash
 opc -H "$(cdv clsp curry password.clsp --args "$(run "(sha256 'password')")")"
 ```
 
-Write down both values this produces, the first one being the puzzle hash, and the second being the puzzle reveal.
+Then run the same command without the -H flag to get the puzzle reveal:
+
+```bash
+opc "$(cdv clsp curry password.clsp --args "$(run "(sha256 'password')")")"
+```
+
+Write down both values.
 
 You can convert the puzzle hash to an address and send funds to it like so:
 
