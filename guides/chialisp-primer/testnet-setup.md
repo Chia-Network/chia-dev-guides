@@ -19,8 +19,9 @@ If you are using Windows, we recommend PowerShell, and you may need to replace f
 5.  Run `chia init` to setup and configure Chia.
 6.  Run `chia keys generate` to prepare the wallet keys.
 7.  Run `chia configure -t true` to use the Testnet.
-8.  Download the [Testnet database](https://download.chia.net/testnet10/blockchain_v2_testnet10.sqlite.gz) and place it in the `~/.chia/testnet10/db` folder.
-9.  Finally, run `chia start node` to start the full node.
+8.  Download the [Testnet database](https://download.chia.net/testnet10/blockchain_v2_testnet10.sqlite.gz) unzip and place it in the `~/.chia/mainnet/db` folder.
+10.  (For Linux users wget https://databases.chia.net/file/chia-public-databases/blockchain_v2_testnet10.sqlite.gz)
+11.  Finally, run `chia start node` to start the full node.
 
 ## Faucet
 
