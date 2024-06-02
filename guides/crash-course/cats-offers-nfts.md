@@ -77,7 +77,7 @@ cdv --help
 We will also want to be sure to use the correct version of Chia Blockchain. At the time of this writing, we will need to use Chia blockchain 1.5.0.
 
 ```
-pip install chia-blockchain==1.5.0
+pip install chia-blockchain==1.6.0
 ```
 
 Verify your node is synced:
